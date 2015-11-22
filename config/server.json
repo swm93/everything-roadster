@@ -1,0 +1,5 @@
+{
+    "url": "jdbc:mysql://cosc304.ok.ubc.ca/{DATABASE_NAME}",
+    "username": "{USER_NAME}",
+    "password": "{PASSWORD}"
+}
