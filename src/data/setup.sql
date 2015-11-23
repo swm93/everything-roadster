@@ -158,6 +158,8 @@ CREATE TABLE ListedPart (
     price       DECIMAL(10,2)
         NOT NULL
         CHECK (price >= 0.0),
+    dateListed  DATETIME
+        NOT NULL,
     PRIMARY KEY (listId),
     FOREIGN KEY (vendorId) REFERENCES Account (accountId)
         -- ON DELETE SET NULL
@@ -279,4 +281,13 @@ INSERT INTO Account (accountId, accountType, email, password, firstName, lastNam
 
 INSERT INTO Account (accountId, accountType, email, password, firstName, lastName, phoneNumber, streetAddress, city, provinceState, country, postalCode)
     VALUES ('20', 'admin', 'gfowlerj@slashdot.org', 'proin', 'Gerald', 'Fowler', '1-(515)167-4752', '396 Maple Wood Place', 'Des Moines', 'Iowa', 'United States', '50936');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Seat', 'Place to sit');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('1', 'Seat', 'Red/Black Seat', 'Red and black seat', 'public/images/parts/part1.jpg');
+
+INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
+    VALUES ('1', '3', '1', '1', '250', '2015-01-01 00:00:00');
 
