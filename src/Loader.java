@@ -1,5 +1,3 @@
-package utility;
-
 import java.io.File;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -59,7 +57,7 @@ public class Loader
         }
         finally
         {
-        	ConnectionManager.close();
+            ConnectionManager.close();
         }
     }
 }
