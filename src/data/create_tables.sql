@@ -131,6 +131,8 @@ CREATE TABLE ListedPart (
     price       DECIMAL(10,2)
         NOT NULL
         CHECK (price >= 0.0),
+    dateListed  DATETIME
+        NOT NULL,
     PRIMARY KEY (listId),
     FOREIGN KEY (vendorId) REFERENCES Account (accountId)
         -- ON DELETE SET NULL
