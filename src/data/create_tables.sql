@@ -36,8 +36,8 @@ CREATE TABLE RatesVendor (
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     FOREIGN KEY (vendorId) REFERENCES Account (accountId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION
 );
 
 CREATE TABLE PartOrder (
@@ -99,7 +99,7 @@ CREATE TABLE Payment (
     PRIMARY KEY (accountNumber),
     FOREIGN KEY (shipmentId) REFERENCES Shipment (shipmentId)
         ON DELETE NO ACTION
-        ON UPDATE CASCADE
+        ON UPDATE No Action
 );
 
 CREATE TABLE PartCategory (
@@ -155,7 +155,7 @@ CREATE TABLE ContainsPart (
         ON UPDATE CASCADE,
     FOREIGN KEY (listId) REFERENCES ListedPart (listId)
         ON DELETE NO ACTION
-        ON UPDATE CASCADE
+        ON UPDATE NO ACTION
 );
 
 CREATE TABLE Make (
