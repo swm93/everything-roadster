@@ -51,14 +51,8 @@ CREATE TABLE PartOrder (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE Payment (
-    accountNumber   INTEGER,
-    paymentType     VARCHAR(25)
-        CHECK (paymentType IN ('Paypal', 'Visa', 'MasterCard')),
-    PRIMARY KEY (accountNumber)
-);
-
 CREATE TABLE Shipment (
+    shipmentId          INTEGER,
     trackingNumber      INTEGER,
     orderId             INTEGER,
     carrier             VARCHAR(25)
@@ -90,13 +84,20 @@ CREATE TABLE Shipment (
         NOT NULL,
     fromPostalCode      VARCHAR(8)
         NOT NULL,
-    paymentId           INTEGER
-        NOT NULL,
-    PRIMARY KEY (trackingNumber),
+    PRIMARY KEY (shipmentId),
     FOREIGN KEY (orderId) REFERENCES PartOrder (orderId)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (paymentId) REFERENCES Payment (accountNumber)
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE Payment (
+    accountNumber   INTEGER,
+    shipmentId      INTEGER
+        NOT NULL,
+    paymentType     VARCHAR(25)
+        CHECK (paymentType IN ('Paypal', 'Visa', 'MasterCard')),
+    PRIMARY KEY (accountNumber),
+    FOREIGN KEY (shipmentId) REFERENCES Shipment (shipmentId)
         ON DELETE NO ACTION
         ON UPDATE CASCADE
 );

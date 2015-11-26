@@ -16,10 +16,10 @@ DROP TABLE Part;
 
 DROP TABLE PartCategory;
 
+DROP TABLE Payment;
+
 DROP TABLE Shipment;
 
 DROP TABLE PartOrder;
-
-DROP TABLE Payment;
 
 DROP TABLE Account;

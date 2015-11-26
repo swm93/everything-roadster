@@ -16,11 +16,11 @@ DROP TABLE Part;
 
 DROP TABLE PartCategory;
 
+DROP TABLE Payment;
+
 DROP TABLE Shipment;
 
 DROP TABLE PartOrder;
-
-DROP TABLE Payment;
 
 DROP TABLE Account;
 
@@ -78,14 +78,8 @@ CREATE TABLE PartOrder (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE Payment (
-    accountNumber   INTEGER,
-    paymentType     VARCHAR(25)
-        CHECK (paymentType IN ('Paypal', 'Visa', 'MasterCard')),
-    PRIMARY KEY (accountNumber)
-);
-
 CREATE TABLE Shipment (
+    shipmentId          INTEGER,
     trackingNumber      INTEGER,
     orderId             INTEGER,
     carrier             VARCHAR(25)
@@ -117,13 +111,20 @@ CREATE TABLE Shipment (
         NOT NULL,
     fromPostalCode      VARCHAR(8)
         NOT NULL,
-    paymentId           INTEGER
-        NOT NULL,
-    PRIMARY KEY (trackingNumber),
+    PRIMARY KEY (shipmentId),
     FOREIGN KEY (orderId) REFERENCES PartOrder (orderId)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (paymentId) REFERENCES Payment (accountNumber)
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE Payment (
+    accountNumber   INTEGER,
+    shipmentId      INTEGER
+        NOT NULL,
+    paymentType     VARCHAR(25)
+        CHECK (paymentType IN ('Paypal', 'Visa', 'MasterCard')),
+    PRIMARY KEY (accountNumber),
+    FOREIGN KEY (shipmentId) REFERENCES Shipment (shipmentId)
         ON DELETE NO ACTION
         ON UPDATE CASCADE
 );
@@ -282,89 +283,23 @@ INSERT INTO Account (accountId, accountType, email, password, firstName, lastNam
 INSERT INTO Account (accountId, accountType, email, password, firstName, lastName, phoneNumber, streetAddress, city, provinceState, country, postalCode)
     VALUES ('20', 'admin', 'gfowlerj@slashdot.org', 'proin', 'Gerald', 'Fowler', '1-(515)167-4752', '396 Maple Wood Place', 'Des Moines', 'Iowa', 'United States', '50936');
 
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('3', '1', '4.9', 'None');
+INSERT INTO RatesVendor (customerId, vendorId, userRating)
+    VALUES ('3', '1', '4.9');
 
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('5', '2', '4.3', 'None');
+INSERT INTO RatesVendor (customerId, vendorId, userRating)
+    VALUES ('5', '2', '4.3');
 
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('10', '3', '2.5', 'None');
+INSERT INTO RatesVendor (customerId, vendorId, userRating)
+    VALUES ('10', '3', '2.5');
 
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('12', '4', '4.7', 'None');
+INSERT INTO RatesVendor (customerId, vendorId, userRating)
+    VALUES ('12', '4', '4.7');
 
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('13', '5', '3.8', 'None');
+INSERT INTO RatesVendor (customerId, vendorId, userRating)
+    VALUES ('13', '5', '3.8');
 
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('17', '6', '0.1', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', 'None');
-
-INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
-    VALUES ('None', 'None', 'None', '0');
+INSERT INTO RatesVendor (customerId, vendorId, userRating)
+    VALUES ('17', '6', '0.1');
 
 INSERT INTO PartOrder (orderId, customerId, orderDate)
     VALUES ('1', '1', '2015-01-01 00:00:00');
@@ -417,6 +352,57 @@ INSERT INTO PartOrder (orderId, customerId, orderDate)
 INSERT INTO PartOrder (orderId, customerId, orderDate)
     VALUES ('17', '1', '2015-01-17 00:00:00');
 
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('1', '1000457', '1', 'USPS', 'Deliver between 08:00 and 20:00', '9.95', '2015-01-01 00:00:00', 'Express', '4 Northridge Park', 'Farmington', 'Michigan', 'United States', '48335', '73331 Jana Way', 'Winston Salem', 'North Carolina', 'United States', '27116');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('2', '2000914', '2', 'CanadaPost', 'If noone is home, leave out back', '123.45', '2015-01-02 00:00:00', 'Normal', '334 Northridge Crossing', 'Tulsa', 'Oklahoma', 'United States', '74133', '8888 Hoard Terrace', 'Dayton', 'Ohio', 'United States', '45440');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('3', '4001828', '3', 'FedEx', 'If noone is home, leave out back', '456.3', '2015-01-03 00:00:00', 'Express', '1 Shopko Court', 'Tucson', 'Arizona', 'United States', '85754', '51 Carioca Alley', 'Washington', 'District of Columbia', 'United States', '20337');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('4', '405002', '4', 'USPS', 'Deliver between 08:00 and 20:00', '32', '2015-01-04 00:00:00', 'Normal', '32 Autumn Leaf Court', 'Rochester', 'New York', 'United States', '14652', '00 1st Plaza', 'Dallas', 'Texas', 'United States', '75236');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('5', '253525', '5', 'CanadaPost', 'If noone is home, leave out back', '255.175', '2015-01-05 00:00:00', 'Normal', '8343 Packers Hill', 'Des Moines', 'Iowa', 'United States', '50320', '83 Browning Avenue', 'Lakewood', 'Washington', 'United States', '98498');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('6', '4653534', '6', 'FedEx', 'If noone is home, leave out back', '295.075', '2015-01-06 00:00:00', 'Express', '85 Riverside Place', 'Milwaukee', 'Wisconsin', 'United States', '53215', '234 Hallows Alley', 'Sacramento', 'California', 'United States', '95852');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('7', '432442', '7', 'USPS', 'If noone is home, leave out back', '334.975', '2015-01-07 00:00:00', 'Normal', '92 Superior Avenue', 'Johnson City', 'Tennessee', 'United States', '37605', '4 4th Plaza', 'Aurora', 'Colorado', 'United States', '80045');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('8', '432423', '8', 'CanadaPost', 'If noone is home, leave out back', '374.875', '2015-01-08 00:00:00', 'Overnight', '12980 Veith Alley', 'Camden', 'New Jersey', 'United States', '8104', '24168 Nelson Drive', 'Philadelphia', 'Pennsylvania', 'United States', '19093');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('9', '35435356', '9', 'FedEx', 'Deliver between 08:00 and 20:00', '414.775', '2015-01-09 00:00:00', 'Overnight', '10 Hagan Place', 'Philadelphia', 'Pennsylvania', 'United States', '19172', '29461 Logan Center', 'Atlanta', 'Georgia', 'United States', '30311');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('10', '432465', '10', 'USPS', 'Deliver between 08:00 and 20:00', '454.675', '2015-01-10 00:00:00', 'Normal', '994 Fremont Road', 'Bradenton', 'Florida', 'United States', '34282', '90 Annamark Alley', 'Richmond', 'Virginia', 'United States', '23213');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('11', '353656', '11', 'CanadaPost', 'If noone is home, leave out back', '494.575', '2015-01-11 00:00:00', 'Express', '33 Melody Center', 'El Paso', 'Texas', 'United States', '88563', '74224 Jenna Trail', 'Arlington', 'Virginia', 'United States', '22244');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('12', '854', '12', 'UPS', 'If noone is home, leave out back', '534.475', '2015-01-12 00:00:00', 'Overnight', '13133 Upham Way', 'Erie', 'Pennsylvania', 'United States', '16565', '848 Lien Hill', 'Lake Charles', 'Louisiana', 'United States', '70616');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('13', '12325', '13', 'USPS', 'Deliver between 08:00 and 20:00', '574.375', '2015-01-13 00:00:00', 'Normal', '194 Steensland Trail', 'Houston', 'Texas', 'United States', '77010', '06327 Clyde Gallagher Center', 'Kansas City', 'Kansas', 'United States', '66112');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('14', '533', '14', 'CanadaPost', 'If noone is home, leave out back', '614.275', '2015-01-14 00:00:00', 'Express', '26874 Bartelt Park', 'Roanoke', 'Virginia', 'United States', '24040', '49059 Dennis Terrace', 'Washington', 'District of Columbia', 'United States', '56944');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('15', '53', '15', 'UPS', 'Deliver between 08:00 and 20:00', '654.175', '2015-01-15 00:00:00', 'Normal', '32 Buena Vista Park', 'Savannah', 'Georgia', 'United States', '31416', '0102 Hoepker Alley', 'Pueblo', 'Colorado', 'United States', '81005');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('16', '525', '16', 'USPS', 'Deliver between 08:00 and 20:00', '694.075', '2015-01-16 00:00:00', 'Overnight', '1 Debs Crossing', 'Washington', 'District of Columbia', 'United States', '20520', '66075 Norway Maple Court', 'Waterbury', 'Connecticut', 'United States', '6726');
+
+INSERT INTO Shipment (shipmentId, trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('17', '25252', '17', 'USPS', 'Deliver between 08:00 and 20:00', '733.975', '2015-01-17 00:00:00', 'Overnight', '9 Jackson Trail', 'Washington', 'District of Columbia', 'United States', '20540', '3846 Westend Way', 'Albuquerque', 'New Mexico', 'United States', '87115');
+
 INSERT INTO Payment (accountNumber, shipmentId, paymentType)
     VALUES ('1', '1', 'Paypal');
 
@@ -458,57 +444,6 @@ INSERT INTO Payment (accountNumber, shipmentId, paymentType)
 
 INSERT INTO Payment (accountNumber, shipmentId, paymentType)
     VALUES ('20', '14', 'MasterCard');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('1000457', '1', 'USPS', 'Deliver between 08:00 and 20:00', '9.95', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('2000914', '2', 'CanadaPost', 'If noone is home, leave out back', '123.45', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('4001828', '3', 'FedEx', 'If noone is home, leave out back', '456.3', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('405002', '4', 'USPS', 'Deliver between 08:00 and 20:00', '32', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('253525', '5', 'CanadaPost', 'If noone is home, leave out back', '255.175', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('4653534', '6', 'FedEx', 'If noone is home, leave out back', '295.075', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('432442', '7', 'USPS', 'If noone is home, leave out back', '334.975', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('432423', '8', 'CanadaPost', 'If noone is home, leave out back', '374.875', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('35435356', '9', 'FedEx', 'Deliver between 08:00 and 20:00', '414.775', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('432465', '10', 'USPS', 'Deliver between 08:00 and 20:00', '454.675', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('353656', '11', 'CanadaPost', 'If noone is home, leave out back', '494.575', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('854', '12', 'UPS', 'If noone is home, leave out back', '534.475', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('12325', '13', 'USPS', 'Deliver between 08:00 and 20:00', '574.375', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('533', '14', 'CanadaPost', 'If noone is home, leave out back', '614.275', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('53', '15', 'UPS', 'Deliver between 08:00 and 20:00', '654.175', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('525', '16', 'USPS', 'Deliver between 08:00 and 20:00', '694.075', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
-
-INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
-    VALUES ('25252', '17', 'USPS', 'Deliver between 08:00 and 20:00', '733.975', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
 
 INSERT INTO PartCategory (categoryName, description)
     VALUES ('Seat', 'A thing made or used for sitting on');
@@ -767,6 +702,9 @@ INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
 
 INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
     VALUES ('24', 'Ferrari', 'F40', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('25', 'Ferrari', 'F40', '2011');
 
 INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
     VALUES ('26', 'Toyota', 'Corolla', '2008');
