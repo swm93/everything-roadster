@@ -282,12 +282,1374 @@ INSERT INTO Account (accountId, accountType, email, password, firstName, lastNam
 INSERT INTO Account (accountId, accountType, email, password, firstName, lastName, phoneNumber, streetAddress, city, provinceState, country, postalCode)
     VALUES ('20', 'admin', 'gfowlerj@slashdot.org', 'proin', 'Gerald', 'Fowler', '1-(515)167-4752', '396 Maple Wood Place', 'Des Moines', 'Iowa', 'United States', '50936');
 
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('3', '1', '4.9', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('5', '2', '4.3', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('10', '3', '2.5', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('12', '4', '4.7', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('13', '5', '3.8', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('17', '6', '0.1', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', 'None');
+
+INSERT INTO RatesVendor (customerId, vendorId, userRating, None)
+    VALUES ('None', 'None', 'None', '0');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('1', '1', '2015-01-01 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('2', '2', '2015-01-02 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('3', '2', '2015-01-03 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('4', '2', '2015-01-04 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('5', '1', '2015-01-05 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('6', '4', '2015-01-06 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('7', '5', '2015-01-07 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('8', '1', '2015-01-08 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('9', '1', '2015-01-09 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('10', '2', '2015-01-10 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('11', '4', '2015-01-11 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('12', '5', '2015-01-12 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('13', '5', '2015-01-13 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('14', '5', '2015-01-14 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('15', '5', '2015-01-15 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('16', '5', '2015-01-16 00:00:00');
+
+INSERT INTO PartOrder (orderId, customerId, orderDate)
+    VALUES ('17', '1', '2015-01-17 00:00:00');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('1', '1', 'Paypal');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('2', '2', 'Paypal');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('4', '3', 'Visa');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('6', '4', 'Visa');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('7', '5', 'Paypal');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('8', '6', 'Visa');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('9', '7', 'MasterCard');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('11', '8', 'Paypal');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('14', '9', 'MasterCard');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('15', '10', 'Visa');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('16', '11', 'Paypal');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('18', '12', 'MasterCard');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('19', '13', 'Paypal');
+
+INSERT INTO Payment (accountNumber, shipmentId, paymentType)
+    VALUES ('20', '14', 'MasterCard');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('1000457', '1', 'USPS', 'Deliver between 08:00 and 20:00', '9.95', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('2000914', '2', 'CanadaPost', 'If noone is home, leave out back', '123.45', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('4001828', '3', 'FedEx', 'If noone is home, leave out back', '456.3', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('405002', '4', 'USPS', 'Deliver between 08:00 and 20:00', '32', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('253525', '5', 'CanadaPost', 'If noone is home, leave out back', '255.175', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('4653534', '6', 'FedEx', 'If noone is home, leave out back', '295.075', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('432442', '7', 'USPS', 'If noone is home, leave out back', '334.975', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('432423', '8', 'CanadaPost', 'If noone is home, leave out back', '374.875', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('35435356', '9', 'FedEx', 'Deliver between 08:00 and 20:00', '414.775', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('432465', '10', 'USPS', 'Deliver between 08:00 and 20:00', '454.675', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('353656', '11', 'CanadaPost', 'If noone is home, leave out back', '494.575', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('854', '12', 'UPS', 'If noone is home, leave out back', '534.475', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('12325', '13', 'USPS', 'Deliver between 08:00 and 20:00', '574.375', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('533', '14', 'CanadaPost', 'If noone is home, leave out back', '614.275', 'None', 'Express', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('53', '15', 'UPS', 'Deliver between 08:00 and 20:00', '654.175', 'None', 'Normal', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('525', '16', 'USPS', 'Deliver between 08:00 and 20:00', '694.075', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
+INSERT INTO Shipment (trackingNumber, orderId, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode, fromAddress, fromCity, fromProvinceState, fromCountry, fromPostalCode)
+    VALUES ('25252', '17', 'USPS', 'Deliver between 08:00 and 20:00', '733.975', 'None', 'Overnight', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None', 'None');
+
 INSERT INTO PartCategory (categoryName, description)
-    VALUES ('Seat', 'Place to sit');
+    VALUES ('Seat', 'A thing made or used for sitting on');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Brake', 'A device for slowing or stopping a moving vehicle, typically by applying pressure to the wheels.');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Tire', 'A  tire consists of a rubber ring around the rim of an automobile whee');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Wheel Rim', 'The outer edge of a wheel, on which the tire is fitted.');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Steering Wheel', 'A wheel that a driver rotates in order to steer a vehicle.');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Battery', 'An automotive battery is a type of rechargeable battery that supplies electric energy to an automobile.');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Windshield Wipers', 'A motor-driven device for keeping a windshield clear of rain, typically one with a rubber blade on an arm that moves in an arc');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Windshield', 'A window at the front of the passenger compartment of a motor vehicle.');
+
+INSERT INTO PartCategory (categoryName, description)
+    VALUES ('Engine', 'A machine with moving parts that converts power into motion.');
 
 INSERT INTO Part (partId, categoryName, partName, description, imagePath)
     VALUES ('1', 'Seat', 'Red/Black Seat', 'Red and black seat', 'public/images/parts/part1.jpg');
 
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('2', 'Brake', 'Brake Rotor - Rear', 'Brake Rotor features a patented elliptical grooves help channel awa heat, water and gases, reducing brake fade', 'public/images/parts/part2.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('3', 'Brake ', 'Brake Rotor - Front', 'Brake Rotor features a patented elliptical grooves help channel awa heat, water and gases, reducing brake fade', 'public/images/parts/part3.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('4', 'Brake', 'Sever Duty Brake Pad Set', 'Resists brake fade that can occur In extended & extreme Use', 'public/images/parts/part4.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('5', 'Engine', 'dodge engine', 'Internal combustion engine made for Dodge vehicles', 'public/images/parts/part5.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('6', 'Engine', 'every other engine', 'Internal combustion engine made for non-Dodge vehicles', 'public/images/parts/part6.jpg');
+
 INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
-    VALUES ('1', '3', '1', '1', '250', '2015-01-01 00:00:00');
+    VALUES ('1', '2', '1', '1', '250', '2015-01-01 00:00:00');
+
+INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
+    VALUES ('2', '3', '2', '1', '100', '2015-01-02 00:00:00');
+
+INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
+    VALUES ('3', '4', '3', '1', '100', '2015-01-03 00:00:00');
+
+INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
+    VALUES ('4', '5', '4', '1', '120', '2015-01-04 00:00:00');
+
+INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
+    VALUES ('5', '1', '6', '1', '600', '2015-01-05 00:00:00');
+
+INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
+    VALUES ('6', '1', '5', '1', '500', '2015-01-06 00:00:00');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('1', '1', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('2', '1', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('3', '1', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('4', '2', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('5', '3', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('6', '5', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('7', '6', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('8', '1', '2');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('9', '2', '3');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('10', '3', '3');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('11', '4', '2');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('12', '5', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('13', '3', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('14', '2', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('15', '1', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('16', '1', '1');
+
+INSERT INTO ContainsPart (orderId, listId, quantity)
+    VALUES ('17', '1', '1');
+
+INSERT INTO Make (name)
+    VALUES ('Ford');
+
+INSERT INTO Make (name)
+    VALUES ('Chevrolet');
+
+INSERT INTO Make (name)
+    VALUES ('Dodge');
+
+INSERT INTO Make (name)
+    VALUES ('Ferrari');
+
+INSERT INTO Make (name)
+    VALUES ('Toyota');
+
+INSERT INTO Make (name)
+    VALUES ('Honda');
+
+INSERT INTO Model (name)
+    VALUES ('F-150');
+
+INSERT INTO Model (name)
+    VALUES ('F-350');
+
+INSERT INTO Model (name)
+    VALUES ('Caravan');
+
+INSERT INTO Model (name)
+    VALUES ('Ram');
+
+INSERT INTO Model (name)
+    VALUES ('Corvette');
+
+INSERT INTO Model (name)
+    VALUES ('Celta');
+
+INSERT INTO Model (name)
+    VALUES ('Daytona');
+
+INSERT INTO Model (name)
+    VALUES ('F40');
+
+INSERT INTO Model (name)
+    VALUES ('Corolla');
+
+INSERT INTO Model (name)
+    VALUES ('Camry');
+
+INSERT INTO Model (name)
+    VALUES ('Accord');
+
+INSERT INTO Model (name)
+    VALUES ('Fit');
+
+INSERT INTO Model (name)
+    VALUES ('Avenger');
+
+INSERT INTO Model (name)
+    VALUES ('Challenger');
+
+INSERT INTO Model (name)
+    VALUES ('Charger');
+
+INSERT INTO Model (name)
+    VALUES ('Dart');
+
+INSERT INTO Model (name)
+    VALUES ('Journey');
+
+INSERT INTO Model (name)
+    VALUES ('Viper');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('1', 'Ford', 'F-150', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('2', 'Ford', 'F-150', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('3', 'Ford', 'F-150', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('4', 'Ford', 'F-350', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('5', 'Ford', 'F-350', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('6', 'Ford', 'F-350', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('7', 'Dodge', 'Caravan', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('8', 'Dodge', 'Caravan', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('9', 'Dodge', 'Caravan', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('10', 'Dodge', 'Ram', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('11', 'Dodge', 'Ram', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('12', 'Dodge', 'Ram', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('13', 'Chevrolet', 'Celta', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('14', 'Chevrolet', 'Celta', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('15', 'Chevrolet', 'Celta', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('16', 'Chevrolet', 'Corvette', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('17', 'Chevrolet', 'Corvette', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('18', 'Chevrolet', 'Corvette', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('19', 'Ferrari', 'Daytona', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('20', 'Ferrari', 'Daytona', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('21', 'Ferrari', 'Daytona', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('22', 'Ferrari', 'F40', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('23', 'Ferrari', 'F40', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('24', 'Ferrari', 'F40', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('26', 'Toyota', 'Corolla', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('27', 'Toyota', 'Corolla', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('28', 'Toyota', 'Corolla', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('29', 'Toyota', 'Camry', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('30', 'Toyota', 'Camry', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('31', 'Toyota', 'Camry', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('32', 'Honda', 'Accord', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('33', 'Honda', 'Accord', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('34', 'Honda', 'Accord', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('35', 'Honda', 'Fit', '2008');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('36', 'Honda', 'Fit', '2009');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('37', 'Honda', 'Fit', '2010');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('38', 'Dodge', 'Avenger', '2011');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('39', 'Dodge', 'Avenger', '2012');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('40', 'Dodge', 'Avenger', '2013');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('41', 'Dodge', 'Challenger', '2011');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('42', 'Dodge', 'Challenger', '2012');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('43', 'Dodge', 'Challenger', '2013');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('44', 'Dodge', 'Charger', '2011');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('45', 'Dodge', 'Charger', '2012');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('46', 'Dodge', 'Charger', '2013');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('47', 'Dodge', 'Dart', '2011');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('48', 'Dodge', 'Dart', '2012');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('49', 'Dodge', 'Dart', '2013');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('50', 'Dodge', 'Journey', '2011');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('51', 'Dodge', 'Journey', '2012');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('52', 'Dodge', 'Journey', '2013');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('53', 'Dodge', 'Viper', '2011');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('54', 'Dodge', 'Viper', '2012');
+
+INSERT INTO Vehicle (vehicleId, makeName, modelName, year)
+    VALUES ('55', 'Dodge', 'Viper', '2013');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '1');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '2');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '3');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '4');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '5');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '6');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '7');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '8');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '9');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '10');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '11');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '12');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '13');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '14');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '15');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '16');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '17');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '18');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '19');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '20');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '21');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '22');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '23');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '24');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '26');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '27');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '28');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '29');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '30');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '31');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '32');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '33');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '34');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '35');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '36');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '37');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '38');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '39');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '40');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '41');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '42');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '43');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '44');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '45');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '46');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '47');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '48');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '49');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '50');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '51');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '52');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '53');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '54');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('1', '55');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '1');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '2');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '3');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '4');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '5');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '6');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '7');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '8');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '9');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '10');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '11');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '12');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '13');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '14');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '15');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '16');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '17');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '18');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '19');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '20');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '21');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '22');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '23');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '24');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '26');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '27');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '28');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '29');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '30');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '31');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '32');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '33');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '34');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '35');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '36');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '37');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '38');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '39');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '40');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '41');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '42');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '43');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '44');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '45');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '46');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '47');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '48');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '49');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '50');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '51');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '52');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '53');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '54');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('2', '55');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '1');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '2');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '3');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '4');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '5');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '6');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '7');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '8');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '9');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '10');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '11');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '12');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '13');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '14');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '15');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '16');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '17');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '18');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '19');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '20');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '21');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '22');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '23');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '24');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '26');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '27');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '28');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '29');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '30');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '31');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '32');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '33');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '34');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '35');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '36');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '37');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '38');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '39');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '40');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '41');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '42');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '43');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '44');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '45');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '46');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '47');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '48');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '49');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '50');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '51');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '52');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '53');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '54');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('3', '55');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '1');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '2');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '3');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '4');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '5');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '6');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '7');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '8');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '9');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '10');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '11');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '12');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '13');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '14');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '15');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '16');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '17');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '18');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '19');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '20');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '21');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '22');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '23');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '24');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '26');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '27');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '28');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '29');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '30');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '31');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '32');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '33');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '34');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '35');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '36');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '37');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '38');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '39');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '40');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '41');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '42');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '43');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '44');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '45');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '46');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '47');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '48');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '49');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '50');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '51');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '52');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '53');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '54');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('4', '55');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '38');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '39');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '40');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '41');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '42');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '43');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '44');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '45');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '46');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '47');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '48');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '49');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '50');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '51');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '52');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '53');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '54');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '55');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '7');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '8');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '9');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '10');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '11');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('5', '12');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '13');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '14');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '15');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '16');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '17');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '18');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '19');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '20');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '21');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '22');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '23');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '24');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '25');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '26');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '27');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '28');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '29');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '30');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '31');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '32');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '33');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '34');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '35');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '36');
+
+INSERT INTO FitsIn (partId, vehicleId)
+    VALUES ('6', '37');
 

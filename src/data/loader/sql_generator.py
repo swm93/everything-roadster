@@ -76,7 +76,7 @@ with open(SQL_PATH, "w+") as outFile:
         with open(CREATE_TABLES_PATH, "r") as f:
             outFile.write(f.read() + "\n\n")
 
-    seed = load_workbook(filename=SEED_PATH, read_only=True)
+    seed = load_workbook(filename=SEED_PATH, read_only=True, data_only=True)
     relationNames = seed.get_sheet_names()
 
     for relationName in relationNames:
