@@ -104,6 +104,7 @@
       <div id="part-categories-container" class="container-fluid">
         <h2>Part Categories</h2>
         <ul class="list-group">
+          <a href="/browse.jsp" class="list-group-item">All</a>
 <%
   //load parts
   PreparedStatement partCategoriesPS = con.prepareStatement(
