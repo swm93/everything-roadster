@@ -1,7 +1,6 @@
 <%@ include file="util_connection.jsp" %>
 
 <%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.DriverManager" %>
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
 
@@ -21,65 +20,18 @@
 
         <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
         <link rel="stylesheet" href="stylesheets/main.css">
-        <link rel="stylesheet" href="stylesheets/home/index.css">
+        <link rel="stylesheet" href="stylesheets/index.css">
 
         <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+        <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
+        <script src="vendor/javascripts/bootstrap.min.js"></script>
     </head>
 
     <body>
-      <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">
-              <img class="navbar-brand-image" src="assets/images/logo02.jpg" />
-              <span>EverythingRoadster</span>
-            </a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <span class="glyphicon glyphicon-shopping-cart"></span>
-                  <span>Cart</span>
-                  <span class="badge">3</span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li>
-                    <a href="#">
-                      <span class="badge">1</span>
-                      <span>Power Steering Pump</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <span class="badge">1</span>
-                      <span>Head Gasket</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#">
-                      <span class="badge">1</span>
-                      <span>Turbo Charger</span>
-                    </a>
-                  </li>
-                </ul>
-              </li>
-              <li class="navbar-form">
-                <button type="submit" class="btn btn-danger">Sign in</button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <%@ include file="util_navbar.jsp" %>
 
       <div class="jumbotron">
-        <div id="new-parts-carousel-container" class="container">
+        <div id="new-parts-carousel-container" class="container-fluid">
           <div id="carousel-new-parts" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
 <%
@@ -149,7 +101,7 @@
 
       <hr>
 
-      <div id="part-categories-container" class="container">
+      <div id="part-categories-container" class="container-fluid">
         <h2>Part Categories</h2>
         <ul class="list-group">
 <%
@@ -168,7 +120,7 @@
     int numParts = partCategoriesRS.getInt("numParts");
 
     String html = String.format(
-         "<a href=\"/browse?category=%s\" class=\"list-group-item\">" +
+         "<a href=\"/browse.jsp?category=%s\" class=\"list-group-item\">" +
            "<span class=\"badge\">%d</span>" +
            "<span>%s</span>" +
          "</a>",
@@ -180,17 +132,8 @@
         </ul>
       </div>
 
-      <hr>
+      <%@ include file="util_copyright.jsp" %>
 
-      <div id="copyright-container" class="container">
-        <footer>
-          <p>&copy; EverythingRoadster 2015</p>
-        </footer>
-      </div>
-
-      <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
-      <script src="vendor/javascripts/bootstrap.min.js"></script>
-      <script src="javascripts/bootstrap.min.js"></script>
     </body>
 </html>
 
