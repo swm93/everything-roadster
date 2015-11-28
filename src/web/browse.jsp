@@ -137,8 +137,7 @@
 
           </form>
 
-          <div id="browse-main-container" class="container-fluid">
-            <div class="row">
+          <ul id="browse-main-container" class="container-fluid list-group">
 <%
   String partsSQL = new String(
     "SELECT LP.listId, P.partName, LP.price, LP.quantity, P.imagePath, P.categoryName, P.description " +
@@ -203,7 +202,7 @@
 
   while (partsRS.next())
   {
-    int partId = partsRS.getInt("listId");
+    int listId = partsRS.getInt("listId");
     String partName = partsRS.getString("partName");
     int quantity = partsRS.getInt("quantity");
     float price = partsRS.getFloat("price");
@@ -211,7 +210,7 @@
     String category = partsRS.getString("categoryName");
     String description = partsRS.getString("description");
 
-    String partsHTML = String.format(
+    /*String partsHTML = String.format(
                "<div class=\"panel-container col-xs-6 col-sm-4 col-md-3 col-lg-2\">" +
                  "<div class=\"panel panel-default\">" +
                    "<div class=\"panel-heading\">%s</div>" +
@@ -233,16 +232,41 @@
                    "</div>" +
                  "</div>" +
                "</div>",
-    partName, image, category, description, partId, partId, partId);
+    partName, image, category, description, partId, partId, partId);*/
+
+    String partsHTML = String.format(
+             "<li class=\"list-group-item row\">" +
+               "<div class=\"col-sm-3\">" +
+                 "<img src=\"%s\" class=\"part-image\" />" +
+                 "<form class=\"add-to-cart-container input-group\">" +
+                   "<span class=\"input-group-btn\">" +
+                     "<button class=\"btn btn-success\" type=\"button\">" +
+                       "<span class=\"glyphicon glyphicon-plus\"></span> " +
+                       "<span>Add to Cart</span>" +
+                     "</button>" +
+                   "</span>" +
+                   "<input class=\"form-control\" type=\"number\" value=\"1\" min=\"1\" max=\"%s\">" +
+                 "</form>" +
+               "</div>" +
+               "<div class=\"col-sm-7\">" +
+                 "<h3 class=\"part-name-header\">%s</h3>" +
+                 "<h5 class=\"part-category-label\">%s</h5>" +
+                 "<p>%s</p>" +
+               "</div>" +
+               "<h5 class=\"col-sm-2\">" +
+                 "<span class=\"part-price-label pull-right\">" +
+                   "<span>$%s</span> " +
+                   "<span class=\"glyphicon glyphicon-tags\"></span>" +
+                 "</span>" +
+               "</h5>" +
+             "</li>",
+    image, quantity, partName, category, description, price);
 
     out.println(partsHTML);
   }
 %>
-            </div>
 
-            <div class="row">
-            </div>
-          </div>
+          </ul>
 
         </div>
       </div>
