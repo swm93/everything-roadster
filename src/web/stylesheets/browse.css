@@ -38,14 +38,6 @@
     margin: 0 4px;
 }
 
-.panel-container {
-    padding: 5px;
-}
-
-.panel .panel-img {
-    width: 100%;
-}
-
 .part-name-header {
     margin: 4px 0;
 }
@@ -56,6 +48,10 @@
 
 .part-image {
     width: 100%;
+}
+
+.part-quantity-input {
+    padding-right: 0;
 }
 
 .add-to-cart-container {

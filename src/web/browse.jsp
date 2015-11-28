@@ -210,30 +210,6 @@
     String category = partsRS.getString("categoryName");
     String description = partsRS.getString("description");
 
-    /*String partsHTML = String.format(
-               "<div class=\"panel-container col-xs-6 col-sm-4 col-md-3 col-lg-2\">" +
-                 "<div class=\"panel panel-default\">" +
-                   "<div class=\"panel-heading\">%s</div>" +
-                   "<div class=\"panel-body\">" +
-                     "<img class=\"panel-img\" src=\"%s\" />" +
-                     "<div>" +
-                       "<span><b>Category: </b></span>" +
-                       "<span>%s</span>" +
-                     "</div>" +
-                     "<p>%s</p>" +
-                     "<form class=\"add-to-cart-container\">" +
-                       "<button class=\"add-to-cart-btn btn btn-success\">" +
-                         "<span class=\"glyphicon glyphicon-plus\"></span> " +
-                         "<span>Add to Cart</span>" +
-                       "</button>" +
-                       "<label class=\"add-to-cart-quantity-label\" for=\"part-%s-quantity\">Quantity: </label>" +
-                       "<input id=\"part-%s-quantity\" class=\"add-to-cart-input form-control\" name=\"part-%s-quantity\" value=\"1\" />" +
-                     "</form>" +
-                   "</div>" +
-                 "</div>" +
-               "</div>",
-    partName, image, category, description, partId, partId, partId);*/
-
     String partsHTML = String.format(
              "<li class=\"list-group-item row\">" +
                "<div class=\"col-sm-3\">" +
@@ -245,7 +221,7 @@
                        "<span>Add to Cart</span>" +
                      "</button>" +
                    "</span>" +
-                   "<input class=\"form-control\" type=\"number\" value=\"1\" min=\"1\" max=\"%s\">" +
+                   "<input class=\"part-quantity-input form-control\" type=\"number\" value=\"1\" min=\"1\" max=\"%s\">" +
                  "</form>" +
                "</div>" +
                "<div class=\"col-sm-7\">" +
