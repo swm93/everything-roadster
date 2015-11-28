@@ -65,7 +65,7 @@
     String html = String.format(
                "<li>" +
                  "<input id=\"category-%s-checkbox\" class=\"filter-checkbox\" type=\"checkbox\" name=\"category\" value=\"%s\" /> " +
-               "<label for=\"category-%s-checkbox\">%s</label>" +
+                 "<label for=\"category-%s-checkbox\">%s</label>" +
                "</li>",
     categoryStripped, categoryStripped, categoryStripped, category);
 
@@ -141,8 +141,9 @@
             <div class="row">
 <%
   String partsSQL = new String(
-    "SELECT P.partName, P.imagePath, P.categoryName, P.description, V.makeName, V.modelName " +
-      "FROM Part P " +
+    "SELECT LP.listId, P.partName, LP.price, LP.quantity, P.imagePath, P.categoryName, P.description " +
+      "FROM ListedPart LP " +
+        "JOIN Part P ON P.partId=LP.partId " +
         "JOIN FitsIn F ON F.partId=P.partId " +
         "JOIN Vehicle V ON V.vehicleId=F.vehicleId "
   );
@@ -190,7 +191,7 @@
     }
   }
 
-  partsSQL = partsSQL.trim() + ";";
+  partsSQL += "GROUP BY LP.listId;";
 
   PreparedStatement partsPS = con.prepareStatement(partsSQL);
   for (int i = 0; i < whereParams.size(); i++)
@@ -202,11 +203,12 @@
 
   while (partsRS.next())
   {
+    int partId = partsRS.getInt("listId");
     String partName = partsRS.getString("partName");
+    int quantity = partsRS.getInt("quantity");
+    float price = partsRS.getFloat("price");
     String image = partsRS.getString("imagePath");
     String category = partsRS.getString("categoryName");
-    String make = partsRS.getString("makeName");
-    String model = partsRS.getString("modelName");
     String description = partsRS.getString("description");
 
     String partsHTML = String.format(
@@ -219,19 +221,19 @@
                        "<span><b>Category: </b></span>" +
                        "<span>%s</span>" +
                      "</div>" +
-                     "<div>" +
-                       "<span><b>Make: </b></span>" +
-                       "<span>%s</span>" +
-                     "</div>" +
-                     "<div>" +
-                       "<span><b>Model: </b></span>" +
-                       "<span>%s</span>" +
-                     "</div>" +
-                     "<div>%s</div>" +
+                     "<p>%s</p>" +
+                     "<form class=\"add-to-cart-container\">" +
+                       "<button class=\"add-to-cart-btn btn btn-success\">" +
+                         "<span class=\"glyphicon glyphicon-plus\"></span> " +
+                         "<span>Add to Cart</span>" +
+                       "</button>" +
+                       "<label class=\"add-to-cart-quantity-label\" for=\"part-%s-quantity\">Quantity: </label>" +
+                       "<input id=\"part-%s-quantity\" class=\"add-to-cart-input form-control\" name=\"part-%s-quantity\" value=\"1\" />" +
+                     "</form>" +
                    "</div>" +
                  "</div>" +
                "</div>",
-    partName, image, category, make, model, description);
+    partName, image, category, description, partId, partId, partId);
 
     out.println(partsHTML);
   }
