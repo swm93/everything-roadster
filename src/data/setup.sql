@@ -63,8 +63,8 @@ CREATE TABLE RatesVendor (
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     FOREIGN KEY (vendorId) REFERENCES Account (accountId)
-        ON DELETE CASCADE
-        ON UPDATE CASCADE
+        ON DELETE NO ACTION
+        ON UPDATE NO ACTION
 );
 
 CREATE TABLE PartOrder (
@@ -126,7 +126,7 @@ CREATE TABLE Payment (
     PRIMARY KEY (accountNumber),
     FOREIGN KEY (shipmentId) REFERENCES Shipment (shipmentId)
         ON DELETE NO ACTION
-        ON UPDATE CASCADE
+        ON UPDATE No Action
 );
 
 CREATE TABLE PartCategory (
@@ -182,7 +182,7 @@ CREATE TABLE ContainsPart (
         ON UPDATE CASCADE,
     FOREIGN KEY (listId) REFERENCES ListedPart (listId)
         ON DELETE NO ACTION
-        ON UPDATE CASCADE
+        ON UPDATE NO ACTION
 );
 
 CREATE TABLE Make (
@@ -485,10 +485,28 @@ INSERT INTO Part (partId, categoryName, partName, description, imagePath)
     VALUES ('4', 'Brake', 'Sever Duty Brake Pad Set', 'Resists brake fade that can occur In extended & extreme Use', 'public/images/parts/part4.jpg');
 
 INSERT INTO Part (partId, categoryName, partName, description, imagePath)
-    VALUES ('5', 'Engine', 'dodge engine', 'Internal combustion engine made for Dodge vehicles', 'public/images/parts/part5.jpg');
+    VALUES ('5', 'Engine', 'An engine specified for a Dodge made vehicle', 'Internal combustion engine made for Dodge vehicles', 'public/images/parts/part5.jpg');
 
 INSERT INTO Part (partId, categoryName, partName, description, imagePath)
-    VALUES ('6', 'Engine', 'every other engine', 'Internal combustion engine made for non-Dodge vehicles', 'public/images/parts/part6.jpg');
+    VALUES ('6', 'Engine', 'An engine specified for a non-Dodge made vehicle', 'Internal combustion engine made for non-Dodge vehicles', 'public/images/parts/part6.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('7', 'Tire', 'Car Tire', 'A tire consisting of a rubber ring around the rim of an automobile wheel', 'public/images/parts/part7.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('8', 'Wheel Rim', 'A wheel rim', 'The outer edge of a wheel, on which the tire is fitted.', 'public/images/parts/part8.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('9', 'Steering Wheel', 'A steering wheel', 'A wheel that a driver rotates in order to steer a vehicle.', 'public/images/parts/part9.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('10', 'Battery', 'A car battery', 'An automotive battery is a type of rechargeable battery that supplies electric energy to an automobile.', 'public/images/parts/part10.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('11', 'Windshield Wipers', 'Windshield wipers', 'A motor-driven device for keeping a windshield clear of rain, typically one with a rubber blade on an arm that moves in an arc.', 'public/images/parts/part11.jpg');
+
+INSERT INTO Part (partId, categoryName, partName, description, imagePath)
+    VALUES ('12', 'Windshield', 'Protective glass', 'A window at the front of the passenger compartment of a motor vehicle.', 'public/images/parts/part12.jpg');
 
 INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
     VALUES ('1', '2', '1', '1', '250', '2015-01-01 00:00:00');
