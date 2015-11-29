@@ -212,7 +212,7 @@
 
     String partsHTML = String.format(
            "<li class=\"list-group-item row\">" +
-             "<div class=\"col-sm-3\">" +
+             "<div class=\"col-xs-12 col-md-3\">" +
                "<img src=\"%s\" class=\"part-image\" />" +
                "<form class=\"add-to-cart-container input-group\" action=\"addToCart.jsp\" method=\"POST\">" +
                  "<span class=\"input-group-btn\">" +
@@ -225,12 +225,12 @@
                  "<input type=\"hidden\" name=\"name\" value=\"%s\" />" +
                "</form>" +
              "</div>" +
-             "<div class=\"col-sm-7\">" +
+             "<div class=\"col-xs-8 col-md-7\">" +
                "<h3 class=\"part-name-header\">%s</h3>" +
                "<h5 class=\"part-category-label\">%s</h5>" +
                "<p>%s</p>" +
              "</div>" +
-             "<h5 class=\"col-sm-2\">" +
+             "<h5 class=\"col-xs-4 col-md-2\">" +
                "<span class=\"part-price-label pull-right\">" +
                  "<span>$%s</span> " +
                  "<span class=\"glyphicon glyphicon-tags\"></span>" +
