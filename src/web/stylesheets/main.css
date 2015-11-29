@@ -17,6 +17,29 @@ body {
     padding: 0 4px;
 }
 
+.navbar .dropdown-menu {
+    min-width: 240px;
+}
+
+.navbar .cart-dropdown-item {
+    position: relative;
+}
+
+.navbar .cart-dropdown-label {
+    padding-right: 30px;
+}
+
+.navbar .cart-dropdown-remove {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    margin-top: -10px;
+    border: 0;
+
+    background: none;
+    outline: none;
+}
+
 .carousel > .carousel-header {
     position: absolute;
     top: 0;

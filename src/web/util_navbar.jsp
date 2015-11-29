@@ -39,16 +39,22 @@
   }
   else
   {
-    for (ArrayList<String> item : cart.values())
+    for (Map.Entry<String, ArrayList<String>> entry : cart.entrySet())
     {
+      String listId = entry.getKey();
+      ArrayList<String> item = entry.getValue();
+
       String html = String.format(
-           "<li>" +
-             "<a href=\"#\">" +
+           "<li class=\"cart-dropdown-item\">" +
+             "<a href=\"#\" class=\"cart-dropdown-label\">" +
                "<span class=\"badge\">%s</span> " +
                "<span>%s</span>" +
+               "<form action=\"removeFromCart.jsp\" method=\"POST\">" +
+                 "<button class=\"cart-dropdown-remove glyphicon glyphicon-remove\" type=\"submit\" name=\"listId\" value=\"%s\"></button>" +
+               "</form>" +
              "</a>" +
            "</li>",
-      item.get(1), item.get(0));
+      item.get(1), item.get(0), listId);
 
       out.println(html);
     }
