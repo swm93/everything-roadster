@@ -1,142 +1,100 @@
-<%@ include file="util_connection.jsp" %>
+<%@ include file="util_connection.jsp"%>
 
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.PreparedStatement" %>
-<%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.sql.Connection"%>
+<%@ page import="java.sql.PreparedStatement"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.util.List"%>
+<%@ page import="java.util.ArrayList"%>
 
 
-<% final int maxRecentParts = 3; %>
 
-<% Connection con = connectionManager.open(); %>
-
-<!doctype html>
-<html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>EverythingRoadster</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
-        <link rel="stylesheet" href="stylesheets/main.css">
-        <link rel="stylesheet" href="stylesheets/index.css">
-
-        <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-        <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
-        <script src="vendor/javascripts/bootstrap.min.js"></script>
-    </head>
-
-    <body>
-      <%@ include file="util_navbar.jsp" %>
-
-      <div class="jumbotron">
-        <div id="new-parts-carousel-container" class="container-fluid">
-          <div id="carousel-new-parts" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
 <%
-  //load parts
-  PreparedStatement recentPartsPS = con.prepareStatement(
-    "SELECT P.partName, P.imagePath " +
-      "FROM Part P " +
-        "JOIN ListedPart LP ON P.partId = LP.partId " +
-      "ORDER BY LP.dateListed ASC " +
-      "LIMIT ?;"
-  );
-  recentPartsPS.setInt(1, maxRecentParts);
-  ResultSet recentPartsRS = recentPartsPS.executeQuery();
-
-  int numRecentParts = 0;
-  if (recentPartsRS.last())
-  {
-    numRecentParts = recentPartsRS.getRow();
-    recentPartsRS.beforeFirst();
-  }
-
-  for (int i=0; i < numRecentParts; i++)
-  {
-    String active = (i == 0) ? " active" : "";
-    String html = String.format(
-             "<li data-target=\"#carousel-example-generic\" data-slide-to=\"%d\" class=\"slide %s\"></li>",
-    i, active);
-
-    out.println(html);
-  }
+	Connection con = connectionManager.open();
 %>
-            </ol>
 
-            <h3 class="carousel-header">Recently Listed Parts</h3>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Everything Roadster</title>
+</head>
+<Body>
+	<b>No account num input on purpose</b>
 
-            <div class="carousel-inner" role="listbox">
+	<b> Account Creation Page</b>
+	<form action="./signUp.jsp" method="POST">
+		<b>"accountType"</b> <input type="text" name="accountType" size="50"
+			value="<%=request.getParameter("accountType")%>"> <b>"email"</b>
+		<input type="text" name="email" size="50"> <b>"password"</b> <input
+			type="password" name="password" size="50"> <b>"firstName"</b>
+		<input type="text" name="firstName" size="50"> <b>"lastName"</b>
+		<input type="text" name="lastName" size="50"> <b>"phoneNumber"</b>
+		<input type="text" name="phoneNumber" size="50"> <b>"streetAddress"</b>
+		<input type="text" name="streetAddress" size="50"> <b>"city"</b>
+		<input type="text" name="city" size="50"> <b>"provinceState"</b>
+		<input type="text" name="provinceState" size="50"> <b>"country"</b>
+		<input type="text" name="country" size="50"> <b>"postalCode"</b>
+		<input type="text" name="postalCode" size="50"> button
+
+
+
+
+		<button type="submit">Signup</button>
+	</form>
+</head>
+
+
+<%!void createAccount(HttpServletRequest request, Connection connection) {
+		String[] accountInfoKeys = { "accountType", "email", "password", "firstName", "lastName", "phoneNumber",
+				"streetAddress", "city", "provinceState", "country", "postalCode" };
+
+		List<String> accountDets = new ArrayList<String>();
+
+		for (String accountInfoKey : accountInfoKeys) {
+			accountDets.add((String) request.getParameter(accountInfoKey));
+		}
+
+		try {
+
+			PreparedStatement preparedStatement = null;
+
+			String query = "SELECT MAX(accountId) FROM Account;";
+
+			preparedStatement = connection.prepareStatement(query);
+			ResultSet rs = preparedStatement.executeQuery(query);
+
+			rs.next();
+
+			Integer k = rs.getInt(1); /// whatever)
+
+			String insertTableSQL = "INSERT INTO Account (accountId, accountType, email, password, firstName, lastName, phoneNumber, streetAddress, city, provinceState, country, postalCode) "
+					+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?)";
+
+			preparedStatement = connection.prepareStatement(insertTableSQL);
+
+			preparedStatement.setInt(1, k + 1);
+
+			int i = 2;
+			for (String column : accountDets) {
+				preparedStatement.setString(i, accountDets.get(i - 2));
+				i++;
+			}
+
+			// execute insert SQL stetement
+			preparedStatement.executeUpdate();
+		} catch (Exception e) {
+
+		}
+
+	}%>
+
 <%
-  while (recentPartsRS.next())
-  {
-    String name = recentPartsRS.getString("partName");
-    String imagePath = recentPartsRS.getString("imagePath");
-    String active = (recentPartsRS.getRow() == 1) ? " active" : "";
-
-    String html = String.format(
-             "<div class=\"item%s\">" +
-               "<img src=\"%s\">" +
-               "<h4 class=\"carousel-title\">%s</h4>" +
-             "</div>",
-    active, imagePath, name);
-
-    out.println(html);
-  }
+	if (request.getParameter("accountType") != null) {
+		System.out.println("creating account");
+		createAccount(request, con);
+	}
 %>
-            </div>
 
-            <a class="left carousel-control" href="#carousel-new-parts" role="button" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-new-parts" role="button" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <hr>
-
-      <div id="part-categories-container" class="container-fluid">
-        <h2>Part Categories</h2>
-        <ul class="list-group">
-          <a href="/browse.jsp" class="list-group-item">All</a>
 <%
-  //load parts
-  PreparedStatement partCategoriesPS = con.prepareStatement(
-    "SELECT P.categoryName, COUNT(*) AS numParts " +
-      "FROM Part P " +
-        "JOIN ListedPart LP ON P.partId = LP.partId " +
-      "GROUP BY P.categoryName;"
-  );
-  ResultSet partCategoriesRS = partCategoriesPS.executeQuery();
-
-  while (partCategoriesRS.next())
-  {
-    String category = partCategoriesRS.getString("categoryName");
-    int numParts = partCategoriesRS.getInt("numParts");
-
-    String html = String.format(
-         "<a href=\"/browse.jsp?category=%s\" class=\"list-group-item\">" +
-           "<span class=\"badge\">%d</span>" +
-           "<span>%s</span>" +
-         "</a>",
-    category, numParts, category);
-
-    out.println(html);
-  }
+	connectionManager.close();
 %>
-        </ul>
-      </div>
-
-      <%@ include file="util_copyright.jsp" %>
-
-    </body>
-</html>
-
-
-<% connectionManager.close(); %>
+</Body>
