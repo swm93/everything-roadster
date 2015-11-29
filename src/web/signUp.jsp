@@ -34,9 +34,6 @@
 		<input type="text" name="country" size="50"> <b>"postalCode"</b>
 		<input type="text" name="postalCode" size="50"> button
 
-
-
-
 		<button type="submit">Signup</button>
 	</form>
 </head>
@@ -81,12 +78,14 @@
 			// execute insert SQL stetement
 			preparedStatement.executeUpdate();
 		} catch (Exception e) {
-
+			System.out.println(e);
 		}
 
 	}%>
 
+
 <%
+	// I mean, I guess it should
 	if (request.getParameter("accountType") != null) {
 		System.out.println("creating account");
 		createAccount(request, con);
