@@ -30,7 +30,7 @@
 <%!void createFitsIn(HttpServletRequest request, Connection connection) {
 		
 	
-	Integer partId = 12;
+		Integer partId = 12;
 	
 		String[] PartInfoKeys = {"makeName", "modelName", "year"};
 	
@@ -45,17 +45,14 @@
 
 			PreparedStatement preparedStatement = null;
 
-			String query = "SELECT vehicleID From Vehicle Where (makeName = '?' AND modelName = '?' AND year = '?');";
-			query = "SELECT vehicleID From Vehicle Where (makeName = 'Ford' AND modelName = 'F-150' AND year = '2008');";
-			
+			String query = "SELECT vehicleID From Vehicle Where (makeName = ? AND modelName = ? AND year =?);";
 			preparedStatement = connection.prepareStatement(query);
-			/*
+			
 			int i = 0;
 			for (String column : PartDets) {
 				preparedStatement.setString(i+1, PartDets.get(i));
 				i++;
 			}
-			*/
 			ResultSet rs = preparedStatement.executeQuery(query);
 			rs.next();
 

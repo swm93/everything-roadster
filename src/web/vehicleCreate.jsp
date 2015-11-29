@@ -18,7 +18,7 @@
 </head>
 <Body>
 	<b> Create vehicle</b>
-	<form action="./fitsIn.jsp" method="POST">
+	<form action="./vehicleCreate.jsp" method="POST">
 		<b>"makeName"</b> <input type="text" name="makeName" size="50">
 		<b>"modelName"</b> <input type="text" name="modelName" size="50">
 		<b>"year"</b> <input type="text" name="year" size="50">
@@ -29,8 +29,6 @@
 <%!void createFitsIn(HttpServletRequest request, Connection connection) {
 		
 	
-	Integer partId = 12;
-	
 		String[] PartInfoKeys = {"makeName", "modelName", "year"};
 	
 		List<String> PartDets = new ArrayList<String>();
@@ -39,32 +37,45 @@
 			PartDets.add((String) request.getParameter(PartInfoKey));
 		}
 
+		Integer vehicleId =0;
+		vehicleId = createVehicle(PartDets,connection);
+		
+		/*
+	
 		try {
+
+
+
 
 			PreparedStatement preparedStatement = null;
 
-			String query = "SELECT vehicleID From Vehicle Where (makeName = '?' AND modelName = '?' AND year = '?');";
-			
+			String query = "SELECT MAX(vehicleId) FROM Vehicle Where (makeName = ? AND modelName = ? AND year = ?);";
 			preparedStatement = connection.prepareStatement(query);
-
-			ResultSet rs = preparedStatement.executeQuery(query);
+		    preparedStatement.setString(1, PartDets.get(0));
+		    preparedStatement.setString(2, PartDets.get(1));
+		    preparedStatement.setInt(3, Integer.parseInt(PartDets.get(2)));
+		        
+		    ResultSet rs = preparedStatement.executeQuery(query);
 			rs.next();
 
+
+
 			Integer vehicleId =0;
-			if(rs.next()==true){
-				
+			
+		if(rs.next()==true){
+				// so if it already exists, do nothing
 			}else{
 				vehicleId = createVehicle(PartDets,connection);
 			}
-
-
-
+		
+		
 			System.out.println("Confirm");
 		} catch (SQLException e) {
 
 			System.out.println(e);
 		}
-
+		*/
+			System.out.println("Your car has been added");
 	}%>
 
 <%!public static Integer createVehicle(List<String> partDets,Connection connection) {
@@ -101,7 +112,7 @@
 	}
 	
 	
-	return k; // why? sheer laziness
+	return k;
 
 }
 
@@ -111,7 +122,7 @@
 	if (request.getParameter("modelName") != null) {
 		createFitsIn(request, con);
 	} else {
-		System.out.println("Check fail");
+		System.out.println("Nothing Entered- yet");
 	}
 %>
 
