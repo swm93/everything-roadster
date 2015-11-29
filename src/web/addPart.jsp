@@ -8,88 +8,127 @@
 
 
 <%
-	/*
-	-- NOTE TO SCOTT: Other than prettification, is it possible to change category name into a drop down list?
-	-- due to the FK restraints it's prone to errors. 
-	*/
+  /*
+  -- NOTE TO SCOTT: Other than prettification, is it possible to change category name into a drop down list?
+  -- due to the FK restraints it's prone to errors.
+  */
 %>
-<%
-	Connection con = connectionManager.open();
+
+<% Connection con = connectionManager.open(); %>
+
+<%!
+  void createPart(HttpServletRequest request, Connection connection) {
+    String[] PartInfoKeys = { "categoryName", "partName", "description", "imagePath" };
+
+    List<String> PartDets = new ArrayList<String>();
+
+    for (String PartInfoKey : PartInfoKeys) {
+      PartDets.add((String) request.getParameter(PartInfoKey));
+    }
+
+    try {
+
+      PreparedStatement preparedStatement = null;
+
+      String query = "SELECT MAX(PartId) FROM Part;";
+
+      preparedStatement = connection.prepareStatement(query);
+      ResultSet rs = preparedStatement.executeQuery(query);
+
+      rs.next();
+      Integer k = rs.getInt(1);
+
+      String insertTableSQL = "INSERT INTO Part (PartId, categoryName, partName, description, imagePath)" + "VALUES"
+          + "(?,?,?,?,?)";
+
+      preparedStatement = connection.prepareStatement(insertTableSQL);
+
+      preparedStatement.setInt(1, k + 1);
+
+      int i = 2;
+      for (String column : PartDets) {
+        preparedStatement.setString(i, PartDets.get(i - 2));
+        i++;
+      }
+
+      String imagePath = "public/images/parts/" + PartDets.get(3) + ".jpg";
+      preparedStatement.setString(5, imagePath);
+      // execute insert SQL stetement
+      preparedStatement.executeUpdate();
+
+      System.out.println("Your part has been added");
+    } catch (Exception e) {
+
+      System.out.println(e);
+    }
+
+  }
 %>
 
 <!DOCTYPE html>
 <html>
-<head>
-<title>Everything Roadster</title>
-</head>
-<Body>
-	<b> Part Creation Page</b>
-	<form action="./addPart.jsp" method="POST">
-		<b>"categoryName"</b> <input type="text" name="categoryName" size="50">
-		<b>"partName"</b> <input type="text" name="partName" size="50">
-		<b>"description"</b> <input type="text" name="description" size="50">
-		<b>"imagePath"</b> <input type="text" name="imagePath" size="50">
-		<button type="submit">AddPart</button>
-	</form>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>EverythingRoadster - Add Part</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/addPart.css">
 
+    <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
+    <script src="vendor/javascripts/bootstrap.min.js"></script>
+  </head>
 
-<%!void createPart(HttpServletRequest request, Connection connection) {
-		String[] PartInfoKeys = { "categoryName", "partName", "description", "imagePath" };
+  <body>
+  <%@ include file="util_navbar.jsp" %>
 
-		List<String> PartDets = new ArrayList<String>();
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>Part Creation Page</h1>
+        </div>
+      </div>
 
-		for (String PartInfoKey : PartInfoKeys) {
-			PartDets.add((String) request.getParameter(PartInfoKey));
-		}
+    <form class="add-part-form" action="./addPart.jsp" method="POST">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="part-name-input">Part Name</label>
+            <input id="part-name-input" class="form-control"  type="text" name="partName" />
+          </div>
+          <div class="form-group">
+            <label for="category-name-input">Category Name</label>
+            <input id="category-name-input" class="form-control"  type="text" name="categoryName" />
+          </div>
+          <div class="form-group">
+            <label for="description-input">Description</label>
+            <input id="description-input" class="form-control"  type="text" name="description" />
+          </div>
+          <div class="form-group">
+            <label for="image-path-input">Image Path</label>
+            <input id="image-path-input" class="form-control"  type="text" name="imagePath" />
+          </div>
 
-		try {
-
-			PreparedStatement preparedStatement = null;
-
-			String query = "SELECT MAX(PartId) FROM Part;";
-
-			preparedStatement = connection.prepareStatement(query);
-			ResultSet rs = preparedStatement.executeQuery(query);
-
-			rs.next();
-			Integer k = rs.getInt(1);
-
-			String insertTableSQL = "INSERT INTO Part (PartId,categoryName,partName, description, imagePath)" + "VALUES"
-					+ "(?,?,?,?,?)";
-
-			preparedStatement = connection.prepareStatement(insertTableSQL);
-
-			preparedStatement.setInt(1, k + 1);
-
-			int i = 2;
-			for (String column : PartDets) {
-				preparedStatement.setString(i, PartDets.get(i - 2));
-				i++;
-			}
-
-			String imagePath = "public/images/parts/" + PartDets.get(3) + ".jpg";
-			preparedStatement.setString(5, imagePath);
-			// execute insert SQL stetement
-			preparedStatement.executeUpdate();
-
-			System.out.println("Your part has been added");
-		} catch (Exception e) {
-
-			System.out.println(e);
-		}
-
-	}%>
-<%
-	if (request.getParameter("partName") != null) {
-		createPart(request, con);
-	} else {
-		System.out.println("here");
-	}
-%>
+          <button class="btn btn-success" type="submit">Add Part</button>
+        </div>
+      </div>
+    </form>
 
 <%
-	connectionManager.close();
+  if (request.getParameter("partName") != null) {
+    createPart(request, con);
+  } else {
+    System.out.println("here");
+  }
 %>
-</Body>
+
+    <%@ include file="util_copyright.jsp" %>
+
+  </body>
+</html>
+
+<% connectionManager.close(); %>
