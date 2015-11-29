@@ -1,3 +1,5 @@
+<!-- due to the FK restraints it's prone to errors -->
+
 <%@ include file="util_connection.jsp"%>
 
 <%@ page import="java.sql.Connection"%>
@@ -6,13 +8,6 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 
-
-<%
-  /*
-  -- NOTE TO SCOTT: Other than prettification, is it possible to change category name into a drop down list?
-  -- due to the FK restraints it's prone to errors.
-  */
-%>
 
 <% Connection con = connectionManager.open(); %>
 
