@@ -214,14 +214,15 @@
            "<li class=\"list-group-item row\">" +
              "<div class=\"col-sm-3\">" +
                "<img src=\"%s\" class=\"part-image\" />" +
-               "<form class=\"add-to-cart-container input-group\">" +
+               "<form class=\"add-to-cart-container input-group\" action=\"addToCart.jsp\" method=\"POST\">" +
                  "<span class=\"input-group-btn\">" +
-                   "<button class=\"btn btn-success\" type=\"button\">" +
+                   "<button class=\"btn btn-success\" type=\"submit\" name=\"listId\" value=\"%d\">" +
                      "<span class=\"glyphicon glyphicon-plus\"></span> " +
                      "<span>Add to Cart</span>" +
                    "</button>" +
                  "</span>" +
-                 "<input class=\"part-quantity-input form-control\" type=\"number\" value=\"1\" min=\"1\" max=\"%s\">" +
+                 "<input class=\"part-quantity-input form-control\" type=\"number\" name=\"quantity\" value=\"1\" min=\"1\" max=\"%s\" />" +
+                 "<input type=\"hidden\" name=\"name\" value=\"%s\" />" +
                "</form>" +
              "</div>" +
              "<div class=\"col-sm-7\">" +
@@ -236,7 +237,7 @@
                "</span>" +
              "</h5>" +
            "</li>",
-    image, quantity, partName, category, description, price);
+    image, listId, quantity, partName, partName, category, description, price);
 
     out.println(partsHTML);
   }
