@@ -22,10 +22,9 @@
 
 	<b> Account Creation Page</b>
 	<form action="./signUp.jsp" method="POST">
-		<b>"accountType"</b> <input type="text" name="accountType" size="50"
-			value="<%=request.getParameter("accountType")%>"> <b>"email"</b>
-		<input type="text" name="email" size="50"> <b>"password"</b> <input
-			type="password" name="password" size="50"> <b>"firstName"</b>
+		<b>"accountType"</b> <input type="text" name="accountType" size="50">
+		<b>"email"</b> <input type="text" name="email" size="50"> <b>"password"</b>
+		<input type="password" name="password" size="50"> <b>"firstName"</b>
 		<input type="text" name="firstName" size="50"> <b>"lastName"</b>
 		<input type="text" name="lastName" size="50"> <b>"phoneNumber"</b>
 		<input type="text" name="phoneNumber" size="50"> <b>"streetAddress"</b>
