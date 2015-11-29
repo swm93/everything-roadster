@@ -27,6 +27,12 @@
           <span class="badge"><%= cart.size() %></span>
         </a>
         <ul class="dropdown-menu">
+          <li class="cart-dropdown-header clearfix">
+            <span>
+              <span class="cart-dropdown-header-label">Cart</span>
+              <a href="checkout.jsp" class="cart-dropdown-checkout">Checkout</a>
+            </span>
+          </li>
 
 <%
   if (cart.size() == 0)

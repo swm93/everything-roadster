@@ -21,6 +21,26 @@ body {
     min-width: 240px;
 }
 
+.navbar .cart-dropdown-header {
+    padding: 0 8px;
+    border-width: 0 0 1px 0;
+
+    border-style: solid;
+    border-color: #CCCCCC;
+}
+
+.navbar .cart-dropdown-header-label {
+    float: left;
+
+    font-size: 1.3em;
+}
+
+.navbar .cart-dropdown-checkout {
+    float: right;
+
+    line-height: 25px;
+}
+
 .navbar .cart-dropdown-item {
     position: relative;
 }
