@@ -1,3 +1,5 @@
+<!-- due to the FK restraints it's prone to errors -->
+
 <%@ include file="util_connection.jsp"%>
 
 <%@ page import="java.sql.Connection"%>
@@ -5,97 +7,157 @@
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
-<%
-	/*
-		-- NOTE TO SCOTT: Other than prettification, is it possible to change AccountType into a drop down list?
-		-- due to the FK restraints it's prone to errors. 
-		*/
-%>
-<%
-	Connection con = connectionManager.open();
+
+<% Connection con = connectionManager.open(); %>
+
+<%!
+void createAccount(HttpServletRequest request, Connection connection) {
+    String[] accountInfoKeys = { "accountType", "email", "password", "firstName", "lastName", "phoneNumber",
+        "streetAddress", "city", "provinceState", "country", "postalCode" };
+
+    List<String> accountDets = new ArrayList<String>();
+
+    for (String accountInfoKey : accountInfoKeys) {
+      accountDets.add((String) request.getParameter(accountInfoKey));
+    }
+
+    try {
+
+      PreparedStatement preparedStatement = null;
+
+      String query = "SELECT MAX(accountId) FROM Account;";
+
+      preparedStatement = connection.prepareStatement(query);
+      ResultSet rs = preparedStatement.executeQuery(query);
+
+      rs.next();
+
+      Integer k = rs.getInt(1); /// whatever
+
+      String insertTableSQL = "INSERT INTO Account (accountId, accountType, email, password, firstName, lastName, phoneNumber, streetAddress, city, provinceState, country, postalCode) "
+          + "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?)";
+
+      preparedStatement = connection.prepareStatement(insertTableSQL);
+
+      preparedStatement.setInt(1, k + 1);
+
+      int i = 2;
+      for (String column : accountDets) {
+        preparedStatement.setString(i, accountDets.get(i - 2));
+        i++;
+      }
+
+      // execute insert SQL stetement
+      preparedStatement.executeUpdate();
+    } catch (Exception e) {
+      System.out.println(e);
+    }
+
+  }
 %>
 
 <!DOCTYPE html>
 <html>
-<head>
-<title>Everything Roadster</title>
-</head>
-<Body>
-	<b>No account num input on purpose</b>
 
-	<b> Account Creation Page</b>
-	<form action="./signUp.jsp" method="POST">
-		<b>"accountType"</b> <input type="text" name="accountType" size="50">
-		<b>"email"</b> <input type="text" name="email" size="50"> <b>"password"</b>
-		<input type="password" name="password" size="50"> <b>"firstName"</b>
-		<input type="text" name="firstName" size="50"> <b>"lastName"</b>
-		<input type="text" name="lastName" size="50"> <b>"phoneNumber"</b>
-		<input type="text" name="phoneNumber" size="50"> <b>"streetAddress"</b>
-		<input type="text" name="streetAddress" size="50"> <b>"city"</b>
-		<input type="text" name="city" size="50"> <b>"provinceState"</b>
-		<input type="text" name="provinceState" size="50"> <b>"country"</b>
-		<input type="text" name="country" size="50"> <b>"postalCode"</b>
-		<input type="text" name="postalCode" size="50"> button
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>EverythingRoadster - Sign Up</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-		<button type="submit">Signup</button>
-	</form>
-</head>
+    <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/signUp.css">
 
+    <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
+    <script src="vendor/javascripts/bootstrap.min.js"></script>
+  </head>
 
-<%!void createAccount(HttpServletRequest request, Connection connection) {
-		String[] accountInfoKeys = { "accountType", "email", "password", "firstName", "lastName", "phoneNumber",
-				"streetAddress", "city", "provinceState", "country", "postalCode" };
+  <body>
+    <%@ include file="util_navbar.jsp" %>
 
-		List<String> accountDets = new ArrayList<String>();
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-xs-12">
+          <h1>Account Creation Page</h1>
+        </div>
+      </div>
 
-		for (String accountInfoKey : accountInfoKeys) {
-			accountDets.add((String) request.getParameter(accountInfoKey));
-		}
-
-		try {
-
-			PreparedStatement preparedStatement = null;
-
-			String query = "SELECT MAX(accountId) FROM Account;";
-
-			preparedStatement = connection.prepareStatement(query);
-			ResultSet rs = preparedStatement.executeQuery(query);
-
-			rs.next();
-
-			Integer k = rs.getInt(1); /// whatever)
-
-			String insertTableSQL = "INSERT INTO Account (accountId, accountType, email, password, firstName, lastName, phoneNumber, streetAddress, city, provinceState, country, postalCode) "
-					+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?)";
-
-			preparedStatement = connection.prepareStatement(insertTableSQL);
-
-			preparedStatement.setInt(1, k + 1);
-
-			int i = 2;
-			for (String column : accountDets) {
-				preparedStatement.setString(i, accountDets.get(i - 2));
-				i++;
-			}
-
-			// execute insert SQL stetement
-			preparedStatement.executeUpdate();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-
-	}%>
-
+      <form id="sign-up-form" action="./signUp.jsp" method="POST">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="account-type-input">Account Type</label>
+              <select id="account-type-input" class="form-control" name="accountType">
+                <option value="customer">Customer</option>
+                <option value="vendor">Vendor</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="email-input">Email</label>
+              <input id="email-input" class="form-control" type="text" name="email" />
+            </div>
+            <div class="form-group">
+              <label for="password-input">Password</label>
+              <input id="password-input" class="form-control" type="password" name="password" />
+            </div>
+            <div class="form-group">
+              <label for="first-name-input">First Name</label>
+              <input id="first-name-input" class="form-control" type="text" name="firstName" />
+            </div>
+            <div class="form-group">
+              <label for="last-name-input">Last Name</label>
+              <input id="last-name-input" class="form-control" type="text" name="lastName" />
+            </div>
+            <div class="form-group">
+              <label for="phone-number-input">Phone Number</label>
+              <input id="phone-number-input" class="form-control" type="text" name="phoneNumber" />
+            </div>
+          </div>
+          <div class="col-xs-12 col-sm-6">
+            <div class="form-group">
+              <label for="street-address-input">Street Address</label>
+              <input id="street-address-input" class="form-control" type="text" name="streetAddress" />
+            </div>
+            <div class="form-group">
+              <label for="city-input">City</label>
+              <input id="city-input" class="form-control" type="text" name="city" />
+            </div>
+            <div class="form-group">
+              <label for="province-state-input">Province or State</label>
+              <input id="province-state-input" class="form-control" type="text" name="provinceState" />
+            </div>
+            <div class="form-group">
+              <label for="country-input">Country</label>
+              <input id="country-input" class="form-control" type="text" name="country" />
+            </div>
+            <div class="form-group">
+              <label for="postal-code-input">Postal Code</label>
+              <input id="postal-code-input" class="form-control" type="text" name="postalCode" />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <button class="btn btn-success" type="submit">Signup</button>
+          </div>
+        </div>
+      </form>
+    </div>
 
 <%
-	// I mean, I guess it should
-	if (request.getParameter("accountType") != null) {
-		System.out.println("creating account");
-		createAccount(request, con);
-	}
+  // I mean, I guess it should
+  if (request.getParameter("accountType") != null) {
+    System.out.println("creating account");
+    createAccount(request, con);
+  }
 %>
 
-<%
-	connectionManager.close();
-%>
-</Body>
+    <%@ include file="util_copyright.jsp" %>
+
+  </body>
+</html>
+
+<% connectionManager.close(); %>

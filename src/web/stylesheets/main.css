@@ -13,6 +13,10 @@ body {
     padding: 0 5px 0 0;
 }
 
+.navbar .navbar-form {
+    padding: 0 4px;
+}
+
 .carousel > .carousel-header {
     position: absolute;
     top: 0;
