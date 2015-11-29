@@ -15,40 +15,40 @@
 
 <!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>EverythingRoadster - Browse</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>EverythingRoadster - Browse</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
-        <link rel="stylesheet" href="stylesheets/main.css">
-        <link rel="stylesheet" href="stylesheets/browse.css">
+    <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/browse.css">
 
-        <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-        <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
-        <script src="vendor/javascripts/bootstrap.min.js"></script>
-        <script src="javascripts/browse.js"></script>
-    </head>
+    <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
+    <script src="vendor/javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/browse.js"></script>
+  </head>
 
-    <body>
-      <%@ include file="util_navbar.jsp" %>
+  <body>
+    <%@ include file="util_navbar.jsp" %>
 
-      <div class="container-fluid">
-        <div class="row">
-          <form id="browse-sidebar-container" action="browse.jsp" method="GET">
-            <button id="browse-apply-btn" class="btn btn-success" type="submit">Apply</button>
-            <button id="browse-apply-btn" class="btn btn-danger" type="reset">Clear</button>
+    <div class="container-fluid">
+      <div class="row">
+        <form id="browse-sidebar-container" action="browse.jsp" method="GET">
+          <button id="browse-apply-btn" class="btn btn-success" type="submit">Apply</button>
+          <button id="browse-apply-btn" class="btn btn-danger" type="reset">Clear</button>
 
+          <hr>
+
+          <input id="browse-search-input" class="form-control" name="search" type="text" placeholder="Search" />
+
+          <div class="filter-container">
             <hr>
-
-            <input id="browse-search-input" class="form-control" name="search" type="text" placeholder="Search" />
-
-            <div class="filter-container">
-              <hr>
-              <h4>Part Categories</h4>
-              <ul class="list-unstyled">
+            <h4>Part Categories</h4>
+            <ul class="list-unstyled">
 <%
   //load parts
   PreparedStatement partCategoriesPS = con.prepareStatement(
@@ -63,22 +63,22 @@
     String categoryStripped = category.replaceAll("\\s", "-").toLowerCase();
 
     String html = String.format(
-               "<li>" +
-                 "<input id=\"category-%s-checkbox\" class=\"filter-checkbox\" type=\"checkbox\" name=\"category\" value=\"%s\" /> " +
-                 "<label for=\"category-%s-checkbox\">%s</label>" +
-               "</li>",
+             "<li>" +
+               "<input id=\"category-%s-checkbox\" class=\"filter-checkbox\" type=\"checkbox\" name=\"category\" value=\"%s\" /> " +
+               "<label for=\"category-%s-checkbox\">%s</label>" +
+             "</li>",
     categoryStripped, categoryStripped, categoryStripped, category);
 
     out.println(html);
   }
 %>
-              </ul>
-            </div>
+            </ul>
+          </div>
 
-            <div class="filter-container">
-              <hr>
-              <h4>Vehicle Makes</h4>
-              <ul class="list-unstyled">
+          <div class="filter-container">
+            <hr>
+            <h4>Vehicle Makes</h4>
+            <ul class="list-unstyled">
 <%
   //load parts
   PreparedStatement makesPS = con.prepareStatement(
@@ -93,22 +93,22 @@
     String makeStripped = make.replaceAll("\\s", "-").toLowerCase();
 
     String html = String.format(
-               "<li>" +
-                 "<input id=\"make-%s-checkbox\" class=\"filter-checkbox\" type=\"checkbox\" name=\"make\" value=\"%s\" /> " +
-                 "<label for=\"make-%s-checkbox\">%s</label>" +
-               "</li>",
+             "<li>" +
+               "<input id=\"make-%s-checkbox\" class=\"filter-checkbox\" type=\"checkbox\" name=\"make\" value=\"%s\" /> " +
+               "<label for=\"make-%s-checkbox\">%s</label>" +
+             "</li>",
     makeStripped, makeStripped, makeStripped, make);
 
     out.println(html);
   }
 %>
-              </ul>
-            </div>
+            </ul>
+          </div>
 
-            <div class="filter-container">
-              <hr>
-              <h4>Vehicle Models</h4>
-              <ul class="list-unstyled">
+          <div class="filter-container">
+            <hr>
+            <h4>Vehicle Models</h4>
+            <ul class="list-unstyled">
 <%
   //load parts
   PreparedStatement modelsPS = con.prepareStatement(
@@ -123,21 +123,21 @@
     String modelStripped = model.replaceAll("\\s", "-").toLowerCase();
 
     String html = String.format(
-               "<li>" +
-                 "<input id=\"model-%s-checkbox\" class=\"filter-checkbox\" type=\"checkbox\" name=\"model\" value=\"%s\" /> " +
-                 "<label for=\"model-%s-checkbox\">%s</label>" +
-               "</li>",
+             "<li>" +
+               "<input id=\"model-%s-checkbox\" class=\"filter-checkbox\" type=\"checkbox\" name=\"model\" value=\"%s\" /> " +
+               "<label for=\"model-%s-checkbox\">%s</label>" +
+             "</li>",
     modelStripped, modelStripped, modelStripped, model);
 
     out.println(html);
   }
 %>
-              </ul>
-            </div>
+            </ul>
+          </div>
 
-          </form>
+        </form>
 
-          <ul id="browse-main-container" class="container-fluid list-group">
+        <ul id="browse-main-container" class="container-fluid list-group">
 <%
   String partsSQL = new String(
     "SELECT LP.listId, P.partName, LP.price, LP.quantity, P.imagePath, P.categoryName, P.description " +
@@ -211,45 +211,45 @@
     String description = partsRS.getString("description");
 
     String partsHTML = String.format(
-             "<li class=\"list-group-item row\">" +
-               "<div class=\"col-sm-3\">" +
-                 "<img src=\"%s\" class=\"part-image\" />" +
-                 "<form class=\"add-to-cart-container input-group\">" +
-                   "<span class=\"input-group-btn\">" +
-                     "<button class=\"btn btn-success\" type=\"button\">" +
-                       "<span class=\"glyphicon glyphicon-plus\"></span> " +
-                       "<span>Add to Cart</span>" +
-                     "</button>" +
-                   "</span>" +
-                   "<input class=\"part-quantity-input form-control\" type=\"number\" value=\"1\" min=\"1\" max=\"%s\">" +
-                 "</form>" +
-               "</div>" +
-               "<div class=\"col-sm-7\">" +
-                 "<h3 class=\"part-name-header\">%s</h3>" +
-                 "<h5 class=\"part-category-label\">%s</h5>" +
-                 "<p>%s</p>" +
-               "</div>" +
-               "<h5 class=\"col-sm-2\">" +
-                 "<span class=\"part-price-label pull-right\">" +
-                   "<span>$%s</span> " +
-                   "<span class=\"glyphicon glyphicon-tags\"></span>" +
+           "<li class=\"list-group-item row\">" +
+             "<div class=\"col-sm-3\">" +
+               "<img src=\"%s\" class=\"part-image\" />" +
+               "<form class=\"add-to-cart-container input-group\">" +
+                 "<span class=\"input-group-btn\">" +
+                   "<button class=\"btn btn-success\" type=\"button\">" +
+                     "<span class=\"glyphicon glyphicon-plus\"></span> " +
+                     "<span>Add to Cart</span>" +
+                   "</button>" +
                  "</span>" +
-               "</h5>" +
-             "</li>",
+                 "<input class=\"part-quantity-input form-control\" type=\"number\" value=\"1\" min=\"1\" max=\"%s\">" +
+               "</form>" +
+             "</div>" +
+             "<div class=\"col-sm-7\">" +
+               "<h3 class=\"part-name-header\">%s</h3>" +
+               "<h5 class=\"part-category-label\">%s</h5>" +
+               "<p>%s</p>" +
+             "</div>" +
+             "<h5 class=\"col-sm-2\">" +
+               "<span class=\"part-price-label pull-right\">" +
+                 "<span>$%s</span> " +
+                 "<span class=\"glyphicon glyphicon-tags\"></span>" +
+               "</span>" +
+             "</h5>" +
+           "</li>",
     image, quantity, partName, category, description, price);
 
     out.println(partsHTML);
   }
 %>
 
-          </ul>
+        </ul>
 
-        </div>
       </div>
+    </div>
 
-      <%@ include file="util_copyright.jsp" %>
+    <%@ include file="util_copyright.jsp" %>
 
-    </body>
+  </body>
 </html>
 
 
