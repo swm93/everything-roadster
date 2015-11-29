@@ -5,9 +5,12 @@
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
-
-
-
+<%
+	/*
+		-- NOTE TO SCOTT: Other than prettification, is it possible to change AccountType into a drop down list?
+		-- due to the FK restraints it's prone to errors. 
+		*/
+%>
 <%
 	Connection con = connectionManager.open();
 %>
