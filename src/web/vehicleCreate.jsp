@@ -8,6 +8,9 @@
 
 
 <%
+
+// See line 46 for error documentation
+
 	Connection con = connectionManager.open();
 %>
 
@@ -26,60 +29,63 @@
 	</form>
 </head>
 
-<%!void createFitsIn(HttpServletRequest request, Connection connection) {
-		
+<%! public void checkExists(HttpServletRequest request, Connection connection){
 	
-		String[] PartInfoKeys = {"makeName", "modelName", "year"};
+	String[] PartInfoKeys = {"makeName", "modelName", "year"};
+
+	List<String> PartDets = new ArrayList<String>();
+
+	for (String PartInfoKey : PartInfoKeys) {
+		PartDets.add((String) request.getParameter(PartInfoKey));
+	}
+
+PreparedStatement preparedStatement = null;
+try {
 	
-		List<String> PartDets = new ArrayList<String>();
 
-		for (String PartInfoKey : PartInfoKeys) {
-			PartDets.add((String) request.getParameter(PartInfoKey));
-		}
-
-		Integer vehicleId =0;
-		vehicleId = createVehicle(PartDets,connection);
-		
-		/*
+	// I have no idea. All this is realistically doing is checking if the vehicle exists.
+	// if it does, do nothing. if it doesn't Create Vehicle
+	// CreateVehicle() works
+	// if you delete this half of the code and force
+	// createVehicle(PartDets, connection); to run, it will create a vehicle and insert it.
+	// all of this is trying to prevent duplicates
 	
-		try {
+	String query = "SELECT MAX(vehicleId) FROM Vehicle Where (makeName = ? AND modelName = ? AND year = ?);";
+	
+	// So I change the string to something I know compiles..
+	query = "SELECT MAX(vehicleId) FROM Vehicle Where (makeName = 'dodge' AND modelName = 'viper' AND year = '2017');";
+	preparedStatement = connection.prepareStatement(query);
+	// prints out the boxes to confrim that the info is in the list...
+	/*
+	
+	System.out.println(PartDets.get(0));
+	System.out.println(PartDets.get(1));
+	System.out.println(PartDets.get(2));
+	//commented out cause there are no paramets atm
+	//preparedStatement.setString(1, PartDets.get(0));
+	//preparedStatement.setString(2, PartDets.get(1));
+	//Integer year = Integer.parseInt(PartDets.get(2));
+	//preparedStatement.setInt(3, year);
+	
+	*/
+	
+	
+	ResultSet rs = preparedStatement.executeQuery(query);
+	if(rs.next()){
+		System.out.println("Vehicle exists already");
+	}else{
+		createVehicle(PartDets, connection);
+	}
+} catch (SQLException e) {
 
+	System.out.println(e);
+}
+}
 
+%>
+<%!public static void createVehicle(List<String> PartDets,Connection connection) {
 
-
-			PreparedStatement preparedStatement = null;
-
-			String query = "SELECT MAX(vehicleId) FROM Vehicle Where (makeName = ? AND modelName = ? AND year = ?);";
-			preparedStatement = connection.prepareStatement(query);
-		    preparedStatement.setString(1, PartDets.get(0));
-		    preparedStatement.setString(2, PartDets.get(1));
-		    preparedStatement.setInt(3, Integer.parseInt(PartDets.get(2)));
-		        
-		    ResultSet rs = preparedStatement.executeQuery(query);
-			rs.next();
-
-
-
-			Integer vehicleId =0;
-			
-		if(rs.next()==true){
-				// so if it already exists, do nothing
-			}else{
-				vehicleId = createVehicle(PartDets,connection);
-			}
-		
-		
-			System.out.println("Confirm");
-		} catch (SQLException e) {
-
-			System.out.println(e);
-		}
-		*/
-			System.out.println("Your car has been added");
-	}%>
-
-<%!public static Integer createVehicle(List<String> partDets,Connection connection) {
-
+	
 	Integer k =0;
 	try {
 	PreparedStatement preparedStatement = null;
@@ -100,8 +106,8 @@
 	preparedStatement.setInt(1, k); // so there are no duplicate vehicleId's fail
 
 	int i = 2;
-	for (String column : partDets) {
-		preparedStatement.setString(i, partDets.get(i - 2));
+	for (String column : PartDets) {
+		preparedStatement.setString(i, PartDets.get(i - 2));
 		i++;
 	}
 	// execute insert SQL stetement
@@ -110,9 +116,8 @@
 
 		System.out.println(e);
 	}
+	System.out.println("Vehicle Created");
 	
-	
-	return k;
 
 }
 
@@ -120,7 +125,7 @@
 	%>
 <%
 	if (request.getParameter("modelName") != null) {
-		createFitsIn(request, con);
+		checkExists(request, con);
 	} else {
 		System.out.println("Nothing Entered- yet");
 	}
