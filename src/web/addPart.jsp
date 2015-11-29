@@ -97,7 +97,27 @@
           </div>
           <div class="form-group">
             <label for="category-name-input">Category Name</label>
-            <input id="category-name-input" class="form-control"  type="text" name="categoryName" />
+            <select id="category-name-input" class="form-control" name="categoryName">
+
+<%
+  PreparedStatement categoryNamesPS = con.prepareStatement(
+    "SELECT categoryName " +
+      "FROM PartCategory;"
+  );
+  ResultSet categoryNamesRS = categoryNamesPS.executeQuery();
+
+  while (categoryNamesRS.next())
+  {
+    String categoryName = categoryNamesRS.getString("categoryName");
+    String categoryOptionHtml = String.format(
+             "<option value=\"%s\">%s</option>",
+    categoryName, categoryName);
+
+    out.println(categoryOptionHtml);
+  }
+%>
+
+            </select>
           </div>
           <div class="form-group">
             <label for="description-input">Description</label>
