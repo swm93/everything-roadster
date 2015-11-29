@@ -1,3 +1,6 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Map" %>
+
 <%@ include file="util_cart.jsp" %>
 
 
