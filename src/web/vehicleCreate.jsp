@@ -30,7 +30,6 @@
 </head>
 
 <%! public void checkExists(HttpServletRequest request, Connection connection){
-	
 	String[] PartInfoKeys = {"makeName", "modelName", "year"};
 
 	List<String> PartDets = new ArrayList<String>();
@@ -39,47 +38,28 @@
 		PartDets.add((String) request.getParameter(PartInfoKey));
 	}
 
-PreparedStatement preparedStatement = null;
-try {
-	
+	PreparedStatement preparedStatement = null;
+	try {
 
-	// I have no idea. All this is realistically doing is checking if the vehicle exists.
-	// if it does, do nothing. if it doesn't Create Vehicle
-	// CreateVehicle() works
-	// if you delete this half of the code and force
-	// createVehicle(PartDets, connection); to run, it will create a vehicle and insert it.
-	// all of this is trying to prevent duplicates
-	
-	String query = "SELECT MAX(vehicleId) FROM Vehicle Where (makeName = ? AND modelName = ? AND year = ?);";
-	
-	// So I change the string to something I know compiles..
-	query = "SELECT MAX(vehicleId) FROM Vehicle Where (makeName = 'dodge' AND modelName = 'viper' AND year = '2017');";
-	preparedStatement = connection.prepareStatement(query);
-	// prints out the boxes to confrim that the info is in the list...
-	/*
-	
-	System.out.println(PartDets.get(0));
-	System.out.println(PartDets.get(1));
-	System.out.println(PartDets.get(2));
-	//commented out cause there are no paramets atm
-	//preparedStatement.setString(1, PartDets.get(0));
-	//preparedStatement.setString(2, PartDets.get(1));
-	//Integer year = Integer.parseInt(PartDets.get(2));
-	//preparedStatement.setInt(3, year);
-	
-	*/
-	
-	
-	ResultSet rs = preparedStatement.executeQuery(query);
-	if(rs.next()){
-		System.out.println("Vehicle exists already");
-	}else{
-		createVehicle(PartDets, connection);
+		String query = "SELECT vehicleId FROM Vehicle WHERE makeName=? AND modelName=? AND year=?;";
+		preparedStatement = connection.prepareStatement(query);
+
+		//commented out cause there are no paramets atm
+		preparedStatement.setString(1, PartDets.get(0));
+		preparedStatement.setString(2, PartDets.get(1));
+		Integer year = Integer.parseInt(PartDets.get(2));
+		preparedStatement.setInt(3, year);
+
+		ResultSet rs = preparedStatement.executeQuery();
+		if(rs.next()){
+			System.out.println("Vehicle exists already");
+		}else{
+			createVehicle(PartDets, connection);
+		}
+	} catch (SQLException e) {
+
+		System.out.println(e);
 	}
-} catch (SQLException e) {
-
-	System.out.println(e);
-}
 }
 
 %>
