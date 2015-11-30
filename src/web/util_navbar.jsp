@@ -83,6 +83,20 @@
       <li class="navbar-form">
         <a href="signUp.jsp" class="btn btn-danger">Sign Up</a>
       </li>
+      
+      <li class="navbar-form">
+        <a href="addPart.jsp" class="btn btn-danger">addPart</a>
+      </li>
+      
+       
+      <li class="navbar-form">
+        <a href="removeVehicle.jsp" class="btn btn-danger">removeVehicle</a>
+      </li>
+      
+      <li class="navbar-form">
+        <a href="myAccount.jsp" class="btn btn-danger">Account</a>
+      </li>
+      
     </ul>
   </div>
 </div>

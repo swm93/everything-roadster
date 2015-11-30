@@ -8,7 +8,6 @@
 
 
 <%
-
 	Connection con = connectionManager.open();
 %>
 
@@ -18,92 +17,59 @@
 <title>Everything Roadster</title>
 </head>
 <Body>
-	<b> Create vehicle</b>
-	<form action="./vehicleCreate.jsp" method="POST">
-		<b>"makeName"</b> <input type="text" name="makeName" size="50">
-		<b>"modelName"</b> <input type="text" name="modelName" size="50">
-		<b>"year"</b> <input type="text" name="year" size="50">
-		<button type="submit">create Vehicle</button>
+	<b> Remove Account</b>
+	<form action="./removeAccount.jsp" method="POST">
+		<b>"accountId"</b> <input type="text" name="accountId" size="50">
+		<b>"accountType"</b> <input type="text" name="accountType" size="50">
+		<button type="submit">remove Account</button>
 	</form>
 </head>
 
-<%! public void checkExists(HttpServletRequest request, Connection connection){
-	String[] PartInfoKeys = {"makeName", "modelName", "year"};
+<%!public void removeAccount(HttpServletRequest request, Connection connection){
+	String[] accountInfoKeys = {"accountId", "accountType"};
 
-	List<String> PartDets = new ArrayList<String>();
+	List<String> accountDets = new ArrayList<String>();
 
-	for (String PartInfoKey : PartInfoKeys) {
-		PartDets.add((String) request.getParameter(PartInfoKey));
+	for (String accountInfoKey : accountInfoKeys) {
+		accountDets.add((String) request.getParameter(accountInfoKey));
 	}
 
-	PreparedStatement preparedStatement = null;
+	if(accountDets.get(1).equals("admin")){
+		System.out.println("you cannot delete a fellow admin through the website");
+	}else{
+
 	try {
 
-		String query = "SELECT vehicleId FROM Vehicle WHERE makeName=? AND modelName=? AND year=?;";
+		PreparedStatement preparedStatement = null;
+		String query = "DELETE FROM Account WHERE accountId=?;";
 		preparedStatement = connection.prepareStatement(query);
 
 		//commented out cause there are no paramets atm
-		preparedStatement.setString(1, PartDets.get(0));
-		preparedStatement.setString(2, PartDets.get(1));
-		Integer year = Integer.parseInt(PartDets.get(2));
-		preparedStatement.setInt(3, year);
-
+		Integer accountId = Integer.parseInt(accountDets.get(0));
+		preparedStatement.setInt(1, accountId);
+		preparedStatement.executeUpdate();
+		
+		preparedStatement = null;
+		String query2 = "SELECT accountId FROM Account WHERE accountId=?;";
+		preparedStatement = connection.prepareStatement(query);
 		ResultSet rs = preparedStatement.executeQuery();
+		
 		if(rs.next()){
-			System.out.println("Vehicle exists already");
+			System.out.println("nothing happened..");
 		}else{
-			createVehicle(PartDets, connection);
+			System.out.println("Account removed");
 		}
 	} catch (SQLException e) {
 
 		System.out.println(e);
+		
 	}
-}
-
-%>
-<%!public static void createVehicle(List<String> PartDets,Connection connection) {
-
-	
-	Integer k =0;
-	try {
-	PreparedStatement preparedStatement = null;
-
-	String query = "SELECT MAX(vehicleId) FROM Vehicle;";
-
-	preparedStatement = connection.prepareStatement(query);
-	ResultSet rs = preparedStatement.executeQuery(query);
-
-	rs.next();
-	k = rs.getInt(1) + 1; /// whatever
-
-	
-	String insertTableSQL = "INSERT INTO Vehicle (vehicleId, makeName, modelName, year) VALUES (?, ?, ?, ?);";
-
-
-	preparedStatement = connection.prepareStatement(insertTableSQL);
-	preparedStatement.setInt(1, k); // so there are no duplicate vehicleId's fail
-
-	int i = 2;
-	for (String column : PartDets) {
-		preparedStatement.setString(i, PartDets.get(i - 2));
-		i++;
 	}
-	// execute insert SQL stetement
-	preparedStatement.executeUpdate();
-	} catch (SQLException e) {
+}%>
 
-		System.out.println(e);
-	}
-	System.out.println("Vehicle Created");
-	
-
-}
-
-
-	%>
 <%
-	if (request.getParameter("modelName") != null) {
-		checkExists(request, con);
+	if (request.getParameter("accountId") != null) {
+		removeAccount(request, con);
 	} else {
 		System.out.println("Nothing Entered- yet");
 	}
