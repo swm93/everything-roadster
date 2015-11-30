@@ -1,0 +1,16 @@
+@media (min-width: 768px) {
+    .order-summary-container {
+        position: fixed;
+        right: 0;
+    }
+}
+
+#checkout-btn {
+    float: right;
+    margin: 18px 0 4px 0;
+}
+
+.order-total-cell {
+    text-align: right;
+    font-weight: 700;
+}
