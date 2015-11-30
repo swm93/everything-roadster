@@ -30,7 +30,10 @@
           <li class="cart-dropdown-header clearfix">
             <span>
               <span class="cart-dropdown-header-label">Cart</span>
-              <a href="checkout.jsp" class="cart-dropdown-checkout">Checkout</a>
+              <a href="checkout.jsp" class="cart-dropdown-checkout btn btn-link">Checkout</a>
+              <form action="cart.jsp" method="POST">
+                <button class="cart-dropdown-empty btn btn-link" type="submit" name="action" value="empty">Empty</button>
+              </form>
             </span>
           </li>
 
@@ -58,7 +61,8 @@
              "<a href=\"#\" class=\"cart-dropdown-label\">" +
                "<span class=\"badge\">%s</span> " +
                "<span>%s</span>" +
-               "<form action=\"removeFromCart.jsp\" method=\"POST\">" +
+               "<form action=\"cart.jsp\" method=\"POST\">" +
+                 "<input type=\"hidden\" name=\"action\" value=\"remove\" />" +
                  "<button class=\"cart-dropdown-remove glyphicon glyphicon-remove\" type=\"submit\" name=\"listId\" value=\"%s\"></button>" +
                "</form>" +
              "</a>" +
@@ -73,15 +77,11 @@
         </ul>
       </li>
       <li class="navbar-form">
-        <form action="signIn.jsp" method="GET">
-          <button class="btn btn-danger" type="submit">Sign In</button>
-        </form>
+        <a href="signIn.jsp" class="btn btn-danger">Sign In</a>
       </li>
 
       <li class="navbar-form">
-        <form action="signUp.jsp" method="GET">
-          <button class="btn btn-danger" type="submit">Sign Up</button>
-        </form>
+        <a href="signUp.jsp" class="btn btn-danger">Sign Up</a>
       </li>
     </ul>
   </div>

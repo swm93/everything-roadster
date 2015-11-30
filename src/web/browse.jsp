@@ -214,7 +214,7 @@
            "<li class=\"list-group-item row\">" +
              "<div class=\"col-xs-12 col-md-3\">" +
                "<img src=\"%s\" class=\"part-image\" />" +
-               "<form class=\"add-to-cart-container input-group\" action=\"addToCart.jsp\" method=\"POST\">" +
+               "<form class=\"add-to-cart-container input-group\" action=\"cart.jsp\" method=\"POST\">" +
                  "<span class=\"input-group-btn\">" +
                    "<button class=\"btn btn-success\" type=\"submit\" name=\"listId\" value=\"%d\">" +
                      "<span class=\"glyphicon glyphicon-plus\"></span> " +
@@ -223,6 +223,7 @@
                  "</span>" +
                  "<input class=\"part-quantity-input form-control\" type=\"number\" name=\"quantity\" value=\"1\" min=\"1\" max=\"%s\" />" +
                  "<input type=\"hidden\" name=\"name\" value=\"%s\" />" +
+                 "<input type=\"hidden\" name=\"action\" value=\"add\" />" +
                "</form>" +
              "</div>" +
              "<div class=\"col-xs-8 col-md-7\">" +

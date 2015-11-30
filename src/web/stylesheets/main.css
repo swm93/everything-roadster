@@ -17,12 +17,23 @@ body {
     padding: 0 4px;
 }
 
+.navbar .navbar-nav>li>a.btn {
+    padding: 6px 12px;
+
+    color: #FFFFFF;
+}
+
+.navbar .navbar-nav>li>a.btn:hover {
+    color: #d43f3a;
+}
+
 .navbar .dropdown-menu {
     min-width: 240px;
 }
 
 .navbar .cart-dropdown-header {
-    padding: 0 8px;
+    padding: 4px 8px;
+    margin: 0 0 5px 0;
     border-width: 0 0 1px 0;
 
     border-style: solid;
@@ -31,14 +42,18 @@ body {
 
 .navbar .cart-dropdown-header-label {
     float: left;
+    margin: 0 6px;
 
     font-size: 1.3em;
 }
 
-.navbar .cart-dropdown-checkout {
+.navbar .cart-dropdown-checkout, .navbar .cart-dropdown-empty {
     float: right;
-
+    padding: 0 6px;
     line-height: 25px;
+
+    color: #337ab7;
+    outline: none;
 }
 
 .navbar .cart-dropdown-item {
