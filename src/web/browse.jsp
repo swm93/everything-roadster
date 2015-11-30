@@ -3,6 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.text.NumberFormat" %>
 
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
@@ -199,6 +200,7 @@
   }
 
   ResultSet partsRS = partsPS.executeQuery();
+  NumberFormat formatter = NumberFormat.getCurrencyInstance();
 
   while (partsRS.next())
   {
@@ -233,12 +235,12 @@
              "</div>" +
              "<h5 class=\"col-xs-4 col-md-2\">" +
                "<span class=\"part-price-label pull-right\">" +
-                 "<span>$%s</span> " +
+                 "<span>%s</span> " +
                  "<span class=\"glyphicon glyphicon-tags\"></span>" +
                "</span>" +
              "</h5>" +
            "</li>",
-    image, listId, quantity, partName, partName, category, description, price);
+    image, listId, quantity, partName, partName, category, description, formatter.format(price));
 
     out.println(partsHTML);
   }
