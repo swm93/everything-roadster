@@ -52,6 +52,8 @@
       preparedStatement.executeUpdate();
 
       System.out.println("Your part has been added");
+      
+      // int toBePass = k+1; (k+1 = partId)
     } catch (Exception e) {
 
       System.out.println(e);
