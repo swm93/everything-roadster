@@ -25,7 +25,7 @@
 	</form>
 </head>
 
-<%!void signIn(HttpServletRequest request, Connection connection) {
+<%!void signIn(HttpServletRequest request, Connection connection, HttpSession session) {
 
 		String[] accountInfoKeys = { "email", "password" };
 
@@ -47,7 +47,7 @@
 				Integer AccountId = rs.getInt(1);
 				//HashMap<String, ArrayList<String>> userHashMap = createUserHash(AccountId, connection);
 				//request.getSession().setAttribute("user", userHashMap);
-				createUserHash(AccountId, connection, request);
+				createUserHash(AccountId, connection, session);
 				System.out.println("signed In!");
 			} else {
 				System.out.println("wrong e-mail/password combination");
@@ -62,10 +62,10 @@
 
 
 <%!//HashMap<String, ArrayList<String>> 
-	void createUserHash(int accountId, Connection connection, HttpServletRequest request) {
+	void createUserHash(int accountId, Connection connection, HttpSession session) {
 		String[] accountInfoKeys = { "accountType", "email", "password", "firstName", "lastName", "phoneNumber",
 				"streetAddress", "city", "provinceState", "country", "postalCode" };
-		HashMap<String, ArrayList<String>> userHash = new HashMap<String, ArrayList<String>>();
+		HashMap<String, String> userHash = new HashMap<String, String>();
 		ArrayList<String> accountDets = new ArrayList<String>();
 		try {
 			PreparedStatement preparedStatement = null;
@@ -78,13 +78,10 @@
 
 			rs.next();
 			for (int i = 0; i < accountInfoKeys.length; i++) {
-				accountDets.add(rs.getString(accountInfoKeys[i]));
+				userHash.put(accountInfoKeys[i], rs.getString(accountInfoKeys[i]));
 			}
-
-			//for (String s : accountDets) {System.out.println(s);}
-
-			userHash.put("user", accountDets);
-			request.getSession().setAttribute("user", userHash);
+			userHash.put("accountId", String.valueOf(accountId));
+			session.setAttribute("user", userHash);
 
 		} catch (SQLException e) {
 
@@ -95,7 +92,7 @@
 	}%>
 <%
 	if ((request.getParameter("email") != null) && (request.getParameter("password") != null)) {
-		signIn(request, con);
+		signIn(request, con, session);
 	} else {
 		System.out.println("Check fail");
 	}
