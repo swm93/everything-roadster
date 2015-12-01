@@ -92,12 +92,6 @@
 <%
   if ((request.getParameter("email") != null) && (request.getParameter("password") != null)) {
     signIn(request, con, session);
-    /* try {
-        Thread.sleep(3000);
-        response.sendRedirect("index.jsp");
-    } catch(InterruptedException ex) {
-        Thread.currentThread().interrupt();
-    } */
   } else {
     System.out.println("Check fail");
   }
