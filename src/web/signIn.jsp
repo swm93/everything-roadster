@@ -7,23 +7,61 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
 
+<%@ include file="util_user.jsp" %>
+
 <%
-	Object user = session.getAttribute("user");
+	if (user != null) 
+	{
+		response.sendRedirect("index.jsp");
+	}
 	Connection con = connectionManager.open();
 %>
 <!DOCTYPE html>
 <html>
-<head>
-<title>Everything Roadster</title>
-</head>
-<Body>
-	<b> Sign In</b>
-	<form action="./signIn.jsp" method="POST">
-		<b>"email"</b> <input type="text" name="email" size="50"> <b>"password"</b>
-		<input type="text" name="password" size="50"> <b>"year"</b>
-		<button type="submit">sign In</button>
-	</form>
-</head>
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	    <title>EverythingRoadster - Sign In</title>
+	    <meta name="description" content="">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	    <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
+	    <link rel="stylesheet" href="stylesheets/main.css">
+	    <link rel="stylesheet" href="stylesheets/signUp.css">
+	
+	    <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+	    <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
+	    <script src="vendor/javascripts/bootstrap.min.js"></script>
+	</head>
+	<Body>
+		<%@ include file="util_navbar.jsp" %>
+		<div class="container-fluid">
+	      <div class="row">
+	        <div class="col-md-4 col-md-offset-4">
+	          <h1>Account Sign In</h1>
+	        </div>
+	      </div>
+	      
+	      <form id="sign-in-form" action="./signIn.jsp" method="POST">
+	        <div class="row">
+	          <div class="col-md-4 col-md-offset-4">
+	            <div class="form-group">
+	              <label for="email-input">Email</label>
+	              <input id="email-input" class="form-control" type="text" name="email" size=50 />
+	            </div>
+	            <div class="form-group">
+	              <label for="password-input">Password</label>
+	              <input id="password-input" class="form-control" type="password" name="password" size=50 />
+	            </div>
+	          </div>
+	        </div>
+	        <div class="row">
+	        	<div class="col-md-4 col-md-offset-4">
+	        		<button class="btn btn-success" type="submit">Sign In</button>
+	        	</div>
+	        </div>
+		</form>
+	</head>
 
 <%!void signIn(HttpServletRequest request, Connection connection, HttpSession session) {
 
@@ -101,4 +139,5 @@
 <%
 	connectionManager.close();
 %>
-</Body>
+	</Body>
+</html>
