@@ -215,7 +215,7 @@
 
     String partsHTML = String.format(
            "<li class=\"list-group-item row\">" +
-             "<div class=\"col-xs-12 col-md-3\">" +
+             "<div class=\"part-image-container col-xs-12 col-md-3\">" +
                "<img src=\"%s\" class=\"part-image\" />" +
                "<form class=\"add-to-cart-container input-group\" action=\"cart.jsp\" method=\"POST\">" +
                  "<span class=\"input-group-btn\">" +
