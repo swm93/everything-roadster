@@ -7,7 +7,7 @@
 
   // get user
   Object userObj = session.getAttribute("user");
-  HashMap<String, String> user;
+  HashMap<String, String> user = null;
 
   if ((userObj != null) && (userObj instanceof java.util.HashMap))
   {

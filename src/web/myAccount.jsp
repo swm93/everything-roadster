@@ -12,19 +12,22 @@
 <%@ include file="util_user.jsp" %>
 
 <%
-	if (user == null || user.get("accountType") != "Customer" || user.get("accountType") != "Vendor") 
+	if (user == null) 
 	{
-		String redirectURL = "http://whatever.com/myJSPFile.jsp";
-        response.sendRedirect(redirectURL);
+		response.sendRedirect("signIn.jsp");
+	} else if (user.get("accountType") == "Admin") 
+	{
+		response.sendRedirect("index.jsp");
 	}
 %>
+
 <%
 	Connection con = connectionManager.open(); 
 %>
 
 <%!
-void updateAccountDetails(HttpServletRequest request, Connection connection) {
-    String[] accountInfoKeys = {"accountType", "email", "password", "firstName", "lastName", "phoneNumber",
+void updateAccountDetails(HttpServletRequest request, Connection connection, HttpSession session, HashMap<String, String> user) {
+    String[] accountInfoKeys = {"email", "password", "firstName", "lastName", "phoneNumber",
         "streetAddress", "city", "provinceState", "country", "postalCode" };
 
     List<String> accountDets = new ArrayList<String>();
@@ -37,19 +40,25 @@ void updateAccountDetails(HttpServletRequest request, Connection connection) {
 
       PreparedStatement preparedStatement = null;
 
-      String insertTableSQL = "INSERT INTO Account (accountId, accountType, email, password, firstName, lastName, phoneNumber, streetAddress, city, provinceState, country, postalCode) "
-          + "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?)";
+      String insertTableSQL = "UPDATE Account SET email=?, password=?, firstName=?, lastName=?, "
+    		  + "phoneNumber=?, streetAddress=?, city=?, provinceState=?, country=?, postalCode=? "
+          + "WHERE accountId=" + user.get("accountId") + ";";
 
       preparedStatement = connection.prepareStatement(insertTableSQL);
 
-      int i = 2;
+      int i = 0;
       for (String column : accountDets) {
-        preparedStatement.setString(i, accountDets.get(i - 2));
+        preparedStatement.setString(i, accountDets.get(i));
         i++;
       }
 
       // execute insert SQL stetement
       preparedStatement.executeUpdate();
+      i = 0;
+      for (String column : accountDets) {
+          user.put(accountInfoKeys[i], accountDets.get(i));
+          i++;
+      }
     } catch (Exception e) {
       System.out.println(e);
     }
@@ -91,49 +100,49 @@ void updateAccountDetails(HttpServletRequest request, Connection connection) {
           <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="account-type-input">Account Type</label>
-              <input id="account-type-input" class="form-control" name="accountType" value=<%= user.get("accountType") %> readonly />
+              <input id="account-type-input" class="form-control" name="accountType" value="<% if (user != null) { user.get("accountType"); } %>" readonly />
             </div>
             <div class="form-group">
               <label for="email-input">Email</label>
-              <input id="email-input" class="form-control" type="text" name="email" readonly/>
+              <input id="email-input" class="form-control" type="text" name="email" value="<% if (user != null) { user.get("email"); } %>" readonly/>
             </div>
             <div class="form-group">
               <label for="password-input">Password</label>
-              <input id="password-input" class="form-control" type="password" name="password" />
+              <input id="password-input" class="form-control" type="password" name="password" value="<% if (user != null) { user.get("password"); } %>"/>
             </div>
             <div class="form-group">
               <label for="first-name-input">First Name</label>
-              <input id="first-name-input" class="form-control" type="text" name="firstName" />
+              <input id="first-name-input" class="form-control" type="text" name="firstName" value="<% if (user != null) { user.get("firstName"); } %>"/>
             </div>
             <div class="form-group">
               <label for="last-name-input">Last Name</label>
-              <input id="last-name-input" class="form-control" type="text" name="lastName" />
+              <input id="last-name-input" class="form-control" type="text" name="lastName" value="<% if (user != null) { user.get("lastName"); } %>"/>
             </div>
             <div class="form-group">
               <label for="phone-number-input">Phone Number</label>
-              <input id="phone-number-input" class="form-control" type="text" name="phoneNumber" />
+              <input id="phone-number-input" class="form-control" type="text" name="phoneNumber" value="<% if (user != null) { user.get("phoneNumber"); } %>"/>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="street-address-input">Street Address</label>
-              <input id="street-address-input" class="form-control" type="text" name="streetAddress" />
+              <input id="street-address-input" class="form-control" type="text" name="streetAddress" value="<% if (user != null) { user.get("streetAddress"); } %>"/>
             </div>
             <div class="form-group">
               <label for="city-input">City</label>
-              <input id="city-input" class="form-control" type="text" name="city" />
+              <input id="city-input" class="form-control" type="text" name="city" value="<% if (user != null) { user.get("city"); } %>"/>
             </div>
             <div class="form-group">
               <label for="province-state-input">Province or State</label>
-              <input id="province-state-input" class="form-control" type="text" name="provinceState" />
+              <input id="province-state-input" class="form-control" type="text" name="provinceState" value="<% if (user != null) { user.get("provinceState"); } %>"/>
             </div>
             <div class="form-group">
               <label for="country-input">Country</label>
-              <input id="country-input" class="form-control" type="text" name="country" />
+              <input id="country-input" class="form-control" type="text" name="country" value="<% if (user != null) { user.get("country"); } %>"/>
             </div>
             <div class="form-group">
               <label for="postal-code-input">Postal Code</label>
-              <input id="postal-code-input" class="form-control" type="text" name="postalCode" />
+              <input id="postal-code-input" class="form-control" type="text" name="postalCode" value="<% if (user != null) { user.get("postalCode"); } %>"/>
             </div>
           </div>
         </div>
@@ -147,13 +156,16 @@ void updateAccountDetails(HttpServletRequest request, Connection connection) {
 
 <%
   // I mean, I guess it should
-  if (request.getParameter("password") != null || request.getParameter("firstName") != null ||
-  request.getParameter("lastName") != null || request.getParameter("streetAddress") != null || 
-  request.getParameter("city") != null || request.getParameter("provinceState") != null || 
-  request.getParameter("country") != null || request.getParameter("postalCode") != null) {  
-    System.out.println("updating account details");
-    updateAccountDetails(request, con);
-  }
+	boolean valid = true;
+	for (String val : request.getParameterMap().keySet()) {
+		if (request.getParameter(val) == null || request.getParameter(val).equals("")) {
+			valid = false;
+		}
+	}
+	if (valid) {  
+	  System.out.println("updating account details");
+	  updateAccountDetails(request, con, session, user);
+	}
 %>
 
     <%@ include file="util_copyright.jsp" %>
