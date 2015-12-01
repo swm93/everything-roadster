@@ -77,14 +77,26 @@
         </ul>
       </li>
       <!-- TODO: only show if logged out -->
-      <li class="navbar-form">
-        <a href="signIn.jsp" class="btn btn-danger">Sign In</a>
-      </li>
-
-      <!-- TODO: only show if logged out -->
-      <li class="navbar-form">
-        <a href="signUp.jsp" class="btn btn-danger">Sign Up</a>
-      </li>
+<%
+	Object userObjNav = session.getAttribute("user");
+	HashMap<String, String> userNav = null;
+	
+	if ((userObjNav != null) && (userObjNav instanceof java.util.HashMap))
+	{
+		  userNav = (HashMap<String, String>)userObjNav;
+	}
+	
+	if (userNav == null) {
+		out.println(
+		           "<li class=\"navbar-form\">" +
+						"<a href=\"signIn.jsp\" class=\"btn btn-danger\">Sign In</a>" +
+					"</li>" +
+					"<li class=\"navbar-form\">" +
+						"<a href=\"signUp.jsp\" class=\"btn btn-danger\">Sign Up</a>" +
+					"</li>"
+		    );
+	}
+%>
 
       <!-- TODO: only show if logged in -->
       <li class="dropdown">
@@ -113,7 +125,7 @@
           <li role="separator" class="divider"></li>
           <!-- TODO: set href to logout page -->
           <li>
-            <a href="#">Logout</a>
+            <a href="logout.jsp">Logout</a>
           </li>
         </ul>
       </li>
