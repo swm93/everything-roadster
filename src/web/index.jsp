@@ -102,7 +102,7 @@
       <hr>
 
       <div id="part-categories-container" class="container-fluid">
-        <h2>Part Categories</h2>
+        <h2>Browse Parts</h2>
         <ul class="list-group">
           <a href="/browse.jsp" class="list-group-item">All</a>
 <%

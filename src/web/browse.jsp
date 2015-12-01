@@ -14,8 +14,8 @@
 
 <% Connection con = connectionManager.open(); %>
 
-<!doctype html>
-<html class="no-js" lang="">
+<!DOCTYPE html>
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">

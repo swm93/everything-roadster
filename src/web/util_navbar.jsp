@@ -76,27 +76,43 @@
 
         </ul>
       </li>
+      <!-- TODO: only show if logged out -->
       <li class="navbar-form">
         <a href="signIn.jsp" class="btn btn-danger">Sign In</a>
       </li>
 
+      <!-- TODO: only show if logged out -->
       <li class="navbar-form">
         <a href="signUp.jsp" class="btn btn-danger">Sign Up</a>
       </li>
-      
-      <li class="navbar-form">
-        <a href="addPart.jsp" class="btn btn-danger">addPart</a>
+
+      <!-- TODO: only show if logged in -->
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <!-- TODO: put user name here -->
+          <span>User</span>
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <!-- TODO: only show if admin -->
+          <li>
+            <a href="addPart.jsp">Add Part</a>
+          </li>
+          <!-- TODO: only show if admin -->
+          <li>
+            <a href="removeVehicle.jsp">Remove Vehicle</a>
+          </li>
+          <li>
+            <a href="myAccount.jsp">Account Settings</a>
+          </li>
+          <li role="separator" class="divider"></li>
+          <!-- TODO: set href to logout page -->
+          <li>
+            <a href="#">Logout</a>
+          </li>
+        </ul>
       </li>
-      
-       
-      <li class="navbar-form">
-        <a href="removeVehicle.jsp" class="btn btn-danger">removeVehicle</a>
-      </li>
-      
-      <li class="navbar-form">
-        <a href="myAccount.jsp" class="btn btn-danger">Account</a>
-      </li>
-      
+
     </ul>
   </div>
 </div>
