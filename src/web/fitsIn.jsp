@@ -6,14 +6,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 
--- To Do Scott: it is possible to make drop down menus for the model, make, year? 
--- Something that iterates through the current vehicle makes, models + years?
--- If they select something weird, the exceptions are handled via auto creating the vehicle
--- so if he made like a ford Caravan from 1950, it technically could be built. 
--- with the FK restraints however our users (Ramon), could have issues makeing something
--- example: he makes a part, he gets here he tries to make it fit into a "Dodg Viper 2013". The page won't crash
--- but dodg != dodge, so he couldn;t add it.
-
+--If you are reading this, you created a vehicle part and are now linking it to the cars the parts works in
 <%
 	Connection con = connectionManager.open();
 %>
@@ -26,12 +19,17 @@
 <Body>
 	<b> Which vehicle(s) does this part fit in?</b>
 	<b> if there are multiple vehicles, enter one at a time</b>
+	<b> after you are finished, click done to be redirected back to home</b>
 	<form action="./fitsIn.jsp" method="POST">
 		<b>"makeName"</b> <input type="text" name="makeName" size="50">
 		<b>"modelName"</b> <input type="text" name="modelName" size="50">
 		<b>"year"</b> <input type="text" name="year" size="50">
 		<button type="submit">AddPart</button>
 	</form>
+	<form action="./index.jsp" method="POST">
+		<button type="submit">Done</button>
+	</form>
+	
 </head>
 
 <%!void createFitsIn(HttpServletRequest request, Connection connection) {
