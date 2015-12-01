@@ -52,7 +52,7 @@
       preparedStatement.executeUpdate();
 
       System.out.println("Your part has been added");
-      
+
       // int toBePass = k+1; (k+1 = partId)
     } catch (Exception e) {
 
@@ -61,6 +61,15 @@
 
   }
 %>
+
+<%
+  if (request.getParameter("partName") != null) {
+    createPart(request, con);
+  } else {
+    System.out.println("here");
+  }
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -133,14 +142,6 @@
         </div>
       </div>
     </form>
-
-<%
-  if (request.getParameter("partName") != null) {
-    createPart(request, con);
-  } else {
-    System.out.println("here");
-  }
-%>
 
     <%@ include file="util_copyright.jsp" %>
 

@@ -66,6 +66,17 @@ public static void removeVehicle(int removeId, Connection connection) {
   }
 %>
 
+<%
+  if ((request.getParameter("modelName") != null) && (request.getParameter("makeName") != null) && (request.getParameter("year") != null))
+  {
+    checkExists(request, con);
+  }
+  else
+  {
+    System.out.println("Nothing Entered- yet");
+  }
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -137,16 +148,7 @@ public static void removeVehicle(int removeId, Connection connection) {
       </div>
     </form>
 
-<%
-  if ((request.getParameter("modelName") != null) && (request.getParameter("makeName") != null) && (request.getParameter("year") != null))
-  {
-    checkExists(request, con);
-  }
-  else
-  {
-    System.out.println("Nothing Entered- yet");
-  }
-%>
+    <%@ include file="util_copyright.jsp" %>
 
   </body>
 </html>
