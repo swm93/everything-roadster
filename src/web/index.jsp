@@ -11,30 +11,30 @@
 
 <!doctype html>
 <html class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>EverythingRoadster</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>EverythingRoadster</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
-        <link rel="stylesheet" href="stylesheets/main.css">
-        <link rel="stylesheet" href="stylesheets/index.css">
+    <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
+    <link rel="stylesheet" href="stylesheets/index.css">
 
-        <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-        <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
-        <script src="vendor/javascripts/bootstrap.min.js"></script>
-    </head>
+    <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
+    <script src="vendor/javascripts/bootstrap.min.js"></script>
+  </head>
 
-    <body>
-      <%@ include file="util_navbar.jsp" %>
-      <%@ include file="util_message.jsp" %>
+  <body>
+    <%@ include file="util_navbar.jsp" %>
+    <%@ include file="util_message.jsp" %>
 
-      <div class="jumbotron">
-        <div id="new-parts-carousel-container" class="container-fluid">
-          <div id="carousel-new-parts" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
+    <div class="jumbotron">
+      <div id="new-parts-carousel-container" class="container-fluid">
+        <div id="carousel-new-parts" class="carousel slide" data-ride="carousel">
+          <ol class="carousel-indicators">
 <%
   //load parts
   PreparedStatement recentPartsPS = con.prepareStatement(
@@ -58,17 +58,17 @@
   {
     String active = (i == 0) ? " active" : "";
     String html = String.format(
-             "<li data-target=\"#carousel-example-generic\" data-slide-to=\"%d\" class=\"slide %s\"></li>",
+           "<li data-target=\"#carousel-example-generic\" data-slide-to=\"%d\" class=\"slide %s\"></li>",
     i, active);
 
     out.println(html);
   }
 %>
-            </ol>
+          </ol>
 
-            <h3 class="carousel-header">Recently Listed Parts</h3>
+          <h3 class="carousel-header">Recently Listed Parts</h3>
 
-            <div class="carousel-inner" role="listbox">
+          <div class="carousel-inner" role="listbox">
 <%
   while (recentPartsRS.next())
   {
@@ -77,35 +77,35 @@
     String active = (recentPartsRS.getRow() == 1) ? " active" : "";
 
     String html = String.format(
-             "<div class=\"item%s\">" +
-               "<img src=\"%s\">" +
-               "<h4 class=\"carousel-title\">%s</h4>" +
-             "</div>",
+           "<div class=\"item%s\">" +
+             "<img src=\"%s\">" +
+             "<h4 class=\"carousel-title\">%s</h4>" +
+           "</div>",
     active, imagePath, name);
 
     out.println(html);
   }
 %>
-            </div>
-
-            <a class="left carousel-control" href="#carousel-new-parts" role="button" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-              <span class="sr-only">Previous</span>
-            </a>
-            <a class="right carousel-control" href="#carousel-new-parts" role="button" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-              <span class="sr-only">Next</span>
-            </a>
           </div>
+
+          <a class="left carousel-control" href="#carousel-new-parts" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-new-parts" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
       </div>
+    </div>
 
-      <hr>
+    <hr>
 
-      <div id="part-categories-container" class="container-fluid">
-        <h2>Browse Parts</h2>
-        <ul class="list-group">
-          <a href="/browse.jsp" class="list-group-item">All</a>
+    <div id="part-categories-container" class="container-fluid">
+      <h2>Browse Parts</h2>
+      <ul class="list-group">
+        <a href="/browse.jsp" class="list-group-item">All</a>
 <%
   //load parts
   PreparedStatement partCategoriesPS = con.prepareStatement(
@@ -122,22 +122,21 @@
     int numParts = partCategoriesRS.getInt("numParts");
 
     String html = String.format(
-         "<a href=\"/browse.jsp?category=%s\" class=\"list-group-item\">" +
-           "<span class=\"badge\">%d</span>" +
-           "<span>%s</span>" +
-         "</a>",
+       "<a href=\"/browse.jsp?category=%s\" class=\"list-group-item\">" +
+         "<span class=\"badge\">%d</span>" +
+         "<span>%s</span>" +
+       "</a>",
     category, numParts, category);
 
     out.println(html);
   }
 %>
-        </ul>
-      </div>
+      </ul>
+    </div>
 
-      <%@ include file="util_copyright.jsp" %>
+    <%@ include file="util_copyright.jsp" %>
 
-    </body>
+  </body>
 </html>
-
 
 <% connectionManager.close(); %>
