@@ -29,6 +29,7 @@
 
     <body>
       <%@ include file="util_navbar.jsp" %>
+      <%@ include file="util_message.jsp" %>
 
       <div class="jumbotron">
         <div id="new-parts-carousel-container" class="container-fluid">

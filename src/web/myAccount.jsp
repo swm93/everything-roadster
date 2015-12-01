@@ -87,6 +87,7 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
 
   <body>
     <%@ include file="util_navbar.jsp" %>
+    <%@ include file="util_message.jsp" %>
 
     <div class="container-fluid">
       <div class="row">

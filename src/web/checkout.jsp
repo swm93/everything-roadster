@@ -31,8 +31,8 @@
   </head>
 
   <body>
-
     <%@ include file="util_navbar.jsp" %>
+    <%@ include file="util_message.jsp" %>
 
     <form class="container-fluid">
       <div class="row">

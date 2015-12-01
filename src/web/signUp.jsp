@@ -7,11 +7,12 @@
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Arrays" %>
 
 <% Connection con = connectionManager.open(); %>
 
 <%!
-void createAccount(HttpServletRequest request, Connection connection) {
+void createAccount(HttpServletRequest request, Connection connection, HttpSession session) {
     String[] accountInfoKeys = { "accountType", "email", "password", "firstName", "lastName", "phoneNumber",
         "streetAddress", "city", "provinceState", "country", "postalCode" };
 
@@ -49,12 +50,23 @@ void createAccount(HttpServletRequest request, Connection connection) {
 
       // execute insert SQL stetement
       preparedStatement.executeUpdate();
+      session.setAttribute("message", Arrays.asList("success", "Your account has been successfully created!"));
     } catch (Exception e) {
       System.out.println(e);
+      session.setAttribute("message", Arrays.asList("danger", "Failed to create your account."));
     }
 
   }
 %>
+
+<%
+  // I mean, I guess it should
+  if (request.getParameter("accountType") != null) {
+    System.out.println("creating account");
+    createAccount(request, con, session);
+  }
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -77,6 +89,7 @@ void createAccount(HttpServletRequest request, Connection connection) {
 
   <body>
     <%@ include file="util_navbar.jsp" %>
+    <%@ include file="util_message.jsp" %>
 
     <div class="container-fluid">
       <div class="row">
@@ -146,14 +159,6 @@ void createAccount(HttpServletRequest request, Connection connection) {
         </div>
       </form>
     </div>
-
-<%
-  // I mean, I guess it should
-  if (request.getParameter("accountType") != null) {
-    System.out.println("creating account");
-    createAccount(request, con);
-  }
-%>
 
     <%@ include file="util_copyright.jsp" %>
 

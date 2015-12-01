@@ -5,12 +5,13 @@
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Arrays" %>
 
 
 <% Connection con = connectionManager.open(); %>
 
 <%!
-  public void checkExists(HttpServletRequest request, Connection connection){
+  public void checkExists(HttpServletRequest request, Connection connection, HttpSession session) {
     String[] PartInfoKeys = {"makeName", "modelName", "year"};
 
     List<String> PartDets = new ArrayList<String>();
@@ -34,7 +35,7 @@
       if(rs.next()){
         System.out.println("Vehicle exists already");
       }else{
-        createVehicle(PartDets, connection);
+        createVehicle(PartDets, connection, session);
       }
     } catch (SQLException e) {
 
@@ -44,7 +45,7 @@
 %>
 
 <%!
-public static void createVehicle(List<String> PartDets,Connection connection) {
+public static void createVehicle(List<String> PartDets, Connection connection, HttpSession session) {
     Integer k =0;
     try {
     PreparedStatement preparedStatement = null;
@@ -72,14 +73,16 @@ public static void createVehicle(List<String> PartDets,Connection connection) {
     } catch (SQLException e) {
 
       System.out.println(e);
+      session.setAttribute("message", Arrays.asList("danger", "Failed to create your vehicle."));
     }
     System.out.println("Vehicle Created");
+    session.setAttribute("message", Arrays.asList("success", "Your vehicle has been successfully created!"));
   }
 %>
 
 <%
   if (request.getParameter("modelName") != null) {
-    checkExists(request, con);
+    checkExists(request, con, session);
   } else {
     System.out.println("Nothing Entered- yet");
   }
@@ -90,7 +93,7 @@ public static void createVehicle(List<String> PartDets,Connection connection) {
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>EverythingRoadster - Remove Vehicle</title>
+    <title>EverythingRoadster - Create Vehicle</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -104,6 +107,7 @@ public static void createVehicle(List<String> PartDets,Connection connection) {
 
   <body>
     <%@ include file="util_navbar.jsp" %>
+    <%@ include file="util_message.jsp" %>
 
     <div class="container-fluid">
       <div class="row">
@@ -112,7 +116,7 @@ public static void createVehicle(List<String> PartDets,Connection connection) {
         </div>
       </div>
 
-      <form class="remove-vehicle-form row" action="./removeVehicle.jsp" method="POST">
+      <form class="remove-vehicle-form row" action="./createVehicle.jsp" method="POST">
         <div class="col-xs-12 col-sm-5 form-group">
           <label for="make-name-input">Make Name</label>
           <input id="make-name-input" class="form-control" name="makeName" type="text" />

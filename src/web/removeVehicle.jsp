@@ -5,12 +5,13 @@
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Arrays" %>
 
 
 <% Connection con = connectionManager.open(); %>
 
 <%!
-  public void checkExists(HttpServletRequest request, Connection connection) {
+  public void checkExists(HttpServletRequest request, Connection connection, HttpSession session) {
     String[] PartInfoKeys = { "makeName", "modelName", "year" };
 
     List<String> PartDets = new ArrayList<String>();
@@ -35,20 +36,23 @@
       Integer vID = 0;
       if (rs.next()) {
         vID=rs.getInt(1);
-        removeVehicle(vID, connection);
+        removeVehicle(vID, connection, session);
         System.out.println("vehicle was removed");
+        session.setAttribute("message", Arrays.asList("success", "Your vehicle was successfully removed!"));
       } else {
         System.out.println("vehicle doesn't exist");
+        session.setAttribute("message", Arrays.asList("danger", "Failed to remove your vehicle."));
       }
     } catch (SQLException e) {
 
       System.out.println(e);
+      session.setAttribute("message", Arrays.asList("danger", "Failed to remove your vehicle."));
     }
   }
 %>
 
 <%!
-public static void removeVehicle(int removeId, Connection connection) {
+public static void removeVehicle(int removeId, Connection connection, HttpSession session) {
 
     try {
       PreparedStatement preparedStatement = null;
@@ -69,7 +73,7 @@ public static void removeVehicle(int removeId, Connection connection) {
 <%
   if ((request.getParameter("modelName") != null) && (request.getParameter("makeName") != null) && (request.getParameter("year") != null))
   {
-    checkExists(request, con);
+    checkExists(request, con, session);
   }
   else
   {
@@ -121,6 +125,7 @@ public static void removeVehicle(int removeId, Connection connection) {
 
   <body>
     <%@ include file="util_navbar.jsp" %>
+    <%@ include file="util_message.jsp" %>
 
     <div class="container-fluid">
       <div class="row">
