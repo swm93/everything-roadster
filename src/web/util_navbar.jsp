@@ -100,6 +100,11 @@
           </li>
           <!-- TODO: only show if admin -->
           <li>
+            <a href="createVehicle.jsp">Create Vehicle</a>
+          </li>
+          <li>
+          <!-- TODO: only show if admin -->
+          <li>
             <a href="removeVehicle.jsp">Remove Vehicle</a>
           </li>
           <li>
