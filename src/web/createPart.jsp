@@ -76,13 +76,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>EverythingRoadster - Add Part</title>
+    <title>EverythingRoadster - Create Part</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/main.css">
-    <link rel="stylesheet" href="stylesheets/addPart.css">
+    <link rel="stylesheet" href="stylesheets/createPart.css">
 
     <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
@@ -96,11 +96,11 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
-          <h1>Part Creation Page</h1>
+          <h1>Create Part</h1>
         </div>
       </div>
 
-      <form class="add-part-form row" action="./addPart.jsp" method="POST">
+      <form class="add-part-form row" action="./createPart.jsp" method="POST">
         <div class="col-xs-12">
           <div class="form-group">
             <label for="part-name-input">Part Name</label>

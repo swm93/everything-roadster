@@ -96,7 +96,7 @@
         <ul class="dropdown-menu">
           <!-- TODO: only show if admin -->
           <li>
-            <a href="addPart.jsp">Add Part</a>
+            <a href="createPart.jsp">Create Part</a>
           </li>
           <!-- TODO: only show if admin -->
           <li>
