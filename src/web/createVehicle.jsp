@@ -21,7 +21,7 @@
 </head>
 <Body>
 	<b> Create vehicle</b>
-	<form action="./vehicleCreate.jsp" method="POST">
+	<form action="./createVehicle.jsp" method="POST">
 		<b>"makeName"</b> <input type="text" name="makeName" size="50">
 		<b>"modelName"</b> <input type="text" name="modelName" size="50">
 		<b>"year"</b> <input type="text" name="year" size="50">
