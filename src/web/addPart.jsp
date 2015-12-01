@@ -81,7 +81,7 @@
   </head>
 
   <body>
-  <%@ include file="util_navbar.jsp" %>
+    <%@ include file="util_navbar.jsp" %>
 
     <div class="container-fluid">
       <div class="row">
@@ -90,8 +90,7 @@
         </div>
       </div>
 
-    <form class="add-part-form" action="./addPart.jsp" method="POST">
-      <div class="row">
+      <form class="add-part-form row" action="./addPart.jsp" method="POST">
         <div class="col-xs-12">
           <div class="form-group">
             <label for="part-name-input">Part Name</label>
@@ -112,7 +111,7 @@
   {
     String categoryName = categoryNamesRS.getString("categoryName");
     String categoryOptionHtml = String.format(
-             "<option value=\"%s\">%s</option>",
+               "<option value=\"%s\">%s</option>",
     categoryName, categoryName);
 
     out.println(categoryOptionHtml);
