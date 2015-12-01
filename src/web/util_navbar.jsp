@@ -19,6 +19,11 @@
     </a>
   </div>
   <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav navbar-left">
+      <li>
+        <a href="browse.jsp">Browse</a>
+      </li>
+    </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -30,7 +35,7 @@
           <li class="cart-dropdown-header clearfix">
             <span>
               <span class="cart-dropdown-header-label">Cart</span>
-              <a href="checkout.jsp" class="cart-dropdown-checkout btn btn-link">Checkout</a>
+              <a href="checkout.jsp" class="cart-dropdown-checkout btn btn-link <%= cart.size() == 0 ? "hidden" : "" %>">Checkout</a>
               <form action="cart.jsp" method="POST">
                 <button class="cart-dropdown-empty btn btn-link" type="submit" name="action" value="empty">Empty</button>
               </form>
