@@ -1,5 +1,3 @@
-<%@ include file="util_connection.jsp" %>
-
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
@@ -9,8 +7,12 @@
 <%@ page import="java.sql.PreparedStatement" %>
 <%@ page import="java.sql.ResultSet" %>
 
+<%@ include file="util_connection.jsp" %>
+<%@ include file="util_user.jsp" %>
+
 
 <% Connection con = connectionManager.open(); %>
+
 
 <!doctype html>
 <html>
@@ -28,6 +30,7 @@
     <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
     <script src="vendor/javascripts/bootstrap.min.js"></script>
+    <script src="javascripts/checkout.js"></script>
   </head>
 
   <body>
@@ -65,23 +68,23 @@
           <h3>Shipping Address</h3>
           <div class="form-group">
             <label for="shipping-address-input">Address</label>
-            <input id="shipping-address-input" class="form-control" name="toAddress" />
+            <input id="shipping-address-input" class="form-control" name="toAddress" value="<%= user != null ? user.get("streetAddress") : "" %>" />
           </div>
           <div class="form-group">
             <label for="shipping-city-input">City</label>
-            <input id="shipping-city-input" class="form-control" name="toCity" />
+            <input id="shipping-city-input" class="form-control" name="toCity" value="<%= user != null ? user.get("city") : "" %>" />
           </div>
           <div class="form-group">
             <label for="shipping-province-state-input">Province or State</label>
-            <input id="shipping-province-state-input" class="form-control" name="toProvinceState" />
+            <input id="shipping-province-state-input" class="form-control" name="toProvinceState" value="<%= user != null ? user.get("provinceState") : "" %>" />
           </div>
           <div class="form-group">
             <label for="shipping-postal-code-input">Postal Code</label>
-            <input id="shipping-postal-code-input" class="form-control" name="toPostalCode" />
+            <input id="shipping-postal-code-input" class="form-control" name="toPostalCode" value="<%= user != null ? user.get("postalCode") : "" %>" />
           </div>
           <div class="form-group">
             <label for="shipping-country-input">Country</label>
-            <input id="shipping-country-input" class="form-control" name="toCountry" />
+            <input id="shipping-country-input" class="form-control" name="toCountry" value="<%= user != null ? user.get("country") : "" %>" />
           </div>
 
           <h3>Payment Options</h3>
@@ -155,8 +158,16 @@
 
             <tfoot>
               <tr>
-                <td class="order-total-cell" colspan="3">Total:</td>
-                <td><%= formatter.format(total) %></td>
+                <td class="order-footer-cell-label" colspan="3">Order Cost:</td>
+                <td id="order-cost-cell" data-value="<%= total %>"><%= formatter.format(total) %></td>
+              </tr>
+              <tr>
+                <td class="order-footer-cell-label" colspan="3">Shipping Cost:</td>
+                <td id="order-shipping-cell"></td>
+              </tr>
+              <tr>
+                <td class="order-footer-cell-label" colspan="3">Total:</td>
+                <td id="order-total-cell"></td>
               </tr>
             </tfoot>
           </table>
