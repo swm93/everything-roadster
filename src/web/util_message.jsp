@@ -9,7 +9,7 @@
   {
     List<String> message = (List<String>)messageObj;
     String messageHtml = String.format(
-      "<div class=\"alert alert-%s alert-dismissible\">" +
+      "<div class=\"alert alert-%s alert-dismissible fade in\">" +
         "<button class=\"close\" data-dismiss=\"alert\">" +
           "<span>&times;</span>" +
         "</button>" +

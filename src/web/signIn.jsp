@@ -7,19 +7,15 @@
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
+<%@ page import="java.io.IOException" %>
 
 <%@ include file="util_user.jsp" %>
 
-<%
-  if (user != null) 
-  {
-    response.sendRedirect("index.jsp");
-  }
-  Connection con = connectionManager.open();
-%>
+
+<% Connection con = connectionManager.open(); %>
 
 <%!
-  void signIn(HttpServletRequest request, Connection connection, HttpSession session) {
+  void signIn(HttpServletRequest request, Connection connection, HttpSession session, HttpServletResponse response) {
 
     String[] accountInfoKeys = { "email", "password" };
 
@@ -44,21 +40,20 @@
         createUserHash(AccountId, connection, session);
         System.out.println("signed In!");
         session.setAttribute("message", Arrays.asList("success", "You have been signed in!"));
+
+        response.sendRedirect("browse.jsp");
       } else {
         System.out.println("wrong e-mail/password combination");
         session.setAttribute("message", Arrays.asList("danger", "Invalid email/password combination."));
       }
-      ;
-    } catch (SQLException e) {
-
+    } catch (SQLException | IOException e) {
       System.out.println(e);
       session.setAttribute("message", Arrays.asList("danger", "Failed to sign in."));
     }
-
   }
 %>
 
-<%!//HashMap<String, ArrayList<String>> 
+<%!
   void createUserHash(int accountId, Connection connection, HttpSession session) {
     String[] accountInfoKeys = { "accountType", "email", "password", "firstName", "lastName", "phoneNumber",
         "streetAddress", "city", "provinceState", "country", "postalCode" };
@@ -79,21 +74,10 @@
       }
       userHash.put("accountId", String.valueOf(accountId));
       session.setAttribute("user", userHash);
-
-    } catch (SQLException e) {
-
+    }
+    catch (SQLException e) {
       System.out.println(e);
     }
-
-    //return userHash;
-  }
-%>
-
-<%
-  if ((request.getParameter("email") != null) && (request.getParameter("password") != null)) {
-    signIn(request, con, session);
-  } else {
-    System.out.println("Check fail");
   }
 %>
 
@@ -152,5 +136,28 @@
 
   </body>
 </html>
+
+
+<%
+  // redirect if signed in
+  if (user != null)
+  {
+    session.setAttribute("message", Arrays.asList("info", "Cannot access sign in page. You are already signed in."));
+    response.sendRedirect("index.jsp");
+  }
+
+  // if post, attempt to sign in
+  if (request.getMethod().equals("POST"))
+  {
+    if ((request.getParameter("email") != null) && (request.getParameter("password") != null))
+    {
+      signIn(request, con, session, response);
+    }
+    else
+    {
+      System.out.println("Check fail");
+    }
+  }
+%>
 
 <% connectionManager.close(); %>
