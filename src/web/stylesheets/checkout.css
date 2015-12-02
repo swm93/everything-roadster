@@ -5,6 +5,10 @@
     }
 }
 
+#shipping-instruction-input {
+    max-width: 100%;
+}
+
 #checkout-btn {
     float: right;
     margin: 18px 0 4px 0;

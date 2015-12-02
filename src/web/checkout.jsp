@@ -1,7 +1,10 @@
+<%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Date" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.io.IOException" %>
 
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
@@ -13,8 +16,205 @@
 
 <% Connection con = connectionManager.open(); %>
 
+<%
+  Date currentDate = new Date();
 
-<!doctype html>
+  HashMap<String, Float> carrierCosts = new HashMap<String, Float>();
+  carrierCosts.put("UPS", 5.f);
+  carrierCosts.put("USPS", 4.f);
+  carrierCosts.put("FedEx", 3.f);
+  carrierCosts.put("Canada Post", 2.f);
+
+  HashMap<String, Float> shippingCosts = new HashMap<String, Float>();
+  shippingCosts.put("Normal", 2.f);
+  shippingCosts.put("Express", 5.f);
+  shippingCosts.put("Overnight", 10.f);
+
+  HashMap<String, Date> shippingDates = new HashMap<String, Date>();
+  shippingDates.put("Normal", new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000));
+  shippingDates.put("Express", new Date(currentDate.getTime() + 3 * 24 * 60 * 60 * 1000));
+  shippingDates.put("Overnight", new Date(currentDate.getTime() + 1 * 24 * 60 * 60 * 1000));
+%>
+
+<%!
+  public void processOrder(
+    HashMap<String, ArrayList<String>> cart,
+    HashMap<String, String> user,
+    HashMap<String, Float> carrierCosts,
+    HashMap<String, Float> shippingCosts,
+    HashMap<String, Date> shippingDates,
+    Connection connection,
+    HttpSession session,
+    HttpServletRequest request,
+    HttpServletResponse response
+  )
+  {
+    try
+    {
+      // disable auto commit so we can rollback inserts if an error occurs
+      connection.setAutoCommit(false);
+
+      Date currentDate = new Date();
+
+      // get next order id
+      Integer orderId = 1;
+      PreparedStatement lastOrderIdPS = connection.prepareStatement(
+        "SELECT MAX(orderId) AS orderId " +
+          "FROM PartOrder;"
+      );
+      ResultSet lastOrderIdRS = lastOrderIdPS.executeQuery();
+      if (lastOrderIdRS.next())
+      {
+        orderId = lastOrderIdRS.getInt("orderId") + 1;
+      }
+
+      // get next shipment id
+      Integer shipmentId = 1;
+      PreparedStatement lastShipmentIdPS = connection.prepareStatement(
+        "SELECT MAX(shipmentId) AS shipmentId " +
+          "FROM Shipment;"
+      );
+      ResultSet lastShipmentIdRS = lastShipmentIdPS.executeQuery();
+      if (lastShipmentIdRS.next())
+      {
+        shipmentId = lastShipmentIdRS.getInt("shipmentId") + 1;
+      }
+
+      // get next payment id
+      Integer paymentId = 1;
+      PreparedStatement lastPaymentIdPS = connection.prepareStatement(
+        "SELECT MAX(paymentId) AS paymentId " +
+          "FROM Payment;"
+      );
+      ResultSet lastPaymentIdRS = lastPaymentIdPS.executeQuery();
+      if (lastPaymentIdRS.next())
+      {
+        paymentId = lastPaymentIdRS.getInt("paymentId") + 1;
+      }
+
+      // create order
+      PreparedStatement createOrderPS = connection.prepareStatement(
+        "INSERT INTO PartOrder(orderId, customerId, orderDate) " +
+          "VALUES (?, ?, ?);"
+      );
+      createOrderPS.setInt(1, orderId);
+      createOrderPS.setInt(2, Integer.parseInt(user.get("accountId")));
+      createOrderPS.setDate(3, new java.sql.Date(currentDate.getTime()));
+      createOrderPS.executeUpdate();
+
+      // create shipment
+      String shipOption = (String)request.getParameter("shipOption");
+      String shipCarrier = (String)request.getParameter("carrier");
+      float carrierCost = carrierCosts.get(shipCarrier);
+      float shipCost = shippingCosts.get(shipOption);
+      Date shipDate = shippingDates.get(shipOption);
+      PreparedStatement createShipmentPS = connection.prepareStatement(
+        "INSERT INTO Shipment(shipmentId, orderId, trackingNumber, carrier, instruction, shipCost, shipDate, shipOption, toAddress, toCity, toProvinceState, toCountry, toPostalCode) " +
+          "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
+      );
+      createShipmentPS.setInt(1, shipmentId);
+      createShipmentPS.setInt(2, orderId);
+      createShipmentPS.setInt(3, (int)(Math.random() * 1000000000));
+      createShipmentPS.setString(4, shipCarrier);
+      createShipmentPS.setString(5, (String)request.getParameter("instruction"));
+      createShipmentPS.setFloat(6, carrierCost + shipCost);
+      createShipmentPS.setDate(7, new java.sql.Date(shipDate.getTime()));
+      createShipmentPS.setString(8, shipOption);
+      createShipmentPS.setString(9, (String)request.getParameter("toAddress"));
+      createShipmentPS.setString(10, (String)request.getParameter("toCity"));
+      createShipmentPS.setString(11, (String)request.getParameter("toProvinceState"));
+      createShipmentPS.setString(12, (String)request.getParameter("toCountry"));
+      createShipmentPS.setString(13, (String)request.getParameter("toPostalCode"));
+      createShipmentPS.executeUpdate();
+
+      // create payment
+      PreparedStatement createPaymentPS = connection.prepareStatement(
+        "INSERT INTO Payment(paymentId, shipmentId, accountNumber, paymentType) " +
+          "VALUES (?, ?, ?, ?);"
+      );
+      createPaymentPS.setInt(1, paymentId);
+      createPaymentPS.setInt(2, shipmentId);
+      createPaymentPS.setInt(3, Integer.parseInt((String)request.getParameter("accountNumber")));
+      createPaymentPS.setString(4, (String)request.getParameter("paymentType"));
+      createPaymentPS.executeUpdate();
+
+      // create contains part insert prepared statement
+      PreparedStatement createContainsPS = connection.prepareStatement(
+        "INSERT INTO ContainsPart(orderId, listId, quantity) " +
+          "VALUES (?, ?, ?);"
+      );
+
+      // create available quantity lookup prepared statement
+      PreparedStatement listedPartPS = connection.prepareStatement(
+        "SELECT quantity " +
+          "FROM ListedPart " +
+          "WHERE listId=?;"
+      );
+
+      for (Map.Entry<String, ArrayList<String>> entry : cart.entrySet())
+      {
+        Integer listId = Integer.parseInt(entry.getKey());
+        String partName = entry.getValue().get(0);
+        Integer requestedQuantity = Integer.parseInt(entry.getValue().get(1));
+
+        listedPartPS.setInt(1, listId);
+        ResultSet listedPartRS = listedPartPS.executeQuery();
+        listedPartRS.next();
+
+        Integer maxQuantity = listedPartRS.getInt("quantity");
+        Integer quantity = Math.min(requestedQuantity, maxQuantity);
+
+        // less parts available than requested; inform user of this
+        if (quantity != requestedQuantity)
+        {
+          session.setAttribute("message", Arrays.asList("info", "Some of the parts you have requested are unavailable. They were removed from your order and you were not charged for them."));
+        }
+
+        createContainsPS.setInt(1, orderId);
+        createContainsPS.setInt(2, listId);
+        createContainsPS.setInt(3, quantity);
+        createContainsPS.addBatch();
+      }
+
+      createContainsPS.executeUpdate();
+
+      connection.commit();
+
+      session.removeAttribute("shoppingCart");
+      response.sendRedirect("checkoutOrderSummary.jsp");
+    }
+    catch (SQLException e)
+    {
+      System.out.println(e);
+
+      try
+      {
+        connection.rollback();
+      }
+      catch (SQLException re) {
+        System.out.println(re);
+      }
+
+      session.setAttribute("message", Arrays.asList("danger", "Failed to process your order."));
+    }
+    catch (IOException e) {
+      System.out.println(e);
+    }
+    finally
+    {
+      try
+      {
+        connection.setAutoCommit(true);
+      }
+      catch (SQLException ce) {
+        System.out.println(ce);
+      }
+    }
+  }
+%>
+
+
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -37,7 +237,7 @@
     <%@ include file="util_navbar.jsp" %>
     <%@ include file="util_message.jsp" %>
 
-    <form class="container-fluid">
+    <form action="./checkout.jsp" method="POST" class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
           <h1>Checkout</h1>
@@ -63,6 +263,10 @@
               <option value="Express">Express</option>
               <option value="Overnight">Overnight</option>
             </select>
+          </div>
+          <div class="form-group">
+            <label for="shipping-instruction-input">Instructions</label>
+            <textarea id="shipping-instruction-input" class="form-control" name="instruction"></textarea>
           </div>
 
           <h3>Shipping Address</h3>
@@ -120,10 +324,11 @@
 
 <%
   PreparedStatement listedPartPS = con.prepareStatement(
-    "SELECT price " +
+    "SELECT price, quantity " +
       "FROM ListedPart " +
       "WHERE listId=?;"
   );
+
   NumberFormat formatter = NumberFormat.getCurrencyInstance();
   Float total = 0.f;
 
@@ -180,5 +385,18 @@
   </body>
 </html>
 
+
+<%
+  if (cart.size() == 0)
+  {
+    session.setAttribute("message", Arrays.asList("warning", "Cannot checkout without adding items to your cart!"));
+    response.sendRedirect("browse.jsp");
+  }
+
+  if (request.getMethod().equals("POST"))
+  {
+    processOrder(cart, user, carrierCosts, shippingCosts, shippingDates, con, session, request, response);
+  }
+%>
 
 <% connectionManager.close(); %>
