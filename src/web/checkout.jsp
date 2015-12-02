@@ -146,9 +146,11 @@
 
       // create available quantity lookup prepared statement
       PreparedStatement listedPartPS = connection.prepareStatement(
-        "SELECT quantity " +
-          "FROM ListedPart " +
-          "WHERE listId=?;"
+        "SELECT LP.quantity, LP.quantity - SUM(CP.quantity) AS remainingQuantity " +
+          "FROM ListedPart LP " +
+            "JOIN ContainsPart CP ON CP.listId=LP.listId " +
+          "WHERE LP.listId=? " +
+          "GROUP BY LP.listId;"
       );
 
       for (Map.Entry<String, ArrayList<String>> entry : cart.entrySet())
@@ -161,7 +163,7 @@
         ResultSet listedPartRS = listedPartPS.executeQuery();
         listedPartRS.next();
 
-        Integer maxQuantity = listedPartRS.getInt("quantity");
+        Integer maxQuantity = listedPartRS.getInt("remainingQuantity");
         Integer quantity = Math.min(requestedQuantity, maxQuantity);
 
         // less parts available than requested; inform user of this
@@ -173,10 +175,8 @@
         createContainsPS.setInt(1, orderId);
         createContainsPS.setInt(2, listId);
         createContainsPS.setInt(3, quantity);
-        createContainsPS.addBatch();
+        createContainsPS.executeUpdate();
       }
-
-      createContainsPS.executeUpdate();
 
       connection.commit();
 

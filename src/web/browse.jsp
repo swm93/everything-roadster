@@ -142,11 +142,12 @@
         <ul id="browse-main-container" class="container-fluid list-group">
 <%
   String partsSQL = new String(
-    "SELECT LP.listId, P.partName, LP.price, LP.quantity, P.imagePath, P.categoryName, P.description " +
+    "SELECT LP.listId, P.partName, LP.price, LP.quantity, P.imagePath, P.categoryName, P.description, LP.quantity - SUM(CP.quantity)/COUNT(DISTINCT V.vehicleId) AS remainingQuantity " +
       "FROM ListedPart LP " +
         "JOIN Part P ON P.partId=LP.partId " +
         "JOIN FitsIn F ON F.partId=P.partId " +
-        "JOIN Vehicle V ON V.vehicleId=F.vehicleId "
+        "JOIN Vehicle V ON V.vehicleId=F.vehicleId " +
+        "JOIN ContainsPart CP ON CP.listId=LP.listId "
   );
   Map<String, String[]> parameterMap = request.getParameterMap();
   List<String> whereParams = new ArrayList<String>();
@@ -192,7 +193,7 @@
     }
   }
 
-  partsSQL += "GROUP BY LP.listId;";
+  partsSQL += "GROUP BY LP.listId HAVING LP.quantity > SUM(CP.quantity)/COUNT(DISTINCT V.vehicleId);";
 
   PreparedStatement partsPS = con.prepareStatement(partsSQL);
   for (int i = 0; i < whereParams.size(); i++)
@@ -207,7 +208,7 @@
   {
     int listId = partsRS.getInt("listId");
     String partName = partsRS.getString("partName");
-    int quantity = partsRS.getInt("quantity");
+    int quantity = partsRS.getInt("remainingQuantity");
     float price = partsRS.getFloat("price");
     String image = partsRS.getString("imagePath");
     String category = partsRS.getString("categoryName");
