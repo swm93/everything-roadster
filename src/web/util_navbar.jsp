@@ -103,7 +103,7 @@
 	}
 	if (userNav != null) {
 		out.println(
-			"<li class=\"dropdown\"" +
+			"<li class=\"dropdown\">" +
 				"<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">" +
 					"<span>" + userNav.get("firstName") + " " + userNav.get("lastName") + "</span>" +
 					"<span class=\"caret\"></span>" +
