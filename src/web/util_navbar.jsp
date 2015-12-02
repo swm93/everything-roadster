@@ -81,7 +81,7 @@
 
         </ul>
       </li>
-      <!-- TODO: only show if logged out -->
+      
 <%
 	Object userObjNav = session.getAttribute("user");
 	HashMap<String, String> userNav = null;
@@ -101,39 +101,58 @@
 					"</li>"
 		    );
 	}
+	if (userNav != null) {
+		out.println(
+			"<li class=\"dropdown\"" +
+				"<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\" role=\"button\" aria-haspopup=\"true\" aria-expanded=\"false\">" +
+					"<span>" + userNav.get("firstName") + " " + userNav.get("lastName") + "</span>" +
+					"<span class=\"caret\"></span>" +
+				"</a>" +
+				"<ul class=\"dropdown-menu\">"
+		);
+		
+		if (userNav.get("accountType").equals("admin") || userNav.get("accountType").equals("vendor")) {
+			out.println(
+				"<li>" +
+					"<a href=\"createPart.jsp\">Create Part</a>" +
+				"</li>"
+			);
+		}
+		
+		if (userNav.get("accountType").equals("admin")) {
+			out.println(
+				"<li>" +
+					"<a href=\"createVehicle.jsp\">Create Vehicle</a>" +
+				"</li>"
+			);
+		}
+		
+		if (userNav.get("accountType").equals("admin")) {
+			out.println(
+				"<li>" +
+					"<a href=\"removeVehicle.jsp\">Remove Vehicle</a>" +
+				"</li>"
+			);
+		}
+		
+		if (userNav.get("accountType").equals("customer") || userNav.get("accountType").equals("vendor")) {
+			out.println(
+				"<li>" +
+					"<a href=\"myAccount.jsp\">Account Settings</a>" +
+				"</li>"
+			);
+		}
+		
+		out.println(
+			"<li role=\"separator\" class=\"divider\"></li>" +
+			"<li>" +
+				"<a href=\"logout.jsp\">Logout</a>" +
+			"</li>" +
+			"</ul>" +
+			"</li>"
+		);
+	}
 %>
-
-      <!-- TODO: only show if logged in -->
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <!-- TODO: put user name here -->
-          <span>User</span>
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <!-- TODO: only show if admin -->
-          <li>
-            <a href="createPart.jsp">Create Part</a>
-          </li>
-          <!-- TODO: only show if admin -->
-          <li>
-            <a href="createVehicle.jsp">Create Vehicle</a>
-          </li>
-          <li>
-          <!-- TODO: only show if admin -->
-          <li>
-            <a href="removeVehicle.jsp">Remove Vehicle</a>
-          </li>
-          <li>
-            <a href="myAccount.jsp">Account Settings</a>
-          </li>
-          <li role="separator" class="divider"></li>
-          <!-- TODO: set href to logout page -->
-          <li>
-            <a href="logout.jsp">Logout</a>
-          </li>
-        </ul>
-      </li>
 
     </ul>
   </div>
