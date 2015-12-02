@@ -50,7 +50,7 @@ void createAccount(HttpServletRequest request, Connection connection, HttpSessio
 
       // execute insert SQL stetement
       preparedStatement.executeUpdate();
-      session.setAttribute("message", Arrays.asList("success", "Your account has been successfully created!"));
+      session.setAttribute("message", Arrays.asList("success", "Your account has been successfully created! Please Sign In"));
     } catch (Exception e) {
       System.out.println(e);
       session.setAttribute("message", Arrays.asList("danger", "Failed to create your account."));
