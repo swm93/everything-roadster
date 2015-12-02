@@ -145,7 +145,13 @@
 				"</li>"
 			);
 		}
-		
+
+    out.println(
+      "<li>" +
+        "<a href=\"orderHistory.jsp\">Order History</a>" +
+      "</li>"
+    );
+
 		if (userNav.get("accountType").equals("customer") || userNav.get("accountType").equals("vendor")) {
 			out.println(
 				"<li>" +
