@@ -1,0 +1,17 @@
+#order-summary-table > tbody {
+    margin-bottom: 20px;
+}
+
+#order-summary-table .address-cell, #order-summary-table .date-cell {
+    padding-top: 60px;
+}
+
+#order-summary-table .address-cell > address {
+    margin: 0;
+}
+
+#order-summary-table .date-cell {
+    vertical-align: top;
+
+    text-align: right;
+}

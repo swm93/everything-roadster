@@ -181,7 +181,7 @@
       connection.commit();
 
       session.removeAttribute("shoppingCart");
-      response.sendRedirect("checkoutOrderSummary.jsp");
+      response.sendRedirect("orderSummary.jsp?orderId=" + orderId);
     }
     catch (SQLException e)
     {
