@@ -8,6 +8,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.Arrays"%>
 
 <%@ include file="util_user.jsp" %>
 
@@ -59,8 +60,10 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
           user.put(accountInfoKeys[i], accountDets.get(i));
           i++;
       }
+      session.setAttribute("message", Arrays.asList("success", "Your settings have been updated successfully"));
     } catch (Exception e) {
       System.out.println(e);
+      session.setAttribute("message", Arrays.asList("danger", "Failed to update your settings"));
     }
 
   }
