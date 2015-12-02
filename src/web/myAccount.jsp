@@ -27,7 +27,7 @@
 
 <%!
 void updateAccountDetails(HttpServletRequest request, Connection connection, HttpSession session, HashMap<String, String> user) {
-    String[] accountInfoKeys = {"email", "password", "firstName", "lastName", "phoneNumber",
+    String[] accountInfoKeys = {"password", "firstName", "lastName", "phoneNumber",
         "streetAddress", "city", "provinceState", "country", "postalCode" };
 
     List<String> accountDets = new ArrayList<String>();
@@ -40,7 +40,7 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
 
       PreparedStatement preparedStatement = null;
 
-      String insertTableSQL = "UPDATE Account SET email=?, password=?, firstName=?, lastName=?, "
+      String insertTableSQL = "UPDATE Account SET password=?, firstName=?, lastName=?, "
     		  + "phoneNumber=?, streetAddress=?, city=?, provinceState=?, country=?, postalCode=? "
           + "WHERE accountId=" + user.get("accountId") + ";";
 
@@ -101,49 +101,49 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
           <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="account-type-input">Account Type</label>
-              <input id="account-type-input" class="form-control" name="accountType" value="<% if (user != null) { user.get("accountType"); } %>" readonly />
+              <input id="account-type-input" class="form-control" name="accountType" value="<% if (user != null) { out.println(user.get("accountType")); } %>" readonly />
             </div>
             <div class="form-group">
               <label for="email-input">Email</label>
-              <input id="email-input" class="form-control" type="text" name="email" value="<% if (user != null) { user.get("email"); } %>" readonly/>
+              <input id="email-input" class="form-control" type="text" name="email" value="<% if (user != null) { out.println(user.get("email")); } %>" readonly/>
             </div>
             <div class="form-group">
               <label for="password-input">Password</label>
-              <input id="password-input" class="form-control" type="password" name="password" value="<% if (user != null) { user.get("password"); } %>"/>
+              <input id="password-input" class="form-control" type="password" name="password" value="<% if (user != null) { out.println(user.get("password")); } %>"/>
             </div>
             <div class="form-group">
               <label for="first-name-input">First Name</label>
-              <input id="first-name-input" class="form-control" type="text" name="firstName" value="<% if (user != null) { user.get("firstName"); } %>"/>
+              <input id="first-name-input" class="form-control" type="text" name="firstName" value="<% if (user != null) { out.println(user.get("firstName")); } %>"/>
             </div>
             <div class="form-group">
               <label for="last-name-input">Last Name</label>
-              <input id="last-name-input" class="form-control" type="text" name="lastName" value="<% if (user != null) { user.get("lastName"); } %>"/>
+              <input id="last-name-input" class="form-control" type="text" name="lastName" value="<% if (user != null) { out.println(user.get("lastName")); } %>"/>
             </div>
             <div class="form-group">
               <label for="phone-number-input">Phone Number</label>
-              <input id="phone-number-input" class="form-control" type="text" name="phoneNumber" value="<% if (user != null) { user.get("phoneNumber"); } %>"/>
+              <input id="phone-number-input" class="form-control" type="text" name="phoneNumber" value="<% if (user != null) { out.println(user.get("phoneNumber")); } %>"/>
             </div>
           </div>
           <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="street-address-input">Street Address</label>
-              <input id="street-address-input" class="form-control" type="text" name="streetAddress" value="<% if (user != null) { user.get("streetAddress"); } %>"/>
+              <input id="street-address-input" class="form-control" type="text" name="streetAddress" value="<% if (user != null) { out.println(user.get("streetAddress")); } %>"/>
             </div>
             <div class="form-group">
               <label for="city-input">City</label>
-              <input id="city-input" class="form-control" type="text" name="city" value="<% if (user != null) { user.get("city"); } %>"/>
+              <input id="city-input" class="form-control" type="text" name="city" value="<% if (user != null) { out.println(user.get("city")); } %>"/>
             </div>
             <div class="form-group">
               <label for="province-state-input">Province or State</label>
-              <input id="province-state-input" class="form-control" type="text" name="provinceState" value="<% if (user != null) { user.get("provinceState"); } %>"/>
+              <input id="province-state-input" class="form-control" type="text" name="provinceState" value="<% if (user != null) { out.println(user.get("provinceState")); } %>"/>
             </div>
             <div class="form-group">
               <label for="country-input">Country</label>
-              <input id="country-input" class="form-control" type="text" name="country" value="<% if (user != null) { user.get("country"); } %>"/>
+              <input id="country-input" class="form-control" type="text" name="country" value="<% if (user != null) { out.println(user.get("country")); } %>"/>
             </div>
             <div class="form-group">
               <label for="postal-code-input">Postal Code</label>
-              <input id="postal-code-input" class="form-control" type="text" name="postalCode" value="<% if (user != null) { user.get("postalCode"); } %>"/>
+              <input id="postal-code-input" class="form-control" type="text" name="postalCode" value="<% if (user != null) { out.println(user.get("postalCode")); } %>"/>
             </div>
           </div>
         </div>
