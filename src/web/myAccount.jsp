@@ -166,7 +166,7 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
 			valid = false;
 		}
 	}
-	if (valid) {  
+	if (valid && request.getMethod().equals("POST")) {  
 	  System.out.println("updating account details");
 	  updateAccountDetails(request, con, session, user);
 	}
