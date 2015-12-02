@@ -504,22 +504,22 @@ INSERT INTO Part (partId, categoryName, partName, description, imagePath)
     VALUES ('12', 'Windshield', 'Protective glass', 'A window at the front of the passenger compartment of a motor vehicle.', 'public/images/parts/part12.jpg');
 
 INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
-    VALUES ('1', '2', '1', '1', '250', '2015-01-01 00:00:00');
+    VALUES ('1', '2', '1', '500', '250', '2015-01-01 00:00:00');
 
 INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
-    VALUES ('2', '3', '2', '1', '100', '2015-01-02 00:00:00');
+    VALUES ('2', '3', '2', '200', '100', '2015-01-02 00:00:00');
 
 INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
-    VALUES ('3', '4', '3', '1', '100', '2015-01-03 00:00:00');
+    VALUES ('3', '4', '3', '500', '100', '2015-01-03 00:00:00');
 
 INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
-    VALUES ('4', '5', '4', '1', '120', '2015-01-04 00:00:00');
+    VALUES ('4', '5', '4', '100', '120', '2015-01-04 00:00:00');
 
 INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
-    VALUES ('5', '1', '6', '1', '600', '2015-01-05 00:00:00');
+    VALUES ('5', '1', '6', '900', '600', '2015-01-05 00:00:00');
 
 INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)
-    VALUES ('6', '1', '5', '1', '500', '2015-01-06 00:00:00');
+    VALUES ('6', '1', '5', '100', '500', '2015-01-06 00:00:00');
 
 INSERT INTO ContainsPart (orderId, listId, quantity)
     VALUES ('1', '1', '1');
