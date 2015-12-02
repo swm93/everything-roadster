@@ -3,6 +3,16 @@
 
 <%@ include file="util_cart.jsp" %>
 
+<%
+	Object userObjNav = session.getAttribute("user");
+	HashMap<String, String> userNav = null;
+	
+	if ((userObjNav != null) && (userObjNav instanceof java.util.HashMap))
+	{
+		  userNav = (HashMap<String, String>)userObjNav;
+	}
+%>
+
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
@@ -35,7 +45,7 @@
           <li class="cart-dropdown-header clearfix">
             <span>
               <span class="cart-dropdown-header-label">Cart</span>
-              <a href="checkout.jsp" class="cart-dropdown-checkout btn btn-link <%= cart.size() == 0 ? "hidden" : "" %>">Checkout</a>
+              <a href="checkout.jsp" class="cart-dropdown-checkout btn btn-link <%= (cart.size() == 0 || userNav == null) ? "hidden" : "" %>">Checkout</a>
               <form action="cart.jsp" method="POST">
                 <button class="cart-dropdown-empty btn btn-link" type="submit" name="action" value="empty">Empty</button>
               </form>
@@ -83,13 +93,6 @@
       </li>
       
 <%
-	Object userObjNav = session.getAttribute("user");
-	HashMap<String, String> userNav = null;
-	
-	if ((userObjNav != null) && (userObjNav instanceof java.util.HashMap))
-	{
-		  userNav = (HashMap<String, String>)userObjNav;
-	}
 	
 	if (userNav == null) {
 		out.println(
