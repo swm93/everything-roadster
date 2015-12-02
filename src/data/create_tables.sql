@@ -74,16 +74,6 @@ CREATE TABLE Shipment (
         NOT NULL,
     toPostalCode        VARCHAR(8)
         NOT NULL,
-    fromAddress         VARCHAR(30)
-        NOT NULL,
-    fromCity            VARCHAR(20)
-        NOT NULL,
-    fromProvinceState   VARCHAR(20)
-        NOT NULL,
-    fromCountry         VARCHAR(20)
-        NOT NULL,
-    fromPostalCode      VARCHAR(8)
-        NOT NULL,
     PRIMARY KEY (shipmentId),
     FOREIGN KEY (orderId) REFERENCES PartOrder (orderId)
         ON DELETE CASCADE
@@ -91,12 +81,14 @@ CREATE TABLE Shipment (
 );
 
 CREATE TABLE Payment (
-    accountNumber   INTEGER,
+    paymentId       INTEGER,
     shipmentId      INTEGER
+        NOT NULL,
+    accountNumber   INTEGER
         NOT NULL,
     paymentType     VARCHAR(25)
         CHECK (paymentType IN ('Paypal', 'Visa', 'MasterCard')),
-    PRIMARY KEY (accountNumber),
+    PRIMARY KEY (paymentId),
     FOREIGN KEY (shipmentId) REFERENCES Shipment (shipmentId)
         ON DELETE NO ACTION
         ON UPDATE No Action
