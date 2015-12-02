@@ -138,6 +138,14 @@
 			);
 		}
 		
+		if (userNav.get("accountType").equals("vendor")) {
+			out.println(
+				"<li>" +
+					"<a href=\"listPart.jsp\">List Part For Sale</a>" +
+				"</li>"
+			);
+		}
+		
 		if (userNav.get("accountType").equals("customer") || userNav.get("accountType").equals("vendor")) {
 			out.println(
 				"<li>" +

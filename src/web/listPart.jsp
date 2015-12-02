@@ -11,6 +11,14 @@
 <%@ include file="util_user.jsp" %>
 
 <%
+	if (user == null) 
+	{
+		response.sendRedirect("signIn.jsp");
+	} else if (user.get("accountType").equals("admin") || user.get("accountType").equals("customer")) 
+	{
+		response.sendRedirect("index.jsp");
+	}
+
 	Connection con = connectionManager.open();
 %>
 
@@ -71,7 +79,6 @@
 	}
 	if (valid && request.getMethod().equals("POST")) {  
 		createListedPart(request, con, session, user);
-		response.sendRedirect("fitsIn.jsp");
 	}
 	
 %>
@@ -102,48 +109,44 @@
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-xs-12">
-				<h1>Create Part</h1>
+				<h1>Create Listing</h1>
 			</div>
 		</div>
 
 		<form class="add-part-form row" action="./listPart.jsp" method="POST">
 			<div class="col-xs-12">
 				<div class="form-group">
-					<label for="part-name-input">Part Name</label> <input
-						id="part-name-input" class="form-control" type="text"
-						name="partName" />
-				</div>
-				<div class="form-group">
-					<label for="category-name-input">Category Name</label> <select
-						id="category-name-input" class="form-control" name="categoryName">
+					<label for="part-id-input">Part Id/Name</label> <select
+						id="part-id-input" class="form-control" name="partId">
 
 						<%
-							PreparedStatement categoryNamesPS = con.prepareStatement("SELECT categoryName " + "FROM PartCategory;");
-							ResultSet categoryNamesRS = categoryNamesPS.executeQuery();
+							PreparedStatement partIdNamePS = con.prepareStatement("SELECT partId, partName " + "FROM Part;");
+							ResultSet partIdNameRS = partIdNamePS.executeQuery();
 
-							while (categoryNamesRS.next()) {
-								String categoryName = categoryNamesRS.getString("categoryName");
-								String categoryOptionHtml = String.format("<option value=\"%s\">%s</option>", categoryName,
-										categoryName);
+							while (partIdNameRS.next()) {
+								Integer partId = partIdNameRS.getInt("partId");
+								String partName = partIdNameRS.getString("partName");
+								String partOptionHtml = String.format("<option value=\"%s\">%s</option>", partId,
+										partName);
 
-								out.println(categoryOptionHtml);
+								out.println(partOptionHtml);
 							}
 						%>
 
 					</select>
 				</div>
 				<div class="form-group">
-					<label for="description-input">Description</label> <input
-						id="description-input" class="form-control" type="text"
-						name="description" />
+					<label for="quantity-input">Quantity</label> <input
+						id="quantity-input" class="form-control" type="text"
+						name="quantity" />
 				</div>
 				<div class="form-group">
-					<label for="image-path-input">Image Path</label> <input
-						id="image-path-input" class="form-control" type="text"
-						name="imagePath" />
+					<label for="price-input">Price</label> <input
+						id="price-input" class="form-control" type="text"
+						name="price" />
 				</div>
 
-				<button class="btn btn-success" type="submit">Add Part</button>
+				<button class="btn btn-success" type="submit">Create Listing</button>
 			</div>
 		</form>
 	</div>

@@ -16,7 +16,7 @@
 	if (user == null) 
 	{
 		response.sendRedirect("signIn.jsp");
-	} else if (user.get("accountType") == "Admin") 
+	} else if (user.get("accountType").equals("admin")) 
 	{
 		response.sendRedirect("index.jsp");
 	}
