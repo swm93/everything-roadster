@@ -1,5 +1,3 @@
-<!-- due to the FK restraints it's prone to errors -->
-
 <%@ include file="util_connection.jsp"%>
 
 <%@ page import="java.sql.Connection"%>
@@ -7,14 +5,17 @@
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Arrays"%>
+<%@ page import="java.sql.Date"%>
 
+<%@ include file="util_user.jsp" %>
 
 <%
 	Connection con = connectionManager.open();
 %>
 
-<%!void createPart(HttpServletRequest request, Connection connection) {
-		String[] PartInfoKeys = { "categoryName", "partName", "description", "imagePath" };
+<%!void createListedPart(HttpServletRequest request, Connection connection, HttpSession session, HashMap<String, String> user) {
+		String[] PartInfoKeys = {"partId", "quantity", "price"};
 
 		List<String> PartDets = new ArrayList<String>();
 
@@ -23,49 +24,54 @@
 		}
 
 		try {
+			if (user != null && user.get("accountType").equals("vendor")) {
+				PreparedStatement preparedStatement = null;
+	
+				String query = "SELECT MAX(listId) FROM ListedPart;";
+	
+				preparedStatement = connection.prepareStatement(query);
+				ResultSet rs = preparedStatement.executeQuery(query);
+	
+				rs.next();
+				Integer k = rs.getInt(1);
+	
+				String insertTableSQL = "INSERT INTO ListedPart (listId, vendorId, partId, quantity, price, dateListed)"
+						+ "VALUES" + "(?,?,?,?,?,?)";
+	
+				preparedStatement = connection.prepareStatement(insertTableSQL);
+	
+				preparedStatement.setInt(1, k + 1);
+				preparedStatement.setInt(2, Integer.parseInt(user.get("accountId")));
+				preparedStatement.setInt(3, Integer.parseInt(PartDets.get(0)));
+				preparedStatement.setInt(4, Integer.parseInt(PartDets.get(1)));
+				preparedStatement.setDouble(5, Double.parseDouble(PartDets.get(2)));
+				
+				long time = System.currentTimeMillis();
+				java.sql.Date date = new java.sql.Date(time);
+				preparedStatement.setDate(6, date);
+				
+				preparedStatement.executeUpdate();
+	
+				System.out.println("Your part has been added");
+				session.setAttribute("message", Arrays.asList("success", "Your part has been listed successfully"));
 
-			PreparedStatement preparedStatement = null;
-
-			String query = "SELECT MAX(PartId) FROM Part;";
-
-			preparedStatement = connection.prepareStatement(query);
-			ResultSet rs = preparedStatement.executeQuery(query);
-
-			rs.next();
-			Integer k = rs.getInt(1);
-
-			String insertTableSQL = "INSERT INTO Part (PartId, categoryName, partName, description, imagePath)"
-					+ "VALUES" + "(?,?,?,?,?)";
-
-			preparedStatement = connection.prepareStatement(insertTableSQL);
-
-			preparedStatement.setInt(1, k + 1);
-
-			int i = 2;
-			for (String column : PartDets) {
-				preparedStatement.setString(i, PartDets.get(i - 2));
-				i++;
-			}
-
-			String imagePath = "public/images/parts/" + PartDets.get(3) + ".jpg";
-			preparedStatement.setString(5, imagePath);
-			// execute insert SQL stetement
-			preparedStatement.executeUpdate();
-
-			System.out.println("Your part has been added");
-
-			// int toBePass = k+1; (k+1 = partId)
+			} // int toBePass = k+1; (k+1 = partId)
 		} catch (Exception e) {
-
 			System.out.println(e);
+			session.setAttribute("message", Arrays.asList("danger", "Failed to list your part, please try again"));
 		}
 	}%>
 <%
-	if (request.getParameter("partName") != null) {
-		createPart(request, con);
+
+	boolean valid = true;
+	for (String val : request.getParameterMap().keySet()) {
+		if (request.getParameter(val) == null || request.getParameter(val).equals("")) {
+			valid = false;
+		}
+	}
+	if (valid && request.getMethod().equals("POST")) {  
+		createListedPart(request, con, session, user);
 		response.sendRedirect("fitsIn.jsp");
-	} else {
-		System.out.println("nothing entered");
 	}
 	
 %>
@@ -76,7 +82,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>EverythingRoadster - Create Part</title>
+<title>EverythingRoadster - List Part</title>
 <meta name="description" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -100,7 +106,7 @@
 			</div>
 		</div>
 
-		<form class="add-part-form row" action="./createPart.jsp" method="POST">
+		<form class="add-part-form row" action="./listPart.jsp" method="POST">
 			<div class="col-xs-12">
 				<div class="form-group">
 					<label for="part-name-input">Part Name</label> <input
