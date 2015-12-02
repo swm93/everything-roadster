@@ -61,7 +61,7 @@ void createAccount(HttpServletRequest request, Connection connection, HttpSessio
 
 <%
   // I mean, I guess it should
-  if (request.getParameter("accountType") != null) {
+  if (request.getParameter("accountType") != null && request.getMethod().equals("POST")) {
     System.out.println("creating account");
     createAccount(request, con, session);
   }
