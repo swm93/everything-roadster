@@ -146,6 +146,15 @@
 			);
 		}
 
+    if (userNav.get("accountType").equals("vendor")) {
+      out.println(
+        "<li>" +
+          "<a href=\"vendorListings.jsp\">Your Listings</a>" +
+        "</li>"
+      );
+    }
+
+
     out.println(
       "<li>" +
         "<a href=\"orderHistory.jsp\">Order History</a>" +
