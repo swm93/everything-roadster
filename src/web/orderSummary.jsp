@@ -42,34 +42,46 @@
 
       <table id="order-summary-table" class="table table-hover">
 <%
-  PreparedStatement orderPS;
+  boolean addedWhere = false;
+  String orderQuery = "SELECT O.orderId, O.orderDate, A.firstName, A.lastName, CP.quantity, LP.price, P.categoryName, P.partName, P.description, S.toAddress, S.toCity, S.toProvinceState, S.toCountry, S.toPostalCode " +
+        "FROM PartOrder O " +
+          "JOIN Account A ON A.accountId=O.customerId " +
+          "JOIN ContainsPart CP ON CP.orderId=O.orderId " +
+          "JOIN ListedPart LP ON LP.listId=CP.listId " +
+          "JOIN Part P ON P.partId=LP.partId " +
+          "JOIN Shipment S ON S.orderId=O.orderId ";
+  ArrayList<String> orderQueryParams = new ArrayList<String>();
+
   if (request.getParameter("orderId") != null)
   {
-    orderPS = con.prepareStatement(
-      "SELECT O.orderId, O.orderDate, A.firstName, A.lastName, CP.quantity, LP.price, P.categoryName, P.partName, P.description, S.toAddress, S.toCity, S.toProvinceState, S.toCountry, S.toPostalCode " +
-        "FROM PartOrder O " +
-          "JOIN Account A ON A.accountId=O.customerId " +
-          "JOIN ContainsPart CP ON CP.orderId=O.orderId " +
-          "JOIN ListedPart LP ON LP.listId=CP.listId " +
-          "JOIN Part P ON P.partId=LP.partId " +
-          "JOIN Shipment S ON S.orderId=O.orderId " +
-        "WHERE O.orderId=? " +
-        "ORDER BY O.orderId;"
-    );
-    orderPS.setString(1, request.getParameter("orderId"));
+    orderQuery += "WHERE O.orderId=? ";
+    orderQueryParams.add(request.getParameter("orderId"));
+
+    addedWhere = true;
   }
-  else
+  if (request.getParameter("customerId") != null)
   {
-    orderPS = con.prepareStatement(
-      "SELECT O.orderId, O.orderDate, A.firstName, A.lastName, CP.quantity, LP.price, P.categoryName, P.partName, P.description, S.toAddress, S.toCity, S.toProvinceState, S.toCountry, S.toPostalCode " +
-        "FROM PartOrder O " +
-          "JOIN Account A ON A.accountId=O.customerId " +
-          "JOIN ContainsPart CP ON CP.orderId=O.orderId " +
-          "JOIN ListedPart LP ON LP.listId=CP.listId " +
-          "JOIN Part P ON P.partId=LP.partId " +
-          "JOIN Shipment S ON S.orderId=O.orderId " +
-        "ORDER BY O.orderId;"
-    );
+    if (addedWhere)
+    {
+      orderQuery += "AND ";
+    }
+    else
+    {
+      orderQuery += "WHERE ";
+    }
+    orderQuery += "A.accountId=? ";
+    orderQueryParams.add(request.getParameter("customerId"));
+
+    addedWhere = true;
+  }
+
+  orderQuery += "ORDER BY O.orderId;";
+
+  PreparedStatement orderPS = con.prepareStatement(orderQuery);
+
+  for (int i=1; i<=orderQueryParams.size(); i++)
+  {
+    orderPS.setString(i, orderQueryParams.get(i-1));
   }
 
   boolean firstOrder = true;
@@ -89,6 +101,11 @@
       orderHtml += String.format(
          "<thead>" +
            "<tr>" +
+             "<th class=\"order-header-cell\" colspan=\"5\">" +
+               "<h2>Order #%d</h2>" +
+             "</th>" +
+           "</tr>" +
+           "<tr>" +
              "<th class=\"address-cell\" colspan=\"3\">" +
                "<address><strong>%s %s</strong><br>%s<br>%s, %s %s<br>%s</address>" +
              "</th>" +
@@ -103,6 +120,7 @@
            "</tr>" +
          "</thead>" +
          "</tbody>",
+        orderId,
         orderRS.getString("firstName"),
         orderRS.getString("lastName"),
         orderRS.getString("toAddress"),
@@ -110,7 +128,7 @@
         orderRS.getString("toProvinceState"),
         orderRS.getString("toPostalCode"),
         orderRS.getString("toCountry"),
-        orderRS.getString("orderDate")
+        orderRS.getDate("orderDate").toString()
       );
       out.println(orderHtml);
     }
