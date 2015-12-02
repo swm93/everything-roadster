@@ -56,6 +56,13 @@
   String orderIdFilter = request.getParameter("orderId");
   String customerIdFilter = request.getParameter("customerId");
 
+  if (user == null)
+  {
+    session.setAttribute("message", Arrays.asList("info", "You must be logged in in order to view that page."));
+    response.sendRedirect("index.jsp");
+    return;
+  }
+
   // set customerIdFilter to currrent user if they aren't an admin
   if (!user.get("accountType").equals("admin"))
   {
