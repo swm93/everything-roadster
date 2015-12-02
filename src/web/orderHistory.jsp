@@ -17,13 +17,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>EverythingRoadster - Order Summary</title>
+    <title>EverythingRoadster - Order History</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="vendor/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="stylesheets/main.css">
-    <link rel="stylesheet" href="stylesheets/orderSummary.css">
+    <link rel="stylesheet" href="stylesheets/orderHistory.css">
 
     <script src="vendor/javascripts/modernizr-2.8.3-respond-1.4.2.min.js"></script>
     <script src="vendor/javascripts/jquery-2.1.4.min.js"></script>
@@ -37,7 +37,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
-          <h1>Order Summary</h1>
+          <h1>Order History</h1>
         </div>
       </div>
 
