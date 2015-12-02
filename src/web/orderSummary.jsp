@@ -9,6 +9,7 @@
 
 
 <% Connection con = connectionManager.open(); %>
+<%@ include file="util_user.jsp" %>
 
 
 <!DOCTYPE html>
@@ -52,14 +53,23 @@
           "JOIN Shipment S ON S.orderId=O.orderId ";
   ArrayList<String> orderQueryParams = new ArrayList<String>();
 
-  if (request.getParameter("orderId") != null)
+  String orderIdFilter = request.getParameter("orderId");
+  String customerIdFilter = request.getParameter("customerId");
+
+  // set customerIdFilter to currrent user if they aren't an admin
+  if (!user.get("accountType").equals("admin"))
+  {
+    customerIdFilter = user.get("accountId");
+  }
+
+  if (orderIdFilter != null)
   {
     orderQuery += "WHERE O.orderId=? ";
-    orderQueryParams.add(request.getParameter("orderId"));
+    orderQueryParams.add(orderIdFilter);
 
     addedWhere = true;
   }
-  if (request.getParameter("customerId") != null)
+  if (customerIdFilter != null)
   {
     if (addedWhere)
     {
@@ -70,7 +80,7 @@
       orderQuery += "WHERE ";
     }
     orderQuery += "A.accountId=? ";
-    orderQueryParams.add(request.getParameter("customerId"));
+    orderQueryParams.add(customerIdFilter);
 
     addedWhere = true;
   }
