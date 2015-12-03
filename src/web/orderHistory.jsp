@@ -43,7 +43,79 @@
     <%@ include file="util_navbar.jsp" %>
     <%@ include file="util_message.jsp" %>
 
-    <div class="container-fluid">
+    
+      
+<%
+
+	if (!user.get("accountType").equals("admin")) {
+		
+		String vendorQuery = "SELECT DISTINCT(LP.vendorId) FROM PartOrder O JOIN Account A " +
+					"ON A.accountId=O.customerId JOIN ContainsPart CP ON CP.orderId=O.orderId " +
+					"JOIN ListedPart LP ON LP.listId=CP.listId WHERE A.accountId=" + user.get("accountId");
+		
+		PreparedStatement vendorPS = con.prepareStatement(vendorQuery);
+		ResultSet vendorRS = vendorPS.executeQuery();
+		
+		List<Integer> unratedVendors = new ArrayList<Integer>();
+		
+		while (vendorRS.next()) {
+			PreparedStatement checkRatedPS = con.prepareStatement("SELECT COUNT(*) FROM RatesVendor WHERE customerId=? AND vendorId=?");
+			checkRatedPS.setInt(1, Integer.parseInt(user.get("accountId")));
+			checkRatedPS.setInt(2, vendorRS.getInt("vendorId"));
+			
+			ResultSet checkRatedRS = checkRatedPS.executeQuery();
+			
+			if (checkRatedRS.next()) {
+				unratedVendors.add(vendorRS.getInt("vendorId"));
+			}
+		}
+		
+		if (unratedVendors.size() > 0) {
+			String rateHtml = "<form id=\"rate-form\" action=\"./orderHistory.jsp\" method=\"POST\">" +
+				"<div class=\"row\">" + 
+				"<div class=\"col-xs-12 col-sm-6\">";
+				
+			for (Integer vendorId : unratedVendors) {
+				PreparedStatement vendorNamePS = con.prepareStatement("SELECT firstName, lastName FROM Account WHERE accountId=?");
+		    vendorNamePS.setInt(1, vendorId);
+		    ResultSet vendorNameRS = vendorNamePS.executeQuery();
+		    vendorNameRS.next();
+				
+		    rateHtml += String.format(
+		    		"<div class=\"form-group\">" +
+		    			"<label for=\"vendor-name-%d\">%s %s</label>" +
+		    			"<select name=\"vendor-name-%d\">" +
+		    				"<option value=0>0</option>" +
+		    				"<option value=1>1</option>" +
+		    				"<option value=2>2</option>" +
+		    				"<option value=3>3</option>" +
+		    				"<option value=4>4</option>" +
+		    				"<option value=5>5</option>" +
+		    			"</select>" +
+		    		"</div",
+		    		vendorId,
+		    		vendorNameRS.getString("firstName"),
+		    		vendorNameRS.getString("lastName"),
+		    		vendorId
+		    		);
+			}
+			
+			rateHtml += "</div>" +
+					"</div>" +
+					"<div class=\"row\">" + 
+						"<div class=\"col-xs-12\">" +
+							"<button class=\"btn btn-success\" type=\"submit\">Rate</button>" +
+						"</div>" +
+					"</div>" +
+				"</form>";
+			
+			out.println(rateHtml);
+		}
+		
+	}
+
+%>
+		<div class="container-fluid">
       <div class="row">
         <div class="col-xs-12">
           <h1>Order History</h1>
@@ -51,9 +123,10 @@
       </div>
 
       <table id="order-summary-table" class="table table-hover">
+      
 <%
   boolean addedWhere = false;
-  String orderQuery = "SELECT O.orderId, O.orderDate, A.firstName, A.lastName, CP.quantity, LP.price, P.categoryName, P.partName, P.description, S.toAddress, S.toCity, S.toProvinceState, S.toCountry, S.toPostalCode " +
+  String orderQuery = "SELECT O.orderId, O.orderDate, A.firstName, A.lastName, CP.quantity, LP.price, P.categoryName, P.partName, P.description, S.toAddress, S.toCity, S.toProvinceState, S.toCountry, S.toPostalCode, LP.vendorId " +
         "FROM PartOrder O " +
           "JOIN Account A ON A.accountId=O.customerId " +
           "JOIN ContainsPart CP ON CP.orderId=O.orderId " +
@@ -120,7 +193,7 @@
       orderHtml += String.format(
          "<thead>" +
            "<tr>" +
-             "<th class=\"order-header-cell\" colspan=\"5\">" +
+             "<th class=\"order-header-cell\" colspan=\"6\">" +
                "<h2>Order #%d</h2>" +
              "</th>" +
            "</tr>" +
@@ -132,6 +205,7 @@
            "</tr>" +
            "<tr>" +
              "<th>Part Name</th>" +
+             "<th>Vendor Name</th>" +
              "<th>Category</th>" +
              "<th>Price</th>" +
              "<th>Quantity</th>" +
@@ -151,9 +225,15 @@
       );
       out.println(orderHtml);
     }
+    
+    PreparedStatement vendorNamePS = con.prepareStatement("SELECT firstName, lastName FROM Account WHERE accountId=?");
+    vendorNamePS.setString(1, orderRS.getString("vendorId"));
+    ResultSet vendorNameRS = vendorNamePS.executeQuery();
+    vendorNameRS.next();
 
     String partHtml = String.format(
            "<tr>" +
+             "<td>%s</td>" +
              "<td>%s</td>" +
              "<td>%s</td>" +
              "<td>$%s</td>" +
@@ -161,6 +241,7 @@
              "<td>%s</td>" +
            "</tr>",
       orderRS.getString("partName"),
+      (vendorNameRS.getString("firstName") + " " + vendorNameRS.getString("lastName")),
       orderRS.getString("categoryName"),
       orderRS.getString("price"),
       orderRS.getString("quantity"),
