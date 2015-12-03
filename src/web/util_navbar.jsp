@@ -121,6 +121,14 @@
 				"</li>"
 			);
 		}
+
+    if (userNav.get("accountType").equals("admin")) {
+      out.println(
+        "<li>" +
+          "<a href=\"managePartCategory.jsp\">Manage Part Categories</a>" +
+        "</li>"
+      );
+    }
 		
 		if (userNav.get("accountType").equals("admin")) {
 			out.println(
