@@ -104,7 +104,8 @@ CREATE TABLE Part (
     partId          INTEGER,
     imagePath       VARCHAR(255),
     categoryName    VARCHAR(50),
-    partName        VARCHAR(50),
+    partName        VARCHAR(50)
+        NOT NULL,
     description     VARCHAR(8000),
     PRIMARY KEY (partId),
     FOREIGN KEY (categoryName) REFERENCES PartCategory (categoryName)
