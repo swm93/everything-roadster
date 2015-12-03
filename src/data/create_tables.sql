@@ -91,7 +91,7 @@ CREATE TABLE Payment (
     PRIMARY KEY (paymentId),
     FOREIGN KEY (shipmentId) REFERENCES Shipment (shipmentId)
         ON DELETE NO ACTION
-        ON UPDATE No Action
+        ON UPDATE NO ACTION
 );
 
 CREATE TABLE PartCategory (
