@@ -20,6 +20,66 @@
   }
 %>
 
+<%!
+void createVendorRates(HttpServletRequest request, Connection connection, HttpSession session, HashMap<String, String> user) {
+
+    try {
+
+      String vendorQuery = "SELECT DISTINCT(LP.vendorId) FROM PartOrder O JOIN Account A " +
+				"ON A.accountId=O.customerId JOIN ContainsPart CP ON CP.orderId=O.orderId " +
+				"JOIN ListedPart LP ON LP.listId=CP.listId WHERE A.accountId=" + user.get("accountId");
+	
+			PreparedStatement vendorPS = connection.prepareStatement(vendorQuery);
+			ResultSet vendorRS = vendorPS.executeQuery();
+			
+			List<Integer> unratedVendors = new ArrayList<Integer>();
+			
+			while (vendorRS.next()) {
+				PreparedStatement checkRatedPS = connection.prepareStatement("SELECT COUNT(*) FROM RatesVendor WHERE customerId=? AND vendorId=?");
+				checkRatedPS.setInt(1, Integer.parseInt(user.get("accountId")));
+				checkRatedPS.setInt(2, vendorRS.getInt("vendorId"));
+				
+				ResultSet checkRatedRS = checkRatedPS.executeQuery();
+				
+				checkRatedRS.next();
+				if (checkRatedRS.getInt("COUNT(*)") == 0) {
+					unratedVendors.add(vendorRS.getInt("vendorId"));
+				}
+			}
+			
+			for (Integer vendorId : unratedVendors) {
+				String insertRatingStr = "INSERT INTO RatesVendor VALUES (?, ?, ?)";
+				PreparedStatement insertRatingPS = connection.prepareStatement(insertRatingStr);
+				insertRatingPS.setInt(1, Integer.parseInt(user.get("accountId")));
+				insertRatingPS.setInt(2, vendorId);
+				insertRatingPS.setDouble(3, Double.parseDouble(request.getParameter(("vendor-name-" + vendorId))));
+				
+				insertRatingPS.executeUpdate();
+			}
+			
+      session.setAttribute("message", Arrays.asList("success", "You have successfully rated the vendors"));
+    } catch (Exception e) {
+      System.out.println(e);
+      session.setAttribute("message", Arrays.asList("danger", "Failed to save the ratings"));
+    }
+
+  }
+%>
+
+<%
+  // I mean, I guess it should
+	boolean valid = true;
+	for (String val : request.getParameterMap().keySet()) {
+		if (request.getParameter(val).equals("-")) {
+			valid = false;
+		}
+	}
+	if (valid && request.getMethod().equals("POST")) {  
+	  System.out.println("inserting vendor ratings");
+	  createVendorRates(request, con, session, user);
+	}
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -42,9 +102,7 @@
   <body>
     <%@ include file="util_navbar.jsp" %>
     <%@ include file="util_message.jsp" %>
-
     
-      
 <%
 
 	if (!user.get("accountType").equals("admin")) {
@@ -59,21 +117,28 @@
 		List<Integer> unratedVendors = new ArrayList<Integer>();
 		
 		while (vendorRS.next()) {
+			System.out.println(vendorRS.getInt("vendorId"));
 			PreparedStatement checkRatedPS = con.prepareStatement("SELECT COUNT(*) FROM RatesVendor WHERE customerId=? AND vendorId=?");
 			checkRatedPS.setInt(1, Integer.parseInt(user.get("accountId")));
 			checkRatedPS.setInt(2, vendorRS.getInt("vendorId"));
 			
 			ResultSet checkRatedRS = checkRatedPS.executeQuery();
-			
-			if (checkRatedRS.next()) {
+			checkRatedRS.next();
+			if (checkRatedRS.getInt("COUNT(*)") == 0) {
 				unratedVendors.add(vendorRS.getInt("vendorId"));
 			}
 		}
-		
+
 		if (unratedVendors.size() > 0) {
-			String rateHtml = "<form id=\"rate-form\" action=\"./orderHistory.jsp\" method=\"POST\">" +
-				"<div class=\"row\">" + 
-				"<div class=\"col-xs-12 col-sm-6\">";
+			String rateHtml = "<div class=\"container-fluid\">" +
+					"<div class=\"row\">" +
+						"<div class=\"col-xs-12\">" +
+							"<h2>Rate Vendors Used</h2>" +
+						"</div>" +
+					"</div>" +
+				"<form id=\"rate-form\" action=\"./orderHistory.jsp\" method=\"POST\">" +
+					"<div class=\"row\">" + 
+						"<div class=\"col-xs-12 col-sm-6\">";
 				
 			for (Integer vendorId : unratedVendors) {
 				PreparedStatement vendorNamePS = con.prepareStatement("SELECT firstName, lastName FROM Account WHERE accountId=?");
@@ -85,6 +150,7 @@
 		    		"<div class=\"form-group\">" +
 		    			"<label for=\"vendor-name-%d\">%s %s</label>" +
 		    			"<select name=\"vendor-name-%d\">" +
+		    				"<option value=\"-\">-</option>" +
 		    				"<option value=0>0</option>" +
 		    				"<option value=1>1</option>" +
 		    				"<option value=2>2</option>" +
@@ -92,7 +158,7 @@
 		    				"<option value=4>4</option>" +
 		    				"<option value=5>5</option>" +
 		    			"</select>" +
-		    		"</div",
+		    		"</div>",
 		    		vendorId,
 		    		vendorNameRS.getString("firstName"),
 		    		vendorNameRS.getString("lastName"),
@@ -106,7 +172,8 @@
 							"<button class=\"btn btn-success\" type=\"submit\">Rate</button>" +
 						"</div>" +
 					"</div>" +
-				"</form>";
+				"</form>" +
+				"</div>";
 			
 			out.println(rateHtml);
 		}
