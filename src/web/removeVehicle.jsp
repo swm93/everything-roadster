@@ -114,10 +114,10 @@ public static void removeVehicle(int removeId, Connection connection, HttpSessio
     String model = vehicleRS.getString("modelName");
     Integer year = vehicleRS.getInt("year");
 
-    String vehicleHtml = String.format(
+    String vehicleJS = String.format(
       "vehicles.push({makeName: \"%s\", modelName: \"%s\", year: \"%s\"});",
     make, model, year);
-    out.println(vehicleHtml);
+    out.println(vehicleJS);
   }
 %>
   </script>

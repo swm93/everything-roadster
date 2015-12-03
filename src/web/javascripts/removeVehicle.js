@@ -11,7 +11,7 @@ function updateSelect(el, vs, filter) {
 }
 
 function createOptionHtml(value) {
-    return '<option value="' + value + '">' + value + '</option>'
+    return '<option value="' + value + '">' + value + '</option>';
 }
 
 function getFilter(filterEl, $els) {
