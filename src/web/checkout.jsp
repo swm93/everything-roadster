@@ -134,8 +134,8 @@
       );
       createPaymentPS.setInt(1, paymentId);
       createPaymentPS.setInt(2, shipmentId);
-      createPaymentPS.setInt(3, Integer.parseInt((String)request.getParameter("accountNumber")));
-      createPaymentPS.setString(4, (String)request.getParameter("paymentType"));
+      createPaymentPS.setInt(3, Integer.parseInt(request.getParameter("accountNumber")));
+      createPaymentPS.setString(4, request.getParameter("paymentType"));
       createPaymentPS.executeUpdate();
 
       // create contains part insert prepared statement
@@ -183,22 +183,21 @@
       session.removeAttribute("shoppingCart");
       response.sendRedirect("orderHistory.jsp?orderId=" + orderId);
     }
-    catch (SQLException e)
+    catch (Exception e)
     {
       System.out.println(e);
 
       try
       {
-        connection.rollback();
+    	  if (!connection.isClosed()) {
+        	connection.rollback();
+    	  }
       }
       catch (SQLException re) {
         System.out.println(re);
       }
 
       session.setAttribute("message", Arrays.asList("danger", "Failed to process your order."));
-    }
-    catch (IOException e) {
-      System.out.println(e);
     }
     finally
     {
@@ -387,16 +386,34 @@
 
 
 <%
-  if (cart.size() == 0)
+	if (user == null || (user != null && user.get("accountType").equals("admin"))) {
+		session.setAttribute("message", Arrays.asList("warning", "Cannot checkout unless signed in as a customer or vendor!"));
+	  response.sendRedirect("browse.jsp");
+	} else if (cart.size() == 0)
   {
     session.setAttribute("message", Arrays.asList("warning", "Cannot checkout without adding items to your cart!"));
     response.sendRedirect("browse.jsp");
   }
 
-  if (request.getMethod().equals("POST"))
-  {
-    processOrder(cart, user, carrierCosts, shippingCosts, shippingDates, con, session, request, response);
-  }
+	boolean valid = true;
+	for (String val : request.getParameterMap().keySet()) {
+		if ((request.getParameter(val) == null || request.getParameter(val).equals("")) && !val.equals("instruction") && request.getMethod().equals("POST")) {
+			valid = false;
+		}
+		if (val.equals("accountNumber") && valid) {
+			try {
+				Integer accIsInt = Integer.parseInt(request.getParameter(val));
+			}
+			catch(NumberFormatException nfe) {  
+				valid = false;  
+			}  
+		}
+	}
+	if (user != null && valid && request.getMethod().equals("POST")) {  
+	  System.out.println("creating order");
+	  processOrder(cart, user, carrierCosts, shippingCosts, shippingDates, con, session, request, response);
+	}
+
 %>
 
 <% connectionManager.close(); %>

@@ -117,7 +117,6 @@ void createVendorRates(HttpServletRequest request, Connection connection, HttpSe
 		List<Integer> unratedVendors = new ArrayList<Integer>();
 		
 		while (vendorRS.next()) {
-			System.out.println(vendorRS.getInt("vendorId"));
 			PreparedStatement checkRatedPS = con.prepareStatement("SELECT COUNT(*) FROM RatesVendor WHERE customerId=? AND vendorId=?");
 			checkRatedPS.setInt(1, Integer.parseInt(user.get("accountId")));
 			checkRatedPS.setInt(2, vendorRS.getInt("vendorId"));

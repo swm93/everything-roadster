@@ -148,6 +148,28 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
               <label for="postal-code-input">Postal Code</label>
               <input id="postal-code-input" class="form-control" type="text" name="postalCode" value="<% if (user != null) { out.println(user.get("postalCode")); } %>"/>
             </div>
+<%
+
+	if (user != null && user.get("accountType").equals("vendor")){
+	
+		PreparedStatement ratingPS = con.prepareStatement("SELECT AVG(userRating) FROM ListedPart LP JOIN " +
+				"RatesVendor RV ON LP.vendorId = RV.vendorId WHERE listId=?");
+		ratingPS.setInt(1, Integer.parseInt(user.get("accountId")));
+		ResultSet ratingRS = ratingPS.executeQuery();
+		ratingRS.next();
+		Double avgRating = ratingRS.getDouble("AVG(userRating)");
+		
+		if (avgRating != null) {
+			out.println(
+					"<div class=\"form-group\">" +
+						"<label for=\"vendor-rating\">Your Rating</label>" +
+						"<input id=\"vendor-rating\" class=\"form-control\" type=\"text\" name=\"vendorRating\" value=\"" + avgRating + "\" readonly />" +
+					"</div>");
+		}
+	
+	}
+	
+%>            
           </div>
         </div>
         <div class="row">

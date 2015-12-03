@@ -45,7 +45,7 @@
           <li class="cart-dropdown-header clearfix">
             <span>
               <span class="cart-dropdown-header-label">Cart</span>
-              <a href="checkout.jsp" class="cart-dropdown-checkout btn btn-link <%= (cart.size() == 0 || userNav == null) ? "hidden" : "" %>">Checkout</a>
+              <a href="checkout.jsp" class="cart-dropdown-checkout btn btn-link <%= (cart.size() == 0 || userNav == null || (userNav != null && userNav.get("accountType").equals("admin"))) ? "hidden" : "" %>">Checkout</a>
               <form action="cart.jsp" method="POST">
                 <button class="cart-dropdown-empty btn btn-link" type="submit" name="action" value="empty">Empty</button>
               </form>

@@ -213,6 +213,13 @@
     String image = partsRS.getString("imagePath");
     String category = partsRS.getString("categoryName");
     String description = partsRS.getString("description");
+    
+    PreparedStatement ratingPS = con.prepareStatement("SELECT AVG(userRating) FROM ListedPart LP JOIN " +
+    		"RatesVendor RV ON LP.vendorId = RV.vendorId WHERE listId=?");
+    ratingPS.setInt(1, listId);
+    ResultSet ratingRS = ratingPS.executeQuery();
+    ratingRS.next();
+    Double avgRating = ratingRS.getDouble("AVG(userRating)");
 
     String partsHTML = String.format(
            "<li class=\"list-group-item row\">" +
@@ -241,8 +248,13 @@
                  "<span class=\"glyphicon glyphicon-tags\"></span>" +
                "</span>" +
              "</h5>" +
+             "<h5 class=\"col-xs-4 col-md-2\">" +
+             	 "<span class=\"part-price-label pull-right\">" +
+               	 "<span>Vendor Rating: %.2f</span> " +
+             	 "</span>" +
+           	 "</h5>" +
            "</li>",
-    image, listId, quantity, partName, partName, category, description, formatter.format(price));
+    image, listId, quantity, partName, partName, category, description, formatter.format(price), avgRating);
 
     out.println(partsHTML);
   }
