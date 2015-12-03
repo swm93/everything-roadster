@@ -1,22 +1,34 @@
 <!-- due to the FK restraints it's prone to errors -->
 
-<%@ include file="util_connection.jsp"%>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.PreparedStatement" %>
+<%@ page import="java.sql.ResultSet" %>
 
-<%@ page import="java.sql.Connection"%>
-<%@ page import="java.sql.PreparedStatement"%>
-<%@ page import="java.sql.ResultSet"%>
-<%@ page import="java.util.List"%>
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.util.Arrays"%>
+<%@ page import="org.apache.commons.fileupload.FileItem" %>
+<%@ page import="org.apache.commons.fileupload.disk.DiskFileItemFactory" %>
+<%@ page import="org.apache.commons.fileupload.servlet.ServletFileUpload" %>
+<%@ page import="org.apache.commons.io.IOUtils" %>
+
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Arrays" %>
+<%@ page import="java.io.File" %>
+<%@ page import="java.util.List" %>
+
+
+<%@ include file="util_connection.jsp" %>
 
 
 <% Connection con = connectionManager.open(); %>
+
 
 <%!
   void createPart(HttpServletRequest request, Connection connection, HttpSession session) {
     try
     {
-      // get part id
+      // disable auto commit so we can rollback inserts if an error occurs
+      connection.setAutoCommit(false);
+
+      // get all values
       PreparedStatement partIdPS = connection.prepareStatement(
         "SELECT MAX(partId) " +
           "FROM Part;"
@@ -24,12 +36,74 @@
 
       ResultSet partIdRS = partIdPS.executeQuery();
       partIdRS.next();
+
       Integer partId = partIdRS.getInt(1) + 1;
+      String partName = null;
+      String categoryName = null;
+      String description = null;
+      List<String> fitsInMake = null;
+      List<String> fitsInModel = null;
+      List<String> fitsInYear = null;
+      String relativeImagePath = "public/images/parts/part_default.jpg";
+
+      if (ServletFileUpload.isMultipartContent(request))
+      {
+        List<FileItem> multiparts = new ServletFileUpload(new DiskFileItemFactory()).parseRequest(request);
+
+        fitsInMake = new ArrayList<String>();
+        fitsInModel = new ArrayList<String>();
+        fitsInYear = new ArrayList<String>();
+
+        for (FileItem item : multiparts)
+        {
+          if (item.isFormField())
+          {
+            String name = item.getFieldName();
+            String value = item.getString();
+
+            if (name.equals("partName"))
+            {
+              partName = value;
+            }
+            else if (name.equals("categoryName"))
+            {
+              categoryName = value;
+            }
+            else if (name.equals("description"))
+            {
+              description = value;
+            }
+            else if (name.equals("fitsInMakeName[]"))
+            {
+              fitsInMake.add(value);
+            }
+            else if (name.equals("fitsInModelName[]"))
+            {
+              fitsInModel.add(value);
+            }
+            else if (name.equals("fitsInYear[]"))
+            {
+              fitsInYear.add(value);
+            }
+          }
+          else
+          {
+            relativeImagePath = "public" + File.separator + "images" + File.separator + "parts" + File.separator + "part" + partId + ".jpg";
+            item.write(new File(getServletContext().getRealPath("/") + relativeImagePath));
+          }
+        }
+      }
+      else
+      {
+        partName = request.getParameter("partName");
+        categoryName = request.getParameter("categoryName");
+        description = request.getParameter("description");
+        fitsInMake = Arrays.asList(request.getParameterValues("fitsInMakeName[]"));
+        fitsInModel = Arrays.asList(request.getParameterValues("fitsInModelName[]"));
+        fitsInYear = Arrays.asList(request.getParameterValues("fitsInYear[]"));
+      }
 
       // get all vehicles ids for fits in associations
-      String[] fitsInMake = request.getParameterValues("fitsInMakeName[]");
-      String[] fitsInModel = request.getParameterValues("fitsInModelName[]");
-      String[] fitsInYear = request.getParameterValues("fitsInYear[]");
       PreparedStatement vehiclePS = connection.prepareStatement(
         "SELECT V.vehicleId " +
           "FROM Vehicle V " +
@@ -39,11 +113,11 @@
       );
 
       ArrayList<Integer> vehicleIds = new ArrayList<Integer>();
-      for (int i=0; i<fitsInMake.length; i++)
+      for (int i=0; i<fitsInMake.size(); i++)
       {
-        vehiclePS.setString(1, fitsInMake[i]);
-        vehiclePS.setString(2, fitsInModel[i]);
-        vehiclePS.setString(3, fitsInYear[i]);
+        vehiclePS.setString(1, fitsInMake.get(i));
+        vehiclePS.setString(2, fitsInModel.get(i));
+        vehiclePS.setString(3, fitsInYear.get(i));
 
         ResultSet vehicleRS = vehiclePS.executeQuery();
         if (vehicleRS.next())
@@ -52,19 +126,16 @@
         }
       }
 
-      // disable auto commit so we can rollback inserts if an error occurs
-      connection.setAutoCommit(false);
-
       // create part
       PreparedStatement createPartPS = connection.prepareStatement(
         "INSERT INTO Part (partId, categoryName, partName, description, imagePath) " +
           "VALUES (?, ?, ?, ?, ?);"
       );
       createPartPS.setInt(1, partId);
-      createPartPS.setString(2, request.getParameter("categoryName"));
-      createPartPS.setString(3, request.getParameter("partName"));
-      createPartPS.setString(4, request.getParameter("description"));
-      createPartPS.setString(5, "public/images/parts/" + request.getParameter("imagePath") + ".jpg");
+      createPartPS.setString(2, categoryName);
+      createPartPS.setString(3, partName);
+      createPartPS.setString(4, description);
+      createPartPS.setString(5, relativeImagePath);
       createPartPS.executeUpdate();
 
       // create fits in associations
@@ -114,15 +185,7 @@
 <%
   if (request.getMethod().equals("POST"))
   {
-    if (request.getParameter("partName") != null && !request.getParameter("partName").equals(""))
-    {
-      createPart(request, con, session);
-    }
-    else
-    {
-      System.out.println("nothing entered");
-      session.setAttribute("message", Arrays.asList("danger", "Failed to create your part."));
-    }
+    createPart(request, con, session);
   }
 %>
 
@@ -173,7 +236,7 @@
     <%@ include file="util_navbar.jsp"%>
     <%@ include file="util_message.jsp"%>
 
-    <form class="container-fluid" action="./createPart.jsp" method="POST">
+    <form class="container-fluid" action="./createPart.jsp" method="POST" enctype="multipart/form-data">
       <div class="row">
         <div class="col-xs-12">
           <h1>Create Part</h1>
@@ -207,14 +270,12 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="description-input">Description</label> <input
-              id="description-input" class="form-control" type="text"
-              name="description" />
+            <label for="description-input">Description</label>
+            <input id="description-input" class="form-control" type="text" name="description" />
           </div>
           <div class="form-group">
-            <label for="image-path-input">Image Path</label> <input
-              id="image-path-input" class="form-control" type="text"
-              name="imagePath" />
+            <label for="image-path-input">Image Path</label>
+            <input id="image-path-input" class="form-control" type="file" accept="image/*" name="imagePath" />
           </div>
         </div>
       </div>
