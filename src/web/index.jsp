@@ -78,7 +78,7 @@
 
     String html = String.format(
            "<div class=\"item%s\">" +
-             "<img src=\"%s\">" +
+             "<img src=\"%s\" onerror=\"if (this.src != 'public/images/parts/part_default.jpg') this.src = 'public/images/parts/part_default.jpg';\">" +
              "<h4 class=\"carousel-title\">%s</h4>" +
            "</div>",
     active, imagePath, name);
