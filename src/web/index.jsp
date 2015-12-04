@@ -105,7 +105,7 @@
     <div id="part-categories-container" class="container-fluid">
       <h2>Browse Parts</h2>
       <ul class="list-group">
-        <a href="/browse.jsp" class="list-group-item">All</a>
+        <a href="browse.jsp" class="list-group-item">All</a>
 <%
   //load parts
   PreparedStatement partCategoriesPS = con.prepareStatement(
@@ -122,7 +122,7 @@
     int numParts = partCategoriesRS.getInt("numParts");
 
     String html = String.format(
-       "<a href=\"/browse.jsp?category=%s\" class=\"list-group-item\">" +
+       "<a href=\"browse.jsp?category=%s\" class=\"list-group-item\">" +
          "<span class=\"badge\">%d</span>" +
          "<span>%s</span>" +
        "</a>",

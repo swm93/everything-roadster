@@ -23,7 +23,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="/">
+    <a class="navbar-brand" href="index.jsp">
       <img class="navbar-brand-image" src="assets/images/logo02.jpg" />
       <span>EverythingRoadster</span>
     </a>
