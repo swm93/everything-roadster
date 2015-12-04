@@ -224,7 +224,7 @@
     String partsHTML = String.format(
            "<li class=\"list-group-item row\">" +
              "<div class=\"part-image-container col-xs-12 col-md-3\">" +
-               "<img src=\"%s\" class=\"part-image\" />" +
+               "<img src=\"%s\" class=\"part-image\"  onerror=\"if (this.src != 'public/images/parts/part_default.jpg') this.src = 'public/images/parts/part_default.jpg';\" />" +
                "<form class=\"add-to-cart-container input-group\" action=\"cart.jsp\" method=\"POST\">" +
                  "<span class=\"input-group-btn\">" +
                    "<button class=\"btn btn-success\" type=\"submit\" name=\"listId\" value=\"%d\">" +
