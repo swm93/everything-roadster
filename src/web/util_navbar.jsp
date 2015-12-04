@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Map" %>
+<%@ page import="java.util.Iterator" %>
 
 <%@ include file="util_cart.jsp" %>
 
@@ -66,8 +67,10 @@
   }
   else
   {
-    for (Map.Entry<String, ArrayList<String>> entry : cart.entrySet())
+    Iterator cartIt = cart.entrySet().iterator();
+    while (cartIt.hasNext())
     {
+      Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)cartIt.next();
       String listId = entry.getKey();
       ArrayList<String> item = entry.getValue();
 

@@ -8,6 +8,8 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Iterator" %>
+
 
 <% Connection con = connectionManager.open(); %>
 
@@ -17,8 +19,10 @@ void createAccount(HttpServletRequest request, Connection connection, HttpSessio
         "streetAddress", "city", "provinceState", "country", "postalCode" };
 
     List<String> accountDets = new ArrayList<String>();
+    int i;
 
-    for (String accountInfoKey : accountInfoKeys) {
+    for (i=0; i<accountInfoKeys.length; i++) {
+      String accountInfoKey = accountInfoKeys[i];
       accountDets.add((String) request.getParameter(accountInfoKey));
     }
 
@@ -42,10 +46,8 @@ void createAccount(HttpServletRequest request, Connection connection, HttpSessio
 
       preparedStatement.setInt(1, k + 1);
 
-      int i = 2;
-      for (String column : accountDets) {
-        preparedStatement.setString(i, accountDets.get(i - 2));
-        i++;
+      for (i=0; i<accountDets.size(); i++) {
+        preparedStatement.setString(i+2, accountDets.get(i));
       }
 
       // execute insert SQL stetement
@@ -61,8 +63,10 @@ void createAccount(HttpServletRequest request, Connection connection, HttpSessio
 
 <%
   // I mean, I guess it should
-  	boolean valid = true;
-	for (String val : request.getParameterMap().keySet()) {
+	boolean valid = true;
+  Iterator keySetIt = request.getParameterMap().keySet().iterator();
+  while (keySetIt.hasNext()) {
+    String val = (String)keySetIt.next();
 		if (request.getParameter(val) == null || request.getParameter(val).equals("")) {
 			valid = false;
 		}

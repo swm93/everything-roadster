@@ -16,7 +16,8 @@
 
     List<String> PartDets = new ArrayList<String>();
 
-    for (String PartInfoKey : PartInfoKeys) {
+    for (int i=0; i<PartInfoKeys.length; i++) {
+      String PartInfoKey = PartInfoKeys[i];
       PartDets.add((String) request.getParameter(PartInfoKey));
     }
 
@@ -48,35 +49,34 @@
 public static void createVehicle(List<String> PartDets, Connection connection, HttpSession session) {
     Integer k =0;
     try {
-    PreparedStatement preparedStatement = null;
+      PreparedStatement preparedStatement = null;
 
-    String query = "SELECT MAX(vehicleId) FROM Vehicle;";
+      String query = "SELECT MAX(vehicleId) FROM Vehicle;";
 
-    preparedStatement = connection.prepareStatement(query);
-    ResultSet rs = preparedStatement.executeQuery(query);
+      preparedStatement = connection.prepareStatement(query);
+      ResultSet rs = preparedStatement.executeQuery(query);
 
-    rs.next();
-    k = rs.getInt(1) + 1; /// whatever
+      rs.next();
+      k = rs.getInt(1) + 1; /// whatever
 
-    String insertTableSQL = "INSERT INTO Vehicle (vehicleId, makeName, modelName, year) VALUES (?, ?, ?, ?);";
+      String insertTableSQL = "INSERT INTO Vehicle (vehicleId, makeName, modelName, year) VALUES (?, ?, ?, ?);";
 
-    preparedStatement = connection.prepareStatement(insertTableSQL);
-    preparedStatement.setInt(1, k); // so there are no duplicate vehicleId's fail
+      preparedStatement = connection.prepareStatement(insertTableSQL);
+      preparedStatement.setInt(1, k); // so there are no duplicate vehicleId's fail
 
-    int i = 2;
-    for (String column : PartDets) {
-      preparedStatement.setString(i, PartDets.get(i - 2));
-      i++;
-    }
-    // execute insert SQL stetement
-    preparedStatement.executeUpdate();
+      for (int i=0; i<PartDets.size(); i++) {
+        preparedStatement.setString(i+2, PartDets.get(i));
+      }
+      // execute insert SQL stetement
+      preparedStatement.executeUpdate();
+
+      System.out.println("Vehicle Created");
+      session.setAttribute("message", Arrays.asList("success", "Your vehicle has been successfully created!"));
     } catch (SQLException e) {
 
       System.out.println(e);
       session.setAttribute("message", Arrays.asList("danger", "Failed to create your vehicle."));
     }
-    System.out.println("Vehicle Created");
-    session.setAttribute("message", Arrays.asList("success", "Your vehicle has been successfully created!"));
   }
 %>
 

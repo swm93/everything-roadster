@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Iterator" %>
 
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.PreparedStatement" %>
@@ -153,8 +154,10 @@
   List<String> whereParams = new ArrayList<String>();
   boolean addedWhere = false;
 
-  for (Map.Entry<String, String[]> entry : parameterMap.entrySet())
+  Iterator browseIt = parameterMap.entrySet().iterator();
+  while (browseIt.hasNext())
   {
+    Map.Entry<String, String[]> entry = (Map.Entry<String, String[]>)browseIt.next();
     String key = entry.getKey();
     String[] values = entry.getValue();
 

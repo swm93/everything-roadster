@@ -9,6 +9,7 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
 <%@ page import="java.util.Arrays"%>
+<%@ page import="java.util.Iterator" %>
 
 <%@ include file="util_user.jsp" %>
 
@@ -33,7 +34,8 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
 
     List<String> accountDets = new ArrayList<String>();
 
-    for (String accountInfoKey : accountInfoKeys) {
+    for (int i=0; i<accountInfoKeys.length; i++) {
+      String accountInfoKey = accountInfoKeys[i];
       accountDets.add((String) request.getParameter(accountInfoKey));
     }
 
@@ -47,18 +49,14 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
 
       preparedStatement = connection.prepareStatement(insertTableSQL);
 
-      int i = 0;
-      for (String column : accountDets) {
-        preparedStatement.setString(i, accountDets.get(i));
-        i++;
+      for (int i=0; i<accountDets.size(); i++) {
+        preparedStatement.setString(i+1, accountDets.get(i));
       }
 
       // execute insert SQL stetement
       preparedStatement.executeUpdate();
-      i = 0;
-      for (String column : accountDets) {
+      for (int i=0; i<accountDets.size(); i++) {
           user.put(accountInfoKeys[i], accountDets.get(i));
-          i++;
       }
       session.setAttribute("message", Arrays.asList("success", "Your settings have been updated successfully"));
     } catch (Exception e) {
@@ -183,7 +181,9 @@ void updateAccountDetails(HttpServletRequest request, Connection connection, Htt
 <%
   // I mean, I guess it should
 	boolean valid = true;
-	for (String val : request.getParameterMap().keySet()) {
+  Iterator orderIt = request.getParameterMap().keySet().iterator();
+  while(orderIt.hasNext()) {
+    String val = (String)orderIt.next();
 		if (request.getParameter(val) == null || request.getParameter(val).equals("")) {
 			valid = false;
 		}

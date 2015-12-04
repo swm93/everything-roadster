@@ -6,6 +6,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Iterator" %>
 
 
 <% Connection con = connectionManager.open(); %>
@@ -16,7 +17,8 @@
 
     List<String> PartDets = new ArrayList<String>();
 
-    for (String PartInfoKey : PartInfoKeys) {
+    for (int i=0; i<PartInfoKeys.length; i++) {
+      String PartInfoKey = PartInfoKeys[i];
       PartDets.add((String) request.getParameter(PartInfoKey));
     }
 

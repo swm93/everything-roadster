@@ -6,6 +6,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Arrays" %>
+<%@ page import="java.util.Iterator" %>
 
 
 <% Connection con = connectionManager.open(); %>
@@ -47,7 +48,8 @@ void createVendorRates(HttpServletRequest request, Connection connection, HttpSe
 				}
 			}
 			
-			for (Integer vendorId : unratedVendors) {
+      for (int i=0; i<unratedVendors.size(); i++) {
+        Integer vendorId = unratedVendors.get(i);
 				String insertRatingStr = "INSERT INTO RatesVendor VALUES (?, ?, ?)";
 				PreparedStatement insertRatingPS = connection.prepareStatement(insertRatingStr);
 				insertRatingPS.setInt(1, Integer.parseInt(user.get("accountId")));
@@ -69,7 +71,9 @@ void createVendorRates(HttpServletRequest request, Connection connection, HttpSe
 <%
   // I mean, I guess it should
 	boolean valid = true;
-	for (String val : request.getParameterMap().keySet()) {
+  Iterator orderIt = request.getParameterMap().keySet().iterator();
+  while(orderIt.hasNext()) {
+    String val = (String)orderIt.next();
 		if (request.getParameter(val).equals("-")) {
 			valid = false;
 		}
@@ -139,7 +143,8 @@ void createVendorRates(HttpServletRequest request, Connection connection, HttpSe
 					"<div class=\"row\">" + 
 						"<div class=\"col-xs-12 col-sm-6\">";
 				
-			for (Integer vendorId : unratedVendors) {
+			for (int i=0; i<unratedVendors.size(); i++) {
+        Integer vendorId = unratedVendors.get(i);
 				PreparedStatement vendorNamePS = con.prepareStatement("SELECT firstName, lastName FROM Account WHERE accountId=?");
 		    vendorNamePS.setInt(1, vendorId);
 		    ResultSet vendorNameRS = vendorNamePS.executeQuery();

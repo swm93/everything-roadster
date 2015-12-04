@@ -7,6 +7,7 @@
 <%@ page import="java.util.Arrays" %>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.Iterator" %>
 <%@ page import="java.io.IOException" %>
 
 <%@ include file="util_user.jsp" %>
@@ -20,8 +21,10 @@
     String[] accountInfoKeys = { "email", "password" };
 
     List<String> accountDets = new ArrayList<String>();
+    int i;
 
-    for (String accountInfoKey : accountInfoKeys) {
+    for (i=0; i<accountInfoKeys.length; i++) {
+      String accountInfoKey = accountInfoKeys[i];
       accountDets.add((String) request.getParameter(accountInfoKey));
     }
 

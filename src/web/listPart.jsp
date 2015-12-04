@@ -6,6 +6,7 @@
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Arrays"%>
+<%@ page import="java.util.Iterator "%>
 <%@ page import="java.sql.Date"%>
 
 <%@ include file="util_user.jsp" %>
@@ -27,7 +28,8 @@
 
 		List<String> PartDets = new ArrayList<String>();
 
-		for (String PartInfoKey : PartInfoKeys) {
+		for (int i=0; i<PartInfoKeys.length; i++) {
+      		String PartInfoKey = PartInfoKeys[i];
 			PartDets.add((String) request.getParameter(PartInfoKey));
 		}
 
@@ -72,7 +74,9 @@
 <%
 
 	boolean valid = true;
-	for (String val : request.getParameterMap().keySet()) {
+	Iterator partIt = request.getParameterMap().keySet().iterator();
+  	while(partIt.hasNext()) {
+    	String val = (String)partIt.next();
 		if (request.getParameter(val) == null || request.getParameter(val).equals("")) {
 			valid = false;
 		}

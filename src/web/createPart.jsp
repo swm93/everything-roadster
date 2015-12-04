@@ -54,8 +54,9 @@
         fitsInModel = new ArrayList<String>();
         fitsInYear = new ArrayList<String>();
 
-        for (FileItem item : multiparts)
+        for (int i=0; i<multiparts.size(); i++)
         {
+          FileItem item = multiparts.get(i);
           if (item.isFormField())
           {
             String name = item.getFieldName();
@@ -144,8 +145,9 @@
           "VALUES (?, ?);"
       );
       createFitsInPS.setInt(1, partId);
-      for (Integer vId : vehicleIds)
+      for (int i=0; i<vehicleIds.size(); i++)
       {
+        Integer vId = vehicleIds.get(i);
         createFitsInPS.setInt(2, vId);
         createFitsInPS.executeUpdate();
       }

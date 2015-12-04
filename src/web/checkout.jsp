@@ -4,6 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Map" %>
 <%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Iterator" %>
 <%@ page import="java.io.IOException" %>
 
 <%@ page import="java.sql.Connection" %>
@@ -153,8 +154,10 @@
           "GROUP BY LP.listId;"
       );
 
-      for (Map.Entry<String, ArrayList<String>> entry : cart.entrySet())
+      Iterator cartIt = cart.entrySet().iterator();
+      while (cartIt.hasNext())
       {
+        Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)cartIt.next();
         Integer listId = Integer.parseInt(entry.getKey());
         String partName = entry.getValue().get(0);
         Integer requestedQuantity = Integer.parseInt(entry.getValue().get(1));
@@ -331,8 +334,10 @@
   NumberFormat formatter = NumberFormat.getCurrencyInstance();
   Float total = 0.f;
 
-  for (Map.Entry<String, ArrayList<String>> entry : cart.entrySet())
+  Iterator cartIt = cart.entrySet().iterator();
+  while (cartIt.hasNext())
   {
+    Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)cartIt.next();
     String listId = entry.getKey();
     ArrayList<String> item = entry.getValue();
     ResultSet listedPartRS;
@@ -396,7 +401,9 @@
   }
 
 	boolean valid = true;
-	for (String val : request.getParameterMap().keySet()) {
+  Iterator checkoutParamsIt = request.getParameterMap().keySet().iterator();
+  while (checkoutParamsIt.hasNext()) {
+    String val = (String)checkoutParamsIt.next();
 		if ((request.getParameter(val) == null || request.getParameter(val).equals("")) && !val.equals("instruction") && request.getMethod().equals("POST")) {
 			valid = false;
 		}
