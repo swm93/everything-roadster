@@ -109,10 +109,7 @@ void createAccount(HttpServletRequest request, Connection connection, HttpSessio
           <div class="col-xs-12 col-sm-6">
             <div class="form-group">
               <label for="account-type-input">Account Type</label>
-              <select id="account-type-input" class="form-control" name="accountType">
-                <option value="customer">Customer</option>
-                <option value="vendor">Vendor</option>
-              </select>
+              <input id="account-type-input" class="form-control" name="accountType" value="customer" readonly/>
             </div>
             <div class="form-group">
               <label for="email-input">Email</label>
