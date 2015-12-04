@@ -49,7 +49,7 @@
         System.out.println("wrong e-mail/password combination");
         session.setAttribute("message", Arrays.asList("danger", "Invalid email/password combination."));
       }
-    } catch (SQLException | IOException e) {
+    } catch (Exception e) {
       System.out.println(e);
       session.setAttribute("message", Arrays.asList("danger", "Failed to sign in."));
     }
