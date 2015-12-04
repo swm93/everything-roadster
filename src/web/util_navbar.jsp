@@ -157,7 +157,7 @@
     if (userNav.get("accountType").equals("vendor")) {
       out.println(
         "<li>" +
-          "<a href=\"vendorListings.jsp\">Your Listings</a>" +
+          "<a href=\"vendorListings.jsp\">Sales History</a>" +
         "</li>"
       );
     }
