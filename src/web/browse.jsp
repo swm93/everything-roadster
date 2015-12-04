@@ -143,7 +143,7 @@
         <ul id="browse-main-container" class="container-fluid list-group">
 <%
   String partsSQL = new String(
-    "SELECT LP.listId, P.partName, LP.price, LP.quantity, P.imagePath, P.categoryName, P.description " +
+    "SELECT LP.listId, P.partName, LP.price, LP.quantity, P.imagePath, P.categoryName, P.description, LP.quantity AS remainingQuantity " +
       "FROM ListedPart LP " +
         "JOIN Part P ON P.partId=LP.partId " +
         "LEFT OUTER JOIN FitsIn F ON F.partId=P.partId " +
@@ -218,6 +218,7 @@
   {
     int listId = partsRS.getInt("listId");
     String partName = partsRS.getString("partName");
+    int quantity = partsRS.getInt("remainingQuantity");
     float price = partsRS.getFloat("price");
     String image = partsRS.getString("imagePath");
     String category = partsRS.getString("categoryName");
@@ -241,7 +242,7 @@
                      "<span>Add to Cart</span>" +
                    "</button>" +
                  "</span>" +
-                 "<input class=\"part-quantity-input form-control\" type=\"number\" name=\"quantity\" value=\"1\" />" +
+                 "<input class=\"part-quantity-input form-control\" type=\"number\" name=\"quantity\" value=\"1\" min=\"1\" max=\"%d\"/>" +
                  "<input type=\"hidden\" name=\"name\" value=\"%s\" />" +
                  "<input type=\"hidden\" name=\"action\" value=\"add\" />" +
                "</form>" +
@@ -263,7 +264,7 @@
              	 "</span>" +
            	 "</h5>" +
            "</li>",
-    image, listId, partName, partName, category, description, formatter.format(price), avgRating);
+    image, listId, quantity, partName, partName, category, description, formatter.format(price), avgRating);
 
     out.println(partsHTML);
   }
