@@ -41,7 +41,7 @@
     "SELECT P.partName, P.imagePath " +
       "FROM Part P " +
         "JOIN ListedPart LP ON P.partId = LP.partId " +
-      "ORDER BY LP.dateListed ASC " +
+      "ORDER BY LP.dateListed DESC " +
       "LIMIT ?;"
   );
   recentPartsPS.setInt(1, maxRecentParts);
