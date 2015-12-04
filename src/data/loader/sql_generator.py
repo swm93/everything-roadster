@@ -49,7 +49,7 @@ def generate_insert_sql(relation, attrs=[], vals=[]):
 #   wrap:   string to wrap elements in
 #   delim:  delimeter place between elements
 def list_to_str(arr=[], wrap='', delim=', '):
-    return delim.join(wrap + str(x) + wrap for x in arr)
+    return delim.join(wrap + (x.encode('utf-8') if isinstance(x, unicode) else str(x)).replace("'", "\\'") + wrap for x in arr)
 
 # Log
 # Alternative to print that maintain indent based on prefix
