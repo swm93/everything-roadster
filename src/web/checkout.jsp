@@ -146,11 +146,7 @@
 
       // create available quantity lookup prepared statement
       PreparedStatement listedPartPS = connection.prepareStatement(
-        "SELECT LP.quantity, LP.quantity - SUM(CP.quantity) AS remainingQuantity " +
-          "FROM ListedPart LP " +
-            "JOIN ContainsPart CP ON CP.listId=LP.listId " +
-          "WHERE LP.listId=? " +
-          "GROUP BY LP.listId;"
+        "SELECT LP.quantity AS remainingQuantity FROM ListedPart LP WHERE LP.listId=?"
       );
 
       for (Map.Entry<String, ArrayList<String>> entry : cart.entrySet())
@@ -158,7 +154,7 @@
         Integer listId = Integer.parseInt(entry.getKey());
         String partName = entry.getValue().get(0);
         Integer requestedQuantity = Integer.parseInt(entry.getValue().get(1));
-
+        
         listedPartPS.setInt(1, listId);
         ResultSet listedPartRS = listedPartPS.executeQuery();
         listedPartRS.next();
@@ -176,6 +172,14 @@
         createContainsPS.setInt(2, listId);
         createContainsPS.setInt(3, quantity);
         createContainsPS.executeUpdate();
+        
+        String reduceQuantitySQL = "UPDATE ListedPart SET quantity=(quantity-?)"
+            + "WHERE listId=?;";
+
+        PreparedStatement redQuantityPS = connection.prepareStatement(reduceQuantitySQL);
+        redQuantityPS.setInt(1, quantity);
+        redQuantityPS.setInt(2, listId);
+        redQuantityPS.executeUpdate();
       }
 
       connection.commit();
