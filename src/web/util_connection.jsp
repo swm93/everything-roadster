@@ -19,9 +19,9 @@
                 Class.forName("com.mysql.jdbc.Driver");
 
                 connection = DriverManager.getConnection(
-                    "jdbc:mysql://cosc304.ok.ubc.ca/db_smielcar",
-                    "smielcar",
-                    "38810115"
+                    "jdbc:mysql://cosc304.ok.ubc.ca/group11",
+                    "group11",
+                    "group11"
                 );
             }
 
