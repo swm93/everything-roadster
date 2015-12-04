@@ -179,7 +179,14 @@
     if (key.equals("search"))
     {
       partsSQL += "partName LIKE ? ";
-      whereParams.add("%" + String.join(" ", values) + "%");
+
+      String partNameLike = "%";
+      for (int i=0; i<values.length; i++)
+      {
+        partNameLike += values[i] + " ";
+      }
+      partNameLike = partNameLike.substring(0, partNameLike.length() - 1) + "%";
+      whereParams.add(partNameLike);
     }
     else
     {
