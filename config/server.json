@@ -1,5 +1,5 @@
 {
-    "url": "jdbc:mysql://cosc304.ok.ubc.ca/db_smielcar",
-    "username": "smielcar",
-    "password": "38810115"
+    "url": "jdbc:mysql://cosc304.ok.ubc.ca/group11",
+    "username": "group11",
+    "password": "group11"
 }
