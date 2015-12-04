@@ -88,7 +88,7 @@
           }
           else
           {
-            relativeImagePath = "public" + File.separator + "images" + File.separator + "parts" + File.separator + "part" + partId + ".jpg";
+            relativeImagePath = "public/images/parts/part" + partId + ".jpg";
             item.write(new File(getServletContext().getRealPath("/") + relativeImagePath));
           }
         }
