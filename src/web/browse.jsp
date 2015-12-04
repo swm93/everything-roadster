@@ -145,9 +145,9 @@
     "SELECT LP.listId, P.partName, LP.price, LP.quantity, P.imagePath, P.categoryName, P.description, LP.quantity - SUM(CP.quantity)/COUNT(DISTINCT V.vehicleId) AS remainingQuantity " +
       "FROM ListedPart LP " +
         "JOIN Part P ON P.partId=LP.partId " +
-        "JOIN FitsIn F ON F.partId=P.partId " +
-        "JOIN Vehicle V ON V.vehicleId=F.vehicleId " +
-        "JOIN ContainsPart CP ON CP.listId=LP.listId "
+        "LEFT OUTER JOIN FitsIn F ON F.partId=P.partId " +
+        "LEFT OUTER JOIN Vehicle V ON V.vehicleId=F.vehicleId " +
+        "LEFT OUTER JOIN ContainsPart CP ON CP.listId=LP.listId "
   );
   Map<String, String[]> parameterMap = request.getParameterMap();
   List<String> whereParams = new ArrayList<String>();
@@ -193,7 +193,7 @@
     }
   }
 
-  partsSQL += "GROUP BY LP.listId HAVING LP.quantity > SUM(CP.quantity)/COUNT(DISTINCT V.vehicleId);";
+  partsSQL += "GROUP BY LP.listId HAVING LP.quantity > SUM(CP.quantity)/COUNT(DISTINCT V.vehicleId) OR SUM(CP.quantity) IS NULL;";
 
   PreparedStatement partsPS = con.prepareStatement(partsSQL);
   for (int i = 0; i < whereParams.size(); i++)
